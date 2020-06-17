@@ -25,22 +25,17 @@ const app = express();
 
 // register a webhook handler with middleware
 // about the middleware, please refer to doc
-app.use('/', line.middleware(config))
 app.use('/callback', line.middleware(config), (req, res, next) => {
+  // 測試用途，了解 event 內容
   console.log('req.header:', req.headers)
   console.log('req.body:', req.body)
-  // console.log('event.type:', req.body.events[0].type)
-  // console.log('event.replyToken:', req.body.events[0].replyToken)
   console.log('event.source:', req.body.events[0].source)
   console.log('event.message:', req.body.events[0].message)
 
   next()
 })
 
-app.post('/', (req, res) => {
-  console.log(req.body)
 app.post('/callback', (req, res) => {
-  // return res.json('Hello, I am doctor')
   Promise
     .all(req.body.events.map(handleEvent))
     .then((result) => res.json(result))
@@ -50,9 +45,6 @@ app.post('/callback', (req, res) => {
     });
 });
 
-app.get('/', (req, res) => {
-  return res.json('I am crocodile doctor.')
-})
 // simple reply function
 const replyText = (token, texts) => {
   texts = Array.isArray(texts) ? texts : [texts];
@@ -64,9 +56,6 @@ const replyText = (token, texts) => {
 
 // event handler
 function handleEvent(event) {
-  if (event.type !== 'message' || event.message.type !== 'text') {
-    // ignore non-text-message event
-    return Promise.resolve(null);
   // 官網測試 webhookURL
   if (event.replyToken && event.replyToken.match(/^(.)\1*$/)) {
     return console.log("Test hook recieved: " + JSON.stringify(event.message));
@@ -77,30 +66,61 @@ function handleEvent(event) {
       const message = event.message
       switch (message.type) {
         case 'text':
-          return handleText(message, event.replyToken, event.source)
-        case 'image':
           return client.replyMessage(event.replyToken, {
-            type: 'text', text: 'sorry, I don\'t know the image says.'
+            type: 'text', text: 'you send a text.'
+          })
+        // return handleText(message, event.replyToken, event.source)
+        case 'image':
+
+          return client.replyMessage(event.replyToken, {
+            type: 'text', text: 'you send a image.'
+          })
+        case 'video':
+          return client.replyMessage(event.replyToken, {
+            type: 'text', text: 'you send a video.'
+          })
+        case 'audio':
+          return client.replyMessage(event.replyToken, {
+            type: 'text', text: 'you send an audio.'
+          })
+        case 'file':
+          return client.replyMessage(event.replyToken, {
+            type: 'text', text: 'you send an file.'
+          })
+        case 'location':
+          return client.replyMessage(event.replyToken, {
+            type: 'text', text: 'you send a location.'
+          })
+        case 'sticker':
+          return client.replyMessage(event.replyToken, {
+            type: 'text', text: 'you send a sticker.'
           })
         default:
-          return handleText(event.replyToken, ['welcome', 'John'
-          ])
+          throw new Error(`Unknown message: ${JSON.stringify(message)}`);
       }
 
     case 'follow':
-      replyMsg = { type: 'text', text: 'welcome to crocodile doctor' }
-      return client.replyMessage(event.replyToken, replyMsg
-      )
+      return replyText(event.replyToken, 'Got followed event');
+
+    case 'unfollow':
+      return console.log(`Unfollowed this bot: ${JSON.stringify(event)}`);
 
     case 'join':
-      replyMsg = ['hello', 'world']
-      return client.replyText(event.replyToken, replyMsg)
+      return replyText(event.replyToken, `Joined ${event.source.type}`);
 
-    default:
-      replyMsg = {
-        type: 'text', text: `hi ${event.source.userId}, I don't know what you say.`
+    case 'leave':
+      return console.log(`Left: ${JSON.stringify(event)}`);
+
+    case 'memberJoined':
+      return replyText(event.replyToken, `memberJoined ${event.source.type}`);
+
+    case 'memberLeft':
+      return console.log(`memberLeft: ${JSON.stringify(event)}`);
       }
       return client.replyToken(event.replyToken, replyMsg)
+
+    default:
+      throw new Error(`Unknown event: ${JSON.stringify(event)}`);
 
   }
 
@@ -161,7 +181,7 @@ function handleText(message, replyToken, source) {
 // listen on port
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`listening on ${port}`);
+  console.log(`listening on ${port} `);
 });
 
 
