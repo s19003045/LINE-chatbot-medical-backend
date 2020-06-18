@@ -139,28 +139,68 @@ function handleEvent(event) {
 }
 
 function handleText(message, replyToken, source) {
+  let replyMsg
   switch (message.text) {
-    case 'hi':
-      const replyMsg = [{
+    // send text
+    case 'hello':
+      return replyText(replyToken, 'wolrd')
+    case 'good':
+      return replyText(replyToken, 'job')
+    case 'texts limit':
+      replyMsg = [{
         type: 'text',
-        text: '1234'
+        text: 'reply message 1'
       },
       {
         type: 'text',
-        text: '5678'
+        text: 'reply message 2'
       },
       {
         type: 'text',
-        text: '5678'
+        text: 'reply message 3'
       },
       {
         type: 'text',
-        text: '5678'
+        text: 'reply message 4'
       },
       {
         type: 'text',
-        text: '5678'
-      }]
+        text: 'reply message 5'
+      }
+      ]
+      return client.replyMessage(replyToken, replyMsg)
+    case 'emoji':
+      replyMsg = {
+        "type": "text",
+        "text": "$$$$$ 就是愛 emoji ", // $代表 emoji
+        "emojis": [
+          {
+            "index": 0,
+            "productId": "5ac1bfd5040ab15980c9b435",
+            "emojiId": "001"
+          },
+          {
+            "index": 1,
+            "productId": "5ac1bfd5040ab15980c9b435",
+            "emojiId": "002"
+          },
+          {
+            "index": 2,
+            "productId": "5ac1bfd5040ab15980c9b435",
+            "emojiId": "047"
+          },
+          {
+            "index": 3,
+            "productId": "5ac1bfd5040ab15980c9b435",
+            "emojiId": "018"
+          },
+          {
+            "index": 4,
+            "productId": "5ac1bfd5040ab15980c9b435",
+            "emojiId": "094"
+          }
+        ]
+      }
       return client.replyMessage(replyToken, replyMsg)
     case 'profile':
       return client.getProfile(source.userId)
