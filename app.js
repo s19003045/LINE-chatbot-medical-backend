@@ -155,24 +155,24 @@ function handleText(message, replyToken, source) {
       return replyText(replyToken, 'job')
     case 'texts limit':
       replyMsg = [{
-        type: 'text',
-        text: 'reply message 1'
+        'type': 'text',
+        'text': 'reply message 1'
       },
       {
-        type: 'text',
-        text: 'reply message 2'
+        'type': 'text',
+        'text': 'reply message 2'
       },
       {
-        type: 'text',
-        text: 'reply message 3'
+        'type': 'text',
+        'text': 'reply message 3'
       },
       {
-        type: 'text',
-        text: 'reply message 4'
+        'type': 'text',
+        'text': 'reply message 4'
       },
       {
-        type: 'text',
-        text: 'reply message 5'
+        'type': 'text',
+        'text': 'reply message 5'
       }
       ]
       return client.replyMessage(replyToken, replyMsg)
