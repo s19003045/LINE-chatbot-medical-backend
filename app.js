@@ -16,12 +16,18 @@ const config = {
   channelSecret: process.env.CHANNEL_SECRET,
 };
 
+// base URL for webhook server
+let baseURL = process.env.BASE_URL;
+
 // create LINE SDK client
 const client = new line.Client(config);
 
 // create Express app
 // about Express itself: https://expressjs.com/
 const app = express();
+
+// serve static files
+app.use('/public', express.static('public'));
 
 // register a webhook handler with middleware
 // about the middleware, please refer to doc
@@ -140,6 +146,7 @@ function handleEvent(event) {
 
 function handleText(message, replyToken, source) {
   let replyMsg
+  const imageURL = `${baseURL}/public/images`
   switch (message.text) {
     // send text
     case 'hello':
@@ -200,6 +207,17 @@ function handleText(message, replyToken, source) {
             "emojiId": "094"
           }
         ]
+      }
+      return client.replyMessage(replyToken, replyMsg)
+
+    // send image
+    case 'image':
+      console.log('imageURL:', imageURL)
+      replyMsg = {
+        "type": "image",
+        "originalContentUrl": `${imageURL}/buttons/dinosaur_space.png`,
+        "previewImageUrl": `${imageURL}/buttons/dinosaur_painter.png`,
+        "animated": true
       }
       return client.replyMessage(replyToken, replyMsg)
     case 'profile':
