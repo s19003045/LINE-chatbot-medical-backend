@@ -220,6 +220,16 @@ function handleText(message, replyToken, source) {
         "animated": true
       }
       return client.replyMessage(replyToken, replyMsg)
+
+    // // send video
+    case 'video':
+      console.log('videoURL:', videoURL);
+      return client.replyMessage(replyToken, {
+        "type": "video",
+        "originalContentUrl": `${videoURL}/video.mp4`,
+        "previewImageUrl": `${videoURL}/preview.jpeg`,
+      })
+
     case 'profile':
       return client.getProfile(source.userId)
         .then((profile) => {
