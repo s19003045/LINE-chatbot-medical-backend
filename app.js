@@ -147,6 +147,7 @@ function handleEvent(event) {
 function handleText(message, replyToken, source) {
   let replyMsg
   const imageURL = `${baseURL}/public/images`
+  const videoURL = `${baseURL}/public/videos`
   switch (message.text) {
     // send text
     case 'hello':
@@ -226,8 +227,8 @@ function handleText(message, replyToken, source) {
       console.log('videoURL:', videoURL);
       return client.replyMessage(replyToken, {
         "type": "video",
-        "originalContentUrl": `${videoURL}/video.mp4`,
-        "previewImageUrl": `${videoURL}/preview.jpeg`,
+        "originalContentUrl": `${videoURL}/country_road/video.mp4`,
+        "previewImageUrl": `${videoURL}/country_road/preview.jpeg`,
       })
 
     case 'profile':
