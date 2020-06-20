@@ -249,6 +249,14 @@ function handleText(message, replyToken, source) {
         "latitude": 41.892575,
         "longitude": 12.485349,
       })
+
+    // send sticker
+    case 'sticker':
+      return client.replyMessage(replyToken, {
+        "type": "sticker",
+        "packageId": "11537",
+        "stickerId": "52002753"
+      })
     case 'profile':
       return client.getProfile(source.userId)
         .then((profile) => {
