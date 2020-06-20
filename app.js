@@ -66,18 +66,17 @@ function handleEvent(event) {
   if (event.replyToken && event.replyToken.match(/^(.)\1*$/)) {
     return console.log("Test hook recieved: " + JSON.stringify(event.message));
   }
-  let replyMsg
+
   switch (event.type) {
     case 'message':
       const message = event.message
       switch (message.type) {
         case 'text':
-          return client.replyMessage(event.replyToken, {
-            type: 'text', text: 'you send a text.'
-          })
-        // return handleText(message, event.replyToken, event.source)
+          // return client.replyMessage(event.replyToken, {
+          //   type: 'text', text: 'you send a text.'
+          // })
+          return handleText(message, event.replyToken, event.source)
         case 'image':
-
           return client.replyMessage(event.replyToken, {
             type: 'text', text: 'you send a image.'
           })
@@ -257,6 +256,39 @@ function handleText(message, replyToken, source) {
         "packageId": "11537",
         "stickerId": "52002753"
       })
+
+    // send imagemap
+    case 'imagemap':
+      return client.replyMessage(
+        replyToken,
+        {
+          type: 'imagemap',
+          baseUrl: `${baseURL}/public/imagemap/social_media`,
+          altText: 'Social media',
+          baseSize: { width: 1040, height: 650 },
+          actions: [
+            { area: { x: 0, y: 0, width: 520, height: 325 }, type: 'uri', linkUri: 'https://www.facebook.com/' },
+            { area: { x: 520, y: 0, width: 520, height: 325 }, type: 'uri', linkUri: 'https://www.google.com.tw/' },
+            { area: { x: 0, y: 325, width: 520, height: 325 }, type: 'message', text: 'Facebook!' },
+            { area: { x: 520, y: 325, width: 520, height: 325 }, type: 'message', text: 'Google!' },
+          ],
+          video: {
+            originalContentUrl: `${videoURL}/country_road/video.mp4`,
+            previewImageUrl: `${videoURL}/country_road/preview.jpeg`,
+            area: {
+              x: 320,
+              y: 220,
+              width: 400,
+              height: 240,
+            },
+            externalLink: {
+              linkUri: 'https://youtu.be/HmeX9_sjGQI',
+              label: 'Go to youtube'
+            }
+          },
+        }
+      );
+
     case 'profile':
       return client.getProfile(source.userId)
         .then((profile) => {
