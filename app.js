@@ -121,7 +121,16 @@ function handleEvent(event) {
 
     case 'memberLeft':
       return console.log(`memberLeft: ${JSON.stringify(event)}`);
+
+    case 'postback':
+      let data = event.postback.data;
+      if (data === 'DATE' || data === 'TIME' || data === 'DATETIME') {
+        data += `(${JSON.stringify(event.postback.params)})`;
       }
+      return replyText(event.replyToken, `Got postback: ${data}`);
+
+    case 'beacon':
+      return replyText(event.replyToken, `Got beacon: ${event.beacon.hwid}`);
 
     default:
       throw new Error(`Unknown event: ${JSON.stringify(event)}`);
