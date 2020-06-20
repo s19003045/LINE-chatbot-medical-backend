@@ -239,6 +239,16 @@ function handleText(message, replyToken, source) {
         "originalContentUrl": `${audioURL}/country_road.m4a`,
         "duration": 214000
       })
+
+    // send location
+    case 'location':
+      return client.replyMessage(replyToken, {
+        "type": "location",
+        "title": "古羅馬廣場",
+        "address": "Via della Salara Vecchia, 5/6, 00186 Roma RM, 義大利",
+        "latitude": 41.892575,
+        "longitude": 12.485349,
+      })
     case 'profile':
       return client.getProfile(source.userId)
         .then((profile) => {
