@@ -37,6 +37,7 @@ app.use('/callback', line.middleware(config), (req, res, next) => {
   console.log('req.body:', req.body)
   console.log('event.source:', req.body.events[0].source)
   console.log('event.message:', req.body.events[0].message)
+  console.log('event.postback:', req.body.events[0].postback)
 
   next()
 })
@@ -284,6 +285,110 @@ function handleText(message, replyToken, source) {
         }
       );
 
+    // buttons template
+    case 'buttons':
+      return client.replyMessage(
+        replyToken,
+        {
+          type: 'template',
+          altText: '太空探險',
+          template: {
+            type: 'buttons',
+            thumbnailImageUrl: `${imageURL}/buttons/dinosaur_space.png`,
+            title: '太空探險',
+            text: '跟我一起去外太空吧！',
+            actions: [
+              { label: '太陽系介紹', type: 'uri', uri: 'https://youtu.be/libKVRa01L8' },
+              { label: '銀河系之美', type: 'uri', uri: 'https://youtu.be/4VX6Nh6YLYk' },
+              { label: '我要登陸月球', type: 'postback', text: '我要登陸月球', data: 'action=fly&gotomoon=true' },
+              { label: '我不要登陸月球', type: 'postback', text: '我不要登陸月球', data: 'action=null&gotomoon=false' }
+
+            ],
+          },
+        }
+      );
+
+    // 詢問登陸月球日期
+    case '我要登陸月球':
+      return client.replyMessage(
+        replyToken,
+        {
+          type: 'template',
+          altText: '登陸月球',
+          template: {
+            type: 'buttons',
+            thumbnailImageUrl: `${imageURL}/buttons/dinosaur_space.png`,
+            title: '坐太空梭登陸月球',
+            text: '選個登陸月球日期',
+            actions: [
+              {
+                "type": "datetimepicker",
+                "label": "出發日期",
+                "data": "DATETIME",
+                "mode": "datetime",
+                "initial": "2020-06-01t00:00",
+                "max": "2020-12-01t23:59",
+                "min": "2020-06-01t00:00"
+              },
+              {
+                "type": "datetimepicker",
+                "label": "回程日期",
+                "data": "DATETIME",
+                "mode": "datetime",
+                "initial": "2020-06-01t00:00",
+                "max": "2020-12-01t23:59",
+                "min": "2020-06-01t00:00"
+              }
+            ]
+          }
+        })
+
+    case '我不要登陸月球':
+      return client.replyMessage(
+        replyToken,
+        {
+          type: 'template',
+          altText: 'VR 探險月球',
+          template: {
+            type: 'buttons',
+            thumbnailImageUrl: `${imageURL}/buttons/dinosaur_music.png`,
+            title: 'VR 探險月球',
+            text: '要來個 VR 探險月球嗎？',
+            actions: [
+              {
+                type: 'postback',
+                label: '我要 VR 探險月球',
+                text: '我要 VR 探險月球',
+                data: 'vr_moon=true'
+              },
+              {
+                type: 'postback',
+                label: '我不要VR探險',
+                text: '我不要VR探險',
+                data: 'vr_moon=false'
+              }
+            ]
+          }
+        }
+      )
+
+    // confirm template
+    case 'confirm':
+      return client.replyMessage(
+        replyToken,
+        {
+          type: 'template',
+          altText: 'Confirm alt text',
+          template: {
+            type: 'confirm',
+            text: 'Do it?',
+            actions: [
+              { label: 'Yes', type: 'message', text: 'Yes!' },
+              { label: 'No', type: 'message', text: 'No!' },
+            ],
+          },
+        }
+      )
     case 'profile':
       return client.getProfile(source.userId)
         .then((profile) => {
