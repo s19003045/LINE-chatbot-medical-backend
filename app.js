@@ -148,6 +148,7 @@ function handleText(message, replyToken, source) {
   let replyMsg
   const imageURL = `${baseURL}/public/images`
   const videoURL = `${baseURL}/public/videos`
+  const audioURL = `${baseURL}/public/audios`
   switch (message.text) {
     // send text
     case 'hello':
@@ -231,6 +232,13 @@ function handleText(message, replyToken, source) {
         "previewImageUrl": `${videoURL}/country_road/preview.jpeg`,
       })
 
+    // send audio
+    case 'audio':
+      return client.replyMessage(replyToken, {
+        "type": "audio",
+        "originalContentUrl": `${audioURL}/country_road.m4a`,
+        "duration": 214000
+      })
     case 'profile':
       return client.getProfile(source.userId)
         .then((profile) => {
