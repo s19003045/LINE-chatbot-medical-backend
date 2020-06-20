@@ -378,13 +378,13 @@ function handleText(message, replyToken, source) {
         replyToken,
         {
           type: 'template',
-          altText: 'Confirm alt text',
+          altText: '炎炎夏日，來個土耳其冰淇淋消消暑',
           template: {
             type: 'confirm',
-            text: 'Do it?',
+            text: '炎炎夏日，來個土耳其冰淇淋消消暑?',
             actions: [
-              { label: 'Yes', type: 'message', text: 'Yes!' },
-              { label: 'No', type: 'message', text: 'No!' },
+              { type: 'postback', label: 'Yes', data: 'icecream=true', text: 'Yes!' },
+              { type: 'postback', label: 'No', data: 'icecream=false', text: 'No!' },
             ],
           },
         }
