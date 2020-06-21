@@ -492,6 +492,42 @@ function handleText(message, replyToken, source) {
           },
         }
       );
+
+    case 'image carousel':
+      return client.replyMessage(replyToken,
+        {
+          "type": "template",
+          "altText": "this is a image carousel template",
+          "template": {
+            "type": "image_carousel",
+            "columns": [
+              {
+                "imageUrl": `${imageURL}/buttons/dinosaur_heart.png`,
+                "action": {
+                  "type": "postback",
+                  "label": "Buy",
+                  "data": "action=buy&itemid=111"
+                }
+              },
+              {
+                "imageUrl": `${imageURL}/buttons/dinosaur_music.png`,
+                "action": {
+                  "type": "message",
+                  "label": "Yes",
+                  "text": "yes"
+                }
+              },
+              {
+                "imageUrl": `${imageURL}/buttons/dinosaur_painter.png`,
+                "action": {
+                  "type": "uri",
+                  "label": "View detail",
+                  "uri": "https://store.line.me/family/play/en"
+                }
+              }
+            ]
+          }
+        })
     case 'profile':
       return client.getProfile(source.userId)
         .then((profile) => {
