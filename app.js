@@ -389,6 +389,58 @@ function handleText(message, replyToken, source) {
           },
         }
       )
+
+    // carousel template
+    case 'carousel':
+      return client.replyMessage(
+        replyToken,
+        {
+          type: 'template',
+          altText: '最佳主持人票選',
+          template: {
+            type: 'carousel',
+            imageAspectRatio: 'square',
+            columns: [
+              {
+                thumbnailImageUrl: `${imageURL}/buttons/dinosaur_heart.png`,
+                title: '朵瑞斯',
+                text: '來自熱情洋溢的海島',
+                actions: [
+                  { label: '投我一票', type: 'postback', text: '投朵瑞斯一票', data: 'candidate=doris&vote=1' },
+                  { label: '查看更多', type: 'uri', uri: 'https://line.me' },
+                ],
+              },
+              {
+                thumbnailImageUrl: `${imageURL}/buttons/dinosaur_music.png`,
+                title: '凱恩',
+                text: '就是愛音樂！',
+                actions: [
+                  { label: '投我一票', type: 'postback', text: '投凱恩一票', data: 'candidate=ken&vote=1' },
+                  { label: '查看更多', type: 'uri', uri: 'https://line.me' },
+                ],
+              },
+              {
+                thumbnailImageUrl: `${imageURL}/buttons/dinosaur_painter.png`,
+                title: '艾瑞克',
+                text: '彩繪人生~',
+                actions: [
+                  { label: '投我一票', type: 'postback', text: '投艾瑞克一票', data: 'candidate=eric&vote=1' },
+                  { label: '查看更多', type: 'uri', uri: 'https://line.me' },
+                ],
+              },
+              {
+                thumbnailImageUrl: `${imageURL}/buttons/dinosaur_saint.png`,
+                title: '富爸',
+                text: '來發禮物囉!',
+                actions: [
+                  { label: '投我一票', type: 'postback', text: '投富爸一票', data: 'candidate=richfather&vote=1' },
+                  { label: '查看更多', type: 'uri', uri: 'https://line.me' },
+                ],
+              },
+            ],
+          },
+        }
+      );
     case 'profile':
       return client.getProfile(source.userId)
         .then((profile) => {
