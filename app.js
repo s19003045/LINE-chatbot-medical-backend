@@ -242,6 +242,14 @@ function handlePostback(event) {
       } else {
         return replyText(event.replyToken, '感謝你的回覆！')
       }
+
+    case 'eatIcecream':
+      if (_data.eatIcecream === 'true') {
+        return replyText(event.replyToken, '請吃！')
+      } else {
+        return replyText(event.replyToken, '謝謝！')
+      }
+
     default:
       return replyText(event.replyToken, `Got postback: ${data}`);
   }
@@ -426,8 +434,8 @@ function handleText(message, replyToken, source) {
             type: 'confirm',
             text: '炎炎夏日，來個土耳其冰淇淋消消暑?',
             actions: [
-              { type: 'postback', label: 'Yes', data: 'icecream=true', text: 'Yes!' },
-              { type: 'postback', label: 'No', data: 'icecream=false', text: 'No!' },
+              { type: 'postback', label: 'Yes', data: 'action=eatIcecream&eatIcecream=true', displayText: 'Yes!' },
+              { type: 'postback', label: 'No', data: 'action=eatIcecream&eatIcecream=false', displayText: 'No!' },
             ],
           },
         }
