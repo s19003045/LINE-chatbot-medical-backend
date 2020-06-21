@@ -64,12 +64,13 @@ const replyText = (token, texts) => {
 };
 
 // 模擬資料庫：用於 carousel template，統計投票結果
-let voteStatistic = {
-  doris: 0,
-  ken: 0,
-  eric: 0,
-  richfather: 0
-}
+let fake_candidates =
+  [
+    { id: 1, name: 'doris', vote: 0 },
+    { id: 2, name: 'ken', vote: 0 },
+    { id: 3, name: 'eric', vote: 0 },
+    { id: 4, name: 'richfather', vote: 0 },
+  ]
 
 // event handler
 function handleEvent(event) {
@@ -134,27 +135,7 @@ function handleEvent(event) {
       return console.log(`memberLeft: ${JSON.stringify(event)}`);
 
     case 'postback':
-      let data = event.postback.data;
-      if (data === 'DATE' || data === 'TIME' || data === 'DATETIME') {
-        data += `(${JSON.stringify(event.postback.params)})`;
-      }
-      // return replyText(event.replyToken, `Got postback: ${data}`);
-
-      let parseData = querystring.parse(data)
-      let voteStatis_processed = handlePostback(parseData, voteStatistic)
-
-      if (voteStatis_processed) {
-        voteStatistic = {
-          ...voteStatis_processed
-        }
-        let statistic_ouput = ''
-        for (let [k, v] of Object.entries(voteStatistic)) {
-          statistic_ouput += `\n${k} : ${v}`
-        }
-        return replyText(event.replyToken, `投票結果: ${statistic_ouput}`);
-      } else {
-        return replyText(event.replyToken, `Got postback: ${data}`);
-      }
+      return handlePostback(event)
 
     case 'beacon':
       return replyText(event.replyToken, `Got beacon: ${event.beacon.hwid}`);
@@ -165,15 +146,26 @@ function handleEvent(event) {
   }
 }
 
-// 處理 postback event
-function handlePostback(queryObject, voteStatistic) {
-  let _queryObject = typeof queryObject === 'string' ? querystring.parse(queryObject) : queryObject
-  if (_queryObject.candidate !== undefined) {
-    let candidate = _queryObject.candidate
-    voteStatistic[candidate] += 1
-    return voteStatistic
-  } else {
-    return null
+// 處理 postback 訊息
+function handlePostback(event) {
+  const imageURL = `${baseURL}/public/images`
+  let data = event.postback.data
+  let _data = querystring.parse(data)
+  switch (_data.action) {
+    case 'vote':
+      fake_candidates.forEach((d) => {
+        if (d.name === _data.candidate) {
+          d.vote += 1
+        }
+      })
+      let statistic_ouput = '投票結果：'
+      fake_candidates.forEach((d) => {
+        statistic_ouput += `\n${d.name} : ${d.vote} 票`
+      })
+      return replyText(event.replyToken, statistic_ouput);
+
+    default:
+      return replyText(event.replyToken, `Got postback: ${data}`);
   }
 }
 
