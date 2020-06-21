@@ -2,6 +2,8 @@
 
 const line = require('@line/bot-sdk');
 const express = require('express');
+const querystring = require('querystring');
+
 
 // 判別開發環境
 if (process.env.NODE_ENV !== 'production') {
@@ -60,6 +62,14 @@ const replyText = (token, texts) => {
     texts.map((text) => ({ type: 'text', text }))
   );
 };
+
+// 模擬資料庫：用於 carousel template，統計投票結果
+let voteStatistic = {
+  doris: 0,
+  ken: 0,
+  eric: 0,
+  richfather: 0
+}
 
 // event handler
 function handleEvent(event) {
@@ -128,7 +138,23 @@ function handleEvent(event) {
       if (data === 'DATE' || data === 'TIME' || data === 'DATETIME') {
         data += `(${JSON.stringify(event.postback.params)})`;
       }
-      return replyText(event.replyToken, `Got postback: ${data}`);
+      // return replyText(event.replyToken, `Got postback: ${data}`);
+
+      let parseData = querystring.parse(data)
+      let voteStatis_processed = handlePostback(parseData, voteStatistic)
+
+      if (voteStatis_processed) {
+        voteStatistic = {
+          ...voteStatis_processed
+        }
+        let statistic_ouput = ''
+        for (let [k, v] of Object.entries(voteStatistic)) {
+          statistic_ouput += `\n${k} : ${v}`
+        }
+        return replyText(event.replyToken, `投票結果: ${statistic_ouput}`);
+      } else {
+        return replyText(event.replyToken, `Got postback: ${data}`);
+      }
 
     case 'beacon':
       return replyText(event.replyToken, `Got beacon: ${event.beacon.hwid}`);
@@ -136,6 +162,18 @@ function handleEvent(event) {
     default:
       throw new Error(`Unknown event: ${JSON.stringify(event)}`);
 
+  }
+}
+
+// 處理 postback event
+function handlePostback(queryObject, voteStatistic) {
+  let _queryObject = typeof queryObject === 'string' ? querystring.parse(queryObject) : queryObject
+  if (_queryObject.candidate !== undefined) {
+    let candidate = _queryObject.candidate
+    voteStatistic[candidate] += 1
+    return voteStatistic
+  } else {
+    return null
   }
 }
 
