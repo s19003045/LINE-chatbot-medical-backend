@@ -250,6 +250,84 @@ function handlePostback(event) {
         return replyText(event.replyToken, '謝謝！')
       }
 
+    case 'nextStation':
+      if (_data.area === 'japan') {
+        return client.replyMessage(event.replyToken, {
+          "type": "text",
+          "text": "要前往哪一個景點？",
+          "quickReply": {
+            "items": [
+              {
+                "type": "action",
+                "action": {
+                  "type": "postback",
+                  "label": "東京",
+                  "displayText": "東京",
+                  "data": "action=nextStation&area=東京"
+                }
+              },
+              {
+                "type": "action",
+                "action": {
+                  "type": "postback",
+                  "label": "大阪",
+                  "displayText": "大阪",
+                  "data": "action=nextStation&area=大阪"
+                }
+              },
+              {
+                "type": "action",
+                "action": {
+                  "type": "postback",
+                  "label": "北海島",
+                  "displayText": "北海島",
+                  "data": "action=nextStation&area=北海島"
+                }
+              },
+              {
+                "type": "action",
+                "action": {
+                  "type": "postback",
+                  "label": "沖繩",
+                  "displayText": "沖繩",
+                  "data": "action=nextStation&area=沖繩"
+                }
+              },
+              {
+                "type": "action",
+                "action": {
+                  "type": "postback",
+                  "label": "九州",
+                  "displayText": "九州",
+                  "data": "action=nextStation&area=九州"
+                }
+              },
+              {
+                "type": "action",
+                "action": {
+                  "type": "postback",
+                  "label": "京都奈良",
+                  "displayText": "京都奈良",
+                  "data": "action=nextStation&area=京都奈良"
+                }
+              },
+              {
+                "type": "action",
+                "action": {
+                  "type": "postback",
+                  "label": "富士山",
+                  "displayText": "富士山",
+                  "data": "action=nextStation&area=富士山"
+                }
+              },
+            ]
+          }
+        })
+      } else {
+        return replyText(event.replyToken, `準備前往 => ${_data.area}`)
+      }
+
+
     default:
       return replyText(event.replyToken, `Got postback: ${data}`);
   }
@@ -528,6 +606,48 @@ function handleText(message, replyToken, source) {
             ]
           }
         })
+
+    // quick replies
+    case 'quick replies':
+      return client.replyMessage(replyToken, {
+        "type": "text",
+        "text": "拍照、上傳照片、打卡、前往下一個景點？",
+        "quickReply": {
+          "items": [
+            {
+              "type": "action",
+              "action": {
+                "type": "camera",
+                "label": "拍照"
+              }
+            },
+            {
+              "type": "action",
+              "action": {
+                "type": "cameraRoll",
+                "label": "上傳照片"
+              }
+            },
+            {
+              "type": "action",
+              "action": {
+                "type": "location",
+                "label": "打卡"
+              }
+            },
+            {
+              "type": "action",
+              "imageUrl": `${imageURL}/quick_replies/japan.png`,
+              "action": {
+                "type": "postback",
+                "label": "下一個景點",
+                "displayText": "下一個景點",
+                "data": "action=nextStation&area=japan"
+              }
+            }
+          ]
+        }
+      })
     case 'profile':
       return client.getProfile(source.userId)
         .then((profile) => {
