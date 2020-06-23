@@ -4,6 +4,8 @@ let baseURL = process.env.BASE_URL;
 
 // import flex template
 const { flexBubble } = require('../flex_templates/flex_bubble')
+const { flexCarousel } = require('../flex_templates/flex_carousel')
+
 function handleText(message, replyToken, source, client, replyText) {
   let replyMsg
   const imageURL = `${baseURL}/public/images`
@@ -323,6 +325,13 @@ function handleText(message, replyToken, source, client, replyText) {
     // flex bubble message
     case 'flex bubble':
       return client.replyMessage(replyToken, flexBubble)
+
+    // flex carousel message
+    case 'flex carousel':
+      return client.replyMessage(replyToken,
+        flexCarousel
+      )
+
     // 與 profile 有關的方法
     case 'profile':
       if (source.userId) {
