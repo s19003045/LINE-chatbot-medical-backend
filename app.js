@@ -59,5 +59,6 @@ app.listen(port, () => {
   console.log(`listening on ${port} `);
 });
 
+require('./routes')(app)
 
 module.exports = client
