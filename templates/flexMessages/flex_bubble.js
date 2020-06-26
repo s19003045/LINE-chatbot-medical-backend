@@ -162,4 +162,4 @@ const flexBubble = {
   }
 }
 
-module.exports = { flexBubble }
+module.exports = flexBubble 

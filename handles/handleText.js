@@ -3,8 +3,8 @@
 let baseURL = process.env.BASE_URL;
 
 // import flex template
-const { flexBubble } = require('../flex_templates/flex_bubble')
-const { flexCarousel } = require('../flex_templates/flex_carousel')
+const flexBubble = require('../templates/flexMessages/flex_bubble')
+const flexCarousel = require('../templates/flexMessages/flex_carousel')
 
 function handleText(message, replyToken, source, client, replyText) {
   let replyMsg

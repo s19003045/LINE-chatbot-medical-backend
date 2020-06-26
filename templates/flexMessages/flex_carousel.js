@@ -75,4 +75,4 @@ const flexCarousel = {
   }
 }
 
-module.exports = { flexCarousel }
+module.exports = flexCarousel 
