@@ -332,6 +332,11 @@ function handleText(message, replyToken, source, client, replyText) {
         flexCarousel
       )
 
+    // liff
+    case 'liff':
+      const liffUrl = `https://liff.line.me/${process.env.LINE_LIFF_ID}`;
+      return replyText(replyToken, liffUrl);
+
     // 與 profile 有關的方法
     case 'profile':
       if (source.userId) {
