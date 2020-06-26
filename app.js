@@ -28,6 +28,14 @@ const handleEvent = initHandleEvent(client)
 // about Express itself: https://expressjs.com/
 const app = express();
 
+app.use(
+  bodyParser.json({
+    verify: (req, _, buf) => {
+      req.rawBody = buf.toString();
+    },
+  })
+)
+
 // serve static files
 app.use('/public', express.static('public'));
 
