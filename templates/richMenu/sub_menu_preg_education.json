@@ -1,0 +1,62 @@
+{
+  "size": {
+    "width": 2500,
+    "height": 1686
+  },
+  "selected": true,
+  "name": "sub menu - pregnancy education",
+  "chatBarText": "服務選單",
+  "areas": [
+    {
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1686,
+        "height": 300
+      },
+      "action": {
+        "type": "postback",
+        "data": "action=sub_menu&category=back_to_main_menu"
+      }
+    },
+    {
+      "bounds": {
+        "x": 0,
+        "y": 300,
+        "width": 1686,
+        "height": 462
+      },
+      "action": {
+        "type": "postback",
+        "displayText": "孕期生理",
+        "data": "action=sub_menu&category=pregnancy_physiology"
+      }
+    },
+    {
+      "bounds": {
+        "x": 0,
+        "y": 762,
+        "width": 1686,
+        "height": 462
+      },
+      "action": {
+        "type": "postback",
+        "displayText": "飲食建議",
+        "data": "action=sub_menu&category=diet_suggestion"
+      }
+    },
+    {
+      "bounds": {
+        "x": 0,
+        "y": 1224,
+        "width": 1686,
+        "height": 462
+      },
+      "action": {
+        "type": "postback",
+        "displayText": "胎兒成長",
+        "data": "action=sub_menu&category=fetus_growth"
+      }
+    }
+  ]
+}
