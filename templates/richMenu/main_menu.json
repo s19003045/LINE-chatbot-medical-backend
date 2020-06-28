@@ -5,7 +5,7 @@
   },
   "selected": true,
   "name": "main menu",
-  "chatBarText": "Tap to open",
+  "chatBarText": "服務選單",
   "areas": [
     {
       "bounds": {
@@ -16,8 +16,8 @@
       },
       "action": {
         "type": "postback",
-        "displayText": "就醫指引",
-        "data": "action=main_menu&category=instruction"
+        "displayText": "產前檢查",
+        "data": "action=main_menu&category=prenatal_visit"
       }
     },
     {
@@ -42,8 +42,7 @@
       },
       "action": {
         "type": "postback",
-        "displayText": "孕期衛教",
-        "data": "action=main_menu&category=health_education"
+        "data": "action=main_menu&category=pregnancy_education"
       }
     },
     {
@@ -55,8 +54,8 @@
       },
       "action": {
         "type": "postback",
-        "displayText": "好文連結",
-        "data": "action=main_menu&category=articles"
+        "displayText": "Q & A",
+        "data": "action=main_menu&category=Q_and_A"
       }
     },
     {
