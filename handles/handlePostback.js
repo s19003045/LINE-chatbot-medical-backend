@@ -18,6 +18,22 @@ function handlePostback(event, client, replyText) {
   let data = event.postback.data
   let _data = querystring.parse(data)
   switch (_data.action) {
+    case 'main_menu':
+      let SUB_RICH_MENU_pregnancy_education_ID = process.env.SUB_RICH_MENU_pregnancy_education_ID
+      if (_data.category === 'pregnancy_education') {
+        return client.linkRichMenuToUser(event.source.userId, SUB_RICH_MENU_pregnancy_education_ID)
+      } else {
+        return replyText(event.replyToken, `Got postback: ${data}`);
+      }
+
+    case 'sub_menu':
+      let MAIN_RICH_MENU_ID = process.env.MAIN_RICH_MENU_ID
+      if (_data.category === 'back_to_main_menu') {
+        return client.linkRichMenuToUser(event.source.userId, MAIN_RICH_MENU_ID)
+      } else {
+        return replyText(event.replyToken, `Got postback: ${data}`);
+      }
+
     case 'vote':
       fake_candidates.forEach((d) => {
         if (d.name === _data.candidate) {
