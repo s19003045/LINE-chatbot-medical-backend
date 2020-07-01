@@ -24,10 +24,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       status: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM("join", "leave")
       },
       interactiveStatus: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM("active", "midactive", "noactive")
       },
       joinDate: {
         type: Sequelize.DATE
