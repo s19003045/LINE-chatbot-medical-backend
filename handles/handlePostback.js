@@ -40,11 +40,11 @@ function handlePostback(event, client, replyText) {
           d.vote += 1
         }
       })
-      let statistic_ouput = '投票結果：'
+      let statistic_output = '投票結果：'
       fake_candidates.forEach((d) => {
-        statistic_ouput += `\n${d.name} : ${d.vote} 票`
+        statistic_output += `\n${d.name} : ${d.vote} 票`
       })
-      return replyText(event.replyToken, statistic_ouput);
+      return replyText(event.replyToken, statistic_output);
 
     case 'flyToMoon':
       if (_data.flyToMoon === 'true') {
