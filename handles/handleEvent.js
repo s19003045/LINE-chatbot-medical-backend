@@ -3,7 +3,8 @@
 const { handlePostback } = require('./handlePostback')
 const { handleText } = require('./handleText')
 const { initReplyText } = require('../libs/utils')
-
+const db = require('../models')
+const User = db.User
 
 function initHandleEvent(client) {
   const replyText = initReplyText(client)
@@ -50,7 +51,25 @@ function initHandleEvent(client) {
         }
 
       case 'follow':
-        return replyText(event.replyToken, 'Got followed event');
+        return client.getProfile(event.source.userId)
+          .then((profile) => {
+            return User.findOrCreate({
+              where: { userId: event.source.userId },
+              defaults: {
+                userId: event.source.userId,
+                displayName: profile.displayName,
+                pictureUrl: profile.pictureUrl,
+                statusMessage: profile.statusMessage,
+                language: profile.language,
+                status: 'join',
+                interactiveStatus: 'active',
+                joinDate: new Date()
+              }
+            })
+              .then((user) => {
+                return replyText(event.replyToken, `${user[0].displayName}，您好！\n感謝您成為 Crocodile Doctor 的好友!`);
+              })
+          })
 
       case 'unfollow':
         return console.log(`Unfollowed this bot: ${JSON.stringify(event)}`);
