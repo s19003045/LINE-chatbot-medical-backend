@@ -13,6 +13,17 @@ const replyMsgController = {
     })
   },
 
+  putTextEvent: (req, res) => {
+    return replyMsgService.putTextEvent(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+
+  deleteTextEvent: (req, res) => {
+    return replyMsgService.deleteTextEvent(req, res, (data) => {
+      return res.json(data)
+    })
+  },
 }
 
 module.exports = replyMsgController

@@ -92,6 +92,14 @@ const replyMsgService = {
     }
   },
 
+  putTextEvent: (req, res, callback) => {
+    callback('put a text event')
+  },
+
+  deleteTextEvent: (req, res, callback) => {
+    callback('delete a text event')
+  },
+
 }
 
 module.exports = replyMsgService
