@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
     pictureUrl: DataTypes.STRING,
     statusMessage: DataTypes.STRING,
     language: DataTypes.STRING,
-    status: DataTypes.ENUM,
-    interactiveStatus: DataTypes.ENUM,
+    status: DataTypes.ENUM("join", "leave"),
+    interactiveStatus: DataTypes.ENUM("active", "midactive", "noactive"),
     joinDate: DataTypes.DATE
   }, {});
-  User.associate = function(models) {
+  User.associate = function (models) {
     // associations can be defined here
   };
   return User;
