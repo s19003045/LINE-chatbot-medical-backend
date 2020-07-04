@@ -12,13 +12,15 @@ module.exports = {
         type: Sequelize.STRING
       },
       pushMsgLimit: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       pushMsgCount: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       pushMsgStatus: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM('available', 'inactive')
       },
       ChannelId: {
         type: Sequelize.INTEGER

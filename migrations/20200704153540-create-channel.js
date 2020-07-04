@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       role: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM('msgAPI', 'lineLogin')
       },
       channelId: {
         type: Sequelize.STRING

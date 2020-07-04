@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     liffUrl: DataTypes.STRING,
     ChatbotId: DataTypes.INTEGER
   }, {});
-  roleFunction.associate = function(models) {
-    // associations can be defined here
+  roleFunction.associate = function (models) {
+    roleFunction.belongsTo(models.Chatbot)
   };
   return roleFunction;
 };

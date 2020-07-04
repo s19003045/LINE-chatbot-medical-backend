@@ -1,12 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Customer = sequelize.define('Customer', {
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    avatar: DataTypes.STRING
+    name: DataTypes.STRING,  //客戶的姓名
+    email: DataTypes.STRING,  //客戶的 email
+    avatar: DataTypes.STRING  //客戶的大頭照網址
   }, {});
-  Customer.associate = function(models) {
-    // associations can be defined here
+  Customer.associate = function (models) {
+    Customer.hasMany(models.Chatbot)
   };
   return Customer;
 };
