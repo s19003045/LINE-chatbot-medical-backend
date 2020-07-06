@@ -1,26 +1,26 @@
 const replyMsgService = require('../../services/replyMsgService')
 
 const replyMsgController = {
-  createTextEvent: (req, res) => {
-    return replyMsgService.createTextEvent(req, res, (data) => {
+  createKeywordReply: (req, res) => {
+    return replyMsgService.createKeywordReply(req, res, (data) => {
       return res.json(data)
     })
   },
 
-  getTextEvents: (req, res) => {
-    return replyMsgService.getTextEvents(req, res, (data) => {
+  getKeywordReply: (req, res) => {
+    return replyMsgService.getKeywordReply(req, res, (data) => {
       return res.json(data)
     })
   },
 
-  putTextEvent: (req, res) => {
-    return replyMsgService.putTextEvent(req, res, (data) => {
+  putKeywordReply: (req, res) => {
+    return replyMsgService.putKeywordReply(req, res, (data) => {
       return res.json(data)
     })
   },
 
-  deleteTextEvent: (req, res) => {
-    return replyMsgService.deleteTextEvent(req, res, (data) => {
+  deleteKeywordReply: (req, res) => {
+    return replyMsgService.deleteKeywordReply(req, res, (data) => {
       return res.json(data)
     })
   },

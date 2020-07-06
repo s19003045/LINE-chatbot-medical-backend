@@ -21,7 +21,7 @@ const fakedTextEvent = {
 
 const replyMsgService = {
   // create reply message for text event
-  createTextEvent: async (req, res, callback) => {
+  createKeywordReply: async (req, res, callback) => {
     try {
       // 先建立 reply message
       const replyMessage = await ReplyMessage.findOrCreate({
@@ -62,7 +62,7 @@ const replyMsgService = {
     }
   },
 
-  getTextEvents: async (req, res, callback) => {
+  getKeywordReply: async (req, res, callback) => {
     try {
       const textEvent = await TextEvent.findAll({
         include: [
@@ -72,16 +72,16 @@ const replyMsgService = {
 
       if (textEvent) {
         const data = {
-          status: 'success',
-          message: 'create reply-message for text event successifully!',
+          status: "success",
+          message: "create reply-message for text event successifully!",
           // replyMessage: replyMessage,
           textEvent: textEvent
         }
         callback(data)
       } else if (!textEvent) {
         const data = {
-          status: 'success',
-          message: '暫無資料或取得資料失敗',
+          status: "success",
+          message: "暫無資料或取得資料失敗",
           // replyMessage: replyMessage,
           textEvent: textEvent
         }
@@ -92,12 +92,12 @@ const replyMsgService = {
     }
   },
 
-  putTextEvent: (req, res, callback) => {
-    callback('put a text event')
+  putKeywordReply: (req, res, callback) => {
+    callback("put a text event")
   },
 
-  deleteTextEvent: (req, res, callback) => {
-    callback('delete a text event')
+  deleteKeywordReply: (req, res, callback) => {
+    callback("delete a text event")
   },
 
 }
