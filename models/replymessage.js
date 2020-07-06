@@ -15,10 +15,11 @@ module.exports = (sequelize, DataTypes) => {
     messageTemplate: DataTypes.JSON,  // message json
     status: DataTypes.ENUM('edited', 'in-use', 'archived'), //此模組的狀態
     ChatbotId: DataTypes.INTEGER, //FK
+    ModuleKeywordId: DataTypes.INTEGER, //FK
   }, {});
   ReplyMessage.associate = function (models) {
     ReplyMessage.hasMany(models.TextEvent)
-    ReplyMessage.hasOne(models.Module_keyword)
+    ReplyMessage.belongsTo(models.ModuleKeyword)
   };
   return ReplyMessage;
 };
