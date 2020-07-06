@@ -1,62 +1,87 @@
-const db = require('../models')
+const db = require("../models")
 const TextEvent = db.TextEvent
 const ReplyMessage = db.ReplyMessage
-const { v4: uuidv4 } = require('uuid');
+const ModuleKeyword = db.ModuleKeyword
+const { v4: uuidv4 } = require("uuid");
+const client = require("../app");
 
-const fakedReplyMsg = {
-  uuid: '2b792cd4-e0a6-4368-a9ec-4628f682c6et',
-  messageTemplate: {
-    type: "text",
-    text: "world"
-  }
-}
-
-const fakedTextEvent = {
-  uuid: 'feaa9c43-26ac-4b7a-bdf0-2666cbfebekk',
-  textEvent: {
-    type: 'text',
-    text: 'hello'
-  }
-}
 
 const replyMsgService = {
   // create reply message for text event
   createKeywordReply: async (req, res, callback) => {
+    const { ChatbotId, module, textEvents, replyMessage } = req.body
     try {
-      // 先建立 reply message
-      const replyMessage = await ReplyMessage.findOrCreate({
+      // 先建立 moduleKeyword
+      const moduleKeyword = await ModuleKeyword.findOrCreate({
         where: {
-          uuid: fakedReplyMsg.uuid
+          uuid: module.uuid ? module.uuid : null
         },
         defaults: {
-          type: 'text',
+          name: module.name === null ? '' : module.name,
+          uuid: uuidv4(),
+          status: module.status === null ? 'edited' : module.status,
+          ChatbotId: ChatbotId,
+        }
+      })
+      console.log('moduleKeyword:', moduleKeyword)
+      // 再建立 reply message
+      const replyMsg = await ReplyMessage.findOrCreate({
+        where: {
+          uuid: replyMessage.uuid ? replyMessage.uuid : null
+        },
+        defaults: {
+          type: replyMessage.type === null ? null : replyMessage.type,
+          name: replyMessage.name === null ? '' : replyMessage.name,
           uuid: uuidv4(),
           replyMsgCount: 0,
           readMsgCount: 0,
-          messageTemplate: fakedReplyMsg.messageTemplate,
-          status: 'edited'
-        }
-      })
-      // 取得ReplyMessageId後，再來建立觸發事件
-      const textEvent = await TextEvent.findOrCreate({
-        where: {
-          uuid: fakedTextEvent.uuid
-        },
-        defaults: {
-          type: 'text',
-          uuid: uuidv4(),
-          text: fakedTextEvent.textEvent.text,
-          ReplyMessageId: replyMessage[0].id
+          messageTemplate: replyMessage.messageTemplate ? replyMessage.messageTemplate : {},
+          status: replyMessage.status ? replyMessage.status : "edited",
+          ChatbotId: ChatbotId,
+          ModuleKeywordId: moduleKeyword[0].id
         }
       })
 
-      if (textEvent) {
-        const data = {
-          status: 'success',
-          message: 'create reply-message for text event successifully!'
-        }
-        callback(data)
+      // 建立 textEvents，使用 Promise.all()
+      const createTextEvents = []
+      for (i = 0; i < textEvents.length; i++) {
+        createTextEvents.push(await TextEvent.findOrCreate({
+          where: {
+            uuid: textEvents[i].uuid ? textEvents[i].uuid : null
+          },
+          defaults: {
+            type: "text",
+            uuid: uuidv4(),
+            text: textEvents[i].text ? textEvents[i].text : null,
+            ReplyMessageId: replyMsg[0].id,
+            ChatbotId: ChatbotId
+          }
+        }))
       }
+
+      Promise.all(createTextEvents)
+        .then((textEvents) => {
+          console.log('textEvents:', textEvents[0])
+          if (moduleKeyword && replyMsg && textEvents) {
+            return res.json({
+              status: 'success',
+              message: {
+                moduleKeywordId: moduleKeyword[0].id,
+                replyMessage: replyMsg[0].id,
+                textEvents: textEvents
+              }
+            })
+          } else {
+            return res.json({
+              status: 'failure',
+              message: '連線異常，請稍後再試'
+            })
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
     } catch (err) {
       console.log(err)
     }
