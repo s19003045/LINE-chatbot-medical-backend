@@ -56,12 +56,52 @@ const replyMsgService = {
     }
   },
   // 新增 reply message
-  createReplyMessage: (req, res, callback) => {
-    callback("createReplyMessage")
+  createReplyMessage: async (req, res, callback) => {
+    const { ChatbotId } = req.body
+    const replyMessage = await ReplyMessage.create({
+      name: '',
+      uuid: uuidv4(),
+      status: 'edited',
+      ChatbotId: ChatbotId,
+    })
+    if (replyMessage) {
+      callback({
+        status: 'success',
+        message: '成功新增',
+        data: {
+          replyMessage: replyMessage
+        }
+      })
+    } else {
+      callback({
+        status: 'error',
+        message: '新增失敗，請稍後再試'
+      })
+    }
   },
   // 刪除 reply message
-  deleteReplyMessage: (req, res, callback) => {
-    callback("deleteReplyMessage")
+  deleteReplyMessage: async (req, res, callback) => {
+    const { ChatbotId, replyMessage } = req.body
+    const replyMessageDeleted = await ReplyMessage.destroy({
+      where: {
+        ChatbotId: ChatbotId,
+        uuid: replyMessage.uuid
+      }
+    })
+    if (replyMessageDeleted) {
+      callback({
+        status: 'success',
+        message: '成功刪除',
+        data: {
+          replyMessageDeleted: replyMessageDeleted
+        }
+      })
+    } else {
+      callback({
+        status: 'error',
+        message: '刪除失敗，請稍後再試'
+      })
+    }
   },
   // 新增 text event
   createTextEvent: (req, res, callback) => {

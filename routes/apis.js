@@ -9,7 +9,7 @@ router.delete('/bots/:botId/module-keyword', replyMsgController.deleteModuleKeyw
 // 新增 reply message
 router.post('/bots/:botId/reply-message', replyMsgController.createReplyMessage)
 // 刪除 reply message
-router.post('/bots/:botId/reply-message', replyMsgController.deleteReplyMessage)
+router.delete('/bots/:botId/reply-message', replyMsgController.deleteReplyMessage)
 // 新增 text event
 router.post('/bots/:botId/text-event', replyMsgController.createTextEvent)
 // 刪除 text event
