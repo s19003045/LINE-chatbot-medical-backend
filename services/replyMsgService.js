@@ -61,21 +61,29 @@ const replyMsgService = {
 
       Promise.all(createTextEvents)
         .then((textEvents) => {
-          console.log('textEvents:', textEvents[0])
-          if (moduleKeyword && replyMsg && textEvents) {
-            return res.json({
-              status: 'success',
-              message: {
+          // 整理 textEvents 的資料
+          const _textEvents = []
+          textEvents.forEach(d => {
+            _textEvents.push(d[0])
+          })
+
+          if (moduleKeyword && replyMsg && _textEvents) {
+            const data = {
+              status: "success",
+              message: "成功取得資料",
+              data: {
                 moduleKeywordId: moduleKeyword[0].id,
                 replyMessage: replyMsg[0].id,
-                textEvents: textEvents
+                textEvents: _textEvents
               }
-            })
+            }
+            callback(data)
           } else {
-            return res.json({
-              status: 'failure',
-              message: '連線異常，請稍後再試'
-            })
+            const data = {
+              status: "success",
+              message: "資料存取失敗，請稍後再試",
+            }
+            callback(data)
           }
         })
         .catch((err) => {
