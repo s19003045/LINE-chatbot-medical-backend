@@ -34,6 +34,9 @@ module.exports = {
       ChatbotId: {
         type: Sequelize.INTEGER
       },
+      ModuleKeywordId: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
