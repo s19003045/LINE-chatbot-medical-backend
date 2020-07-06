@@ -8,12 +8,52 @@ const client = require("../app");
 
 const replyMsgService = {
   // 新增 module keyword
-  createModuleKeyword: (req, res, callback) => {
-    callback("createModuleKeyword")
+  createModuleKeyword: async (req, res, callback) => {
+    const { ChatbotId } = req.body
+    const moduleKeyword = await ModuleKeyword.create({
+      name: '',
+      uuid: uuidv4(),
+      status: 'edited',
+      ChatbotId: ChatbotId,
+    })
+    if (moduleKeyword) {
+      callback({
+        status: 'success',
+        message: '成功建立模組',
+        data: {
+          moduleKeyword: moduleKeyword
+        }
+      })
+    } else {
+      callback({
+        status: 'failed',
+        message: '新增模組失敗，請稍後再試'
+      })
+    }
   },
   // 刪除 module keyword
-  deleteModuleKeyword: (req, res, callback) => {
-    callback("deleteModuleKeyword")
+  deleteModuleKeyword: async (req, res, callback) => {
+    const { ChatbotId, moduleKeyword } = req.body
+    const moduleKeywordDelete = await ModuleKeyword.destroy({
+      where: {
+        ChatbotId: ChatbotId,
+        uuid: moduleKeyword.uuid
+      }
+    })
+    if (moduleKeywordDelete) {
+      callback({
+        status: 'success',
+        message: '成功刪除模組',
+        data: {
+          moduleKeywordDelete: moduleKeywordDelete
+        }
+      })
+    } else {
+      callback({
+        status: 'failed',
+        message: '刪除模組失敗，請稍後再試'
+      })
+    }
   },
   // 新增 reply message
   createReplyMessage: (req, res, callback) => {
@@ -165,8 +205,109 @@ const replyMsgService = {
     }
   },
 
-  putKeywordReply: (req, res, callback) => {
-    callback("put a text event")
+  putKeywordReply: async (req, res, callback) => {
+    const { ChatbotId, module, textEvents, replyMessage } = req.body
+    try {
+      // 找出 moduleKeyword
+      const moduleKeyword = await ModuleKeyword.findOne({
+        where: {
+          uuid: module.uuid
+        }
+      })
+
+      //修改 moduleKeyword
+      moduleKeyword.name = module.name === null ? '' : module.name
+      moduleKeyword.uuid = module.uuid
+      moduleKeyword.status = module.status === null ? 'edited' : module.status
+      moduleKeyword.ChatbotId = ChatbotId
+      //儲存資料
+      await moduleKeyword.save()
+      console.log('moduleKeyword:', moduleKeyword)
+
+      //尋找 replyMessage 資料
+      let replyMsg = await ReplyMessage.findOne({
+        where: {
+          uuid: replyMessage.uuid
+        }
+      })
+
+      if (replyMsg) {
+        replyMsg.type = replyMessage.type ? replyMessage.type : null
+        replyMsg.name = replyMessage.name ? replyMessage.name : ''
+        replyMsg.uuid = replyMessage.uuid
+        replyMsg.messageTemplate = replyMessage.messageTemplate ? replyMessage.messageTemplate : {}
+        replyMsg.ChatbotId = ChatbotId
+        replyMsg.ModuleKeywordId = moduleKeyword.id
+        //儲存資料
+        await replyMsg.save()
+      } else {
+        replyMsg = await ReplyMessage.create({
+          type: replyMessage.type === null ? null : replyMessage.type,
+          name: replyMessage.name === null ? '' : replyMessage.name,
+          uuid: uuidv4(),
+          replyMsgCount: 0,
+          readMsgCount: 0,
+          messageTemplate: replyMessage.messageTemplate ? replyMessage.messageTemplate : {},
+          status: replyMessage.status ? replyMessage.status : "edited",
+          ChatbotId: ChatbotId,
+          ModuleKeywordId: moduleKeyword.id
+        })
+      }
+
+      // 建立 textEvents，使用 Promise.all()
+      const createTextEvents = []
+      for (i = 0; i < textEvents.length; i++) {
+        createTextEvents.push(await TextEvent.update({
+          type: "text",
+          text: textEvents[i].text ? textEvents[i].text : null,
+          ReplyMessageId: replyMsg.id,
+          ChatbotId: ChatbotId
+        }, {
+          where: {
+            uuid: textEvents[i].uuid
+          }
+        }))
+      }
+
+      Promise.all(createTextEvents)
+        .then((textEvents) => {
+          console.log('textEvents:', textEvents)
+
+          callback({
+            status: 'not finished'
+          })
+          // 整理 textEvents 的資料
+          // const _textEvents = []
+          // textEvents.forEach(d => {
+          //   _textEvents.push(d[0])
+          // })
+
+          // if (moduleKeyword && replyMsg && _textEvents) {
+          //   const data = {
+          //     status: "success",
+          //     message: "成功取得資料",
+          //     data: {
+          //       moduleKeywordId: moduleKeyword[0].id,
+          //       replyMessage: replyMsg[0].id,
+          //       textEvents: _textEvents
+          //     }
+          //   }
+          //   callback(data)
+          // } else {
+          //   const data = {
+          //     status: "success",
+          //     message: "資料存取失敗，請稍後再試",
+          //   }
+          //   callback(data)
+          // }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+    } catch (err) {
+      console.log(err)
+    }
   },
 
   deleteKeywordReply: (req, res, callback) => {

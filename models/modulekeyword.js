@@ -5,7 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     uuid: DataTypes.STRING,
     status: DataTypes.ENUM('edited', 'in-use', 'archived'),  //模組狀態
     ChatbotId: DataTypes.INTEGER,
-  }, {});
+  }, {
+    paranoid: true,
+  });
   ModuleKeyword.associate = function (models) {
     ModuleKeyword.hasOne(models.ReplyMessage)
   };
