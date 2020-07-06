@@ -97,29 +97,42 @@ const replyMsgService = {
 
   getKeywordReply: async (req, res, callback) => {
     try {
-      const textEvent = await TextEvent.findAll({
+      const { ChatbotId } = req.query
+
+      //取得 moduleKeywords 資料, moduleKeywords join replyMessages, replyMessages join textEvents
+      const moduleKeywords = await ModuleKeyword.findAll({
+        where: {
+          ChatbotId: ChatbotId
+        },
         include: [
-          { model: ReplyMessage }
+          {
+            model: ReplyMessage,
+            include: [
+              {
+                model: TextEvent
+              }
+            ]
+          }
         ]
       })
 
-      if (textEvent) {
+      if (moduleKeywords) {
         const data = {
           status: "success",
-          message: "create reply-message for text event successifully!",
-          // replyMessage: replyMessage,
-          textEvent: textEvent
+          message: "成功取得資料",
+          data: {
+            moduleKeywords: moduleKeywords
+          }
         }
         callback(data)
-      } else if (!textEvent) {
+      } else {
         const data = {
           status: "success",
           message: "暫無資料或取得資料失敗",
-          // replyMessage: replyMessage,
-          textEvent: textEvent
         }
         callback(data)
       }
+
     } catch (err) {
       console.log(err)
     }
