@@ -5,8 +5,10 @@ module.exports = (sequelize, DataTypes) => {
     groupName: DataTypes.STRING,
     pictureUrl: DataTypes.STRING,
     count: DataTypes.INTEGER
-  }, {});
-  Group.associate = function(models) {
+  }, {
+    paranoid: true
+  });
+  Group.associate = function (models) {
     // associations can be defined here
   };
   return Group;

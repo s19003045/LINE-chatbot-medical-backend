@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     joinGroupChat: DataTypes.BOOLEAN,
     liffUrl: DataTypes.STRING,
     ChatbotId: DataTypes.INTEGER
-  }, {});
+  }, {
+    paranoid: true
+  });
   roleFunction.associate = function (models) {
     roleFunction.belongsTo(models.Chatbot)
   };

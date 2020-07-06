@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     botBasicId: DataTypes.STRING, //用於加好友
     channelSecret: DataTypes.STRING, //機密資訊
     channelAccessToken: DataTypes.STRING //機密資訊
-  }, {});
+  }, {
+    paranoid: true
+  });
   Channel.associate = function (models) {
     Channel.hasOne(models.Chatbot)
   };

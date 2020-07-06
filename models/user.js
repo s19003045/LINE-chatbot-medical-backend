@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.ENUM("join", "leave"),
     interactiveStatus: DataTypes.ENUM("active", "midactive", "noactive"),
     joinDate: DataTypes.DATE
-  }, {});
+  }, {
+    paranoid: true
+  });
   User.associate = function (models) {
     // associations can be defined here
   };
