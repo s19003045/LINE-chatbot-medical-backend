@@ -7,6 +7,33 @@ const client = require("../app");
 
 
 const replyMsgService = {
+  // 新增 module keyword
+  createModuleKeyword: (req, res, callback) => {
+    callback("createModuleKeyword")
+  },
+  // 刪除 module keyword
+  deleteModuleKeyword: (req, res, callback) => {
+    callback("deleteModuleKeyword")
+  },
+  // 新增 reply message
+  createReplyMessage: (req, res, callback) => {
+    callback("createReplyMessage")
+  },
+  // 刪除 reply message
+  deleteReplyMessage: (req, res, callback) => {
+    callback("deleteReplyMessage")
+  },
+  // 新增 text event
+  createTextEvent: (req, res, callback) => {
+    callback("createTextEvent")
+  },
+  // 刪除 text event
+  deleteTextEvent: (req, res, callback) => {
+    callback("deleteTextEvent")
+  },
+
+
+
   // create reply message for text event
   createKeywordReply: async (req, res, callback) => {
     const { ChatbotId, module, textEvents, replyMessage } = req.body
