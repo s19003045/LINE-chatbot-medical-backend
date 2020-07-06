@@ -11,6 +11,9 @@ module.exports = {
       type: {
         type: Sequelize.STRING
       },
+      name: {
+        type: Sequelize.STRING
+      },
       uuid: {
         type: Sequelize.STRING
       },
@@ -27,6 +30,9 @@ module.exports = {
       },
       status: {
         type: Sequelize.ENUM('edited', 'in-use', 'archived')
+      },
+      ChatbotId: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

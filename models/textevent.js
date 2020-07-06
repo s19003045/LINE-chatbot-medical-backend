@@ -5,12 +5,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'text'
     },
-    uuid: DataTypes.STRING,
-    text: DataTypes.STRING,
-    ReplyMessageId: DataTypes.INTEGER
+    uuid: DataTypes.STRING, //使用於主控台
+    text: DataTypes.STRING, //關鍵字
+    textEventCount: {
+      type: DataTypes.INTEGER, //使用次數
+      defaultValue: 0
+    },
+    ReplyMessageId: DataTypes.INTEGER, //FK
+    ChatbotId: DataTypes.INTEGER //FK
   }, {});
   TextEvent.associate = function (models) {
     TextEvent.belongsTo(models.ReplyMessage)
+    TextEvent.belongsTo(models.Chatbot)
   };
   return TextEvent;
 };

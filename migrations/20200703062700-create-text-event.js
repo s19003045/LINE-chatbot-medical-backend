@@ -18,7 +18,13 @@ module.exports = {
       text: {
         type: Sequelize.STRING
       },
+      textEventCount: {
+        type: Sequelize.INTEGER
+      },
       ReplyMessageId: {
+        type: Sequelize.INTEGER
+      },
+      ChatbotId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
