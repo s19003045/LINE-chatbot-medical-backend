@@ -151,94 +151,125 @@ const replyMsgService = {
     }
   },
 
-  // create reply message for text event
-  createKeywordReply: async (req, res, callback) => {
+  // 儲存關鍵字回覆模組
+  postKeywordReply: async (req, res, callback) => {
     const { ChatbotId, module, textEvents, replyMessage } = req.body
     try {
       // 先建立 moduleKeyword
-      const moduleKeyword = await ModuleKeyword.findOrCreate({
+      const moduleKeyword = await ModuleKeyword.findOne({
         where: {
-          uuid: module.uuid ? module.uuid : null
-        },
-        defaults: {
-          name: module.name === null ? '' : module.name,
-          uuid: uuidv4(),
-          status: module.status === null ? 'edited' : module.status,
-          ChatbotId: ChatbotId,
-        }
-      })
-      console.log('moduleKeyword:', moduleKeyword)
-      // 再建立 reply message
-      const replyMsg = await ReplyMessage.findOrCreate({
-        where: {
-          uuid: replyMessage.uuid ? replyMessage.uuid : null
-        },
-        defaults: {
-          type: replyMessage.type === null ? null : replyMessage.type,
-          name: replyMessage.name === null ? '' : replyMessage.name,
-          uuid: uuidv4(),
-          replyMsgCount: 0,
-          readMsgCount: 0,
-          messageTemplate: replyMessage.messageTemplate ? replyMessage.messageTemplate : {},
-          status: replyMessage.status ? replyMessage.status : "edited",
-          ChatbotId: ChatbotId,
-          ModuleKeywordId: moduleKeyword[0].id
+          uuid: module && module.uuid ? module.uuid : null
         }
       })
 
-      // 建立 textEvents，使用 Promise.all()
+      //修改並存檔
+      if (moduleKeyword) {
+        moduleKeyword.name = module && module.name ? module.name : ''
+        moduleKeyword.status = module && module.status ? module.status : 'edited'
+        moduleKeyword.ChatbotId = ChatbotId
+        //存檔
+        await moduleKeyword.save()
+      }
+
+      console.log('moduleKeyword:', moduleKeyword)
+      // 再建立 reply message
+      const replyMsg = await ReplyMessage.findOne({
+        where: {
+          uuid: replyMessage && replyMessage.uuid ? replyMessage.uuid : null
+        }
+      })
+
+      console.log('replyMsg:', replyMsg)
+      //修改並存檔
+      if (replyMsg) {
+        replyMsg.type = replyMessage && replyMessage.type ? replyMessage.type : null
+
+        replyMsg.name = replyMessage && replyMessage.name ? replyMessage.name : ''
+
+        replyMsg.replyMsgCount = 0
+        replyMsg.readMsgCount = 0
+
+        replyMsg.messageTemplate = replyMessage && replyMessage.messageTemplate ? replyMessage.messageTemplate : {}
+
+        replyMsg.status = replyMessage && replyMessage.status ? replyMessage.status : "edited"
+
+        replyMsg.ChatbotId = ChatbotId
+        replyMsg.ModuleKeywordId = moduleKeyword.id
+
+        await replyMsg.save()
+      }
+
+      // 搜尋 text events
       const createTextEvents = []
       for (i = 0; i < textEvents.length; i++) {
-        createTextEvents.push(await TextEvent.findOrCreate({
+        createTextEvents.push(await TextEvent.findOne({
           where: {
-            uuid: textEvents[i].uuid ? textEvents[i].uuid : null
-          },
-          defaults: {
-            type: "text",
-            uuid: uuidv4(),
-            text: textEvents[i].text ? textEvents[i].text : null,
-            ReplyMessageId: replyMsg[0].id,
-            ChatbotId: ChatbotId
+            uuid: textEvents[i] && textEvents[i].uuid ? textEvents[i].uuid : null
           }
         }))
       }
 
+      // 修改並儲存 text events
       Promise.all(createTextEvents)
-        .then((textEvents) => {
-          // 整理 textEvents 的資料
-          const _textEvents = []
-          textEvents.forEach(d => {
-            _textEvents.push(d[0])
-          })
+        .then(async (_textEvents) => {
+          console.log('_textEvents:', _textEvents)
 
-          if (moduleKeyword && replyMsg && _textEvents) {
-            const data = {
-              status: "success",
-              message: "成功取得資料",
-              data: {
-                moduleKeywordId: moduleKeyword[0].id,
-                replyMessage: replyMsg[0].id,
-                textEvents: _textEvents
+          try {
+            for (i = 0; i < textEvents.length; i++) {
+              if (_textEvents[i]) {
+                _textEvents[i].type = textEvents[i] && textEvents[i].type ? textEvents[i].type : 'text'
+
+                _textEvents[i].text = textEvents[i] && textEvents[i].text ? textEvents[i].text : ''
+
+                _textEvents[i].ReplyMessageId = replyMsg && replyMsg.id ? replyMsg.id : null
+
+                _textEvents[i].ChatbotId = ChatbotId
+
+                //存檔
+                await _textEvents[i].save()
               }
             }
-            callback(data)
-          } else {
+          } catch (err) {
             const data = {
               status: "success",
               message: "資料存取失敗，請稍後再試",
+              error: err.message
+            }
+            callback(data)
+          }
+          //存取成功，匯出訊息
+          if (moduleKeyword && replyMsg && _textEvents) {
+            const data = {
+              status: "success",
+              message: "資料存取成功",
+              data: {
+                moduleKeywordId: moduleKeyword,
+                replyMessage: replyMsg,
+                textEvents: _textEvents
+              }
             }
             callback(data)
           }
         })
         .catch((err) => {
-          console.log(err)
+          const data = {
+            status: "success",
+            message: "資料存取失敗，請稍後再試",
+            error: err.message
+          }
+          callback(data)
         })
 
     } catch (err) {
-      console.log(err)
+      const data = {
+        status: "error",
+        message: "系統錯誤,請稍後重試",
+        error: err.message
+      }
+      callback(data)
     }
   },
-
+  // 取得關鍵字回應模組
   getKeywordReply: async (req, res, callback) => {
     try {
       const { ChatbotId } = req.query
@@ -271,122 +302,22 @@ const replyMsgService = {
         callback(data)
       } else {
         const data = {
-          status: "success",
-          message: "暫無資料或取得資料失敗",
+          status: "error",
+          message: "取得資料失敗",
         }
         callback(data)
       }
 
     } catch (err) {
-      console.log(err)
+      const data = {
+        status: "error",
+        message: "系統錯誤,請稍後重試",
+        error: err.message
+      }
+      callback(data)
     }
   },
-
-  putKeywordReply: async (req, res, callback) => {
-    const { ChatbotId, module, textEvents, replyMessage } = req.body
-    try {
-      // 找出 moduleKeyword
-      const moduleKeyword = await ModuleKeyword.findOne({
-        where: {
-          uuid: module.uuid
-        }
-      })
-
-      //修改 moduleKeyword
-      moduleKeyword.name = module.name === null ? '' : module.name
-      moduleKeyword.uuid = module.uuid
-      moduleKeyword.status = module.status === null ? 'edited' : module.status
-      moduleKeyword.ChatbotId = ChatbotId
-      //儲存資料
-      await moduleKeyword.save()
-      console.log('moduleKeyword:', moduleKeyword)
-
-      //尋找 replyMessage 資料
-      let replyMsg = await ReplyMessage.findOne({
-        where: {
-          uuid: replyMessage.uuid
-        }
-      })
-
-      if (replyMsg) {
-        replyMsg.type = replyMessage.type ? replyMessage.type : null
-        replyMsg.name = replyMessage.name ? replyMessage.name : ''
-        replyMsg.uuid = replyMessage.uuid
-        replyMsg.messageTemplate = replyMessage.messageTemplate ? replyMessage.messageTemplate : {}
-        replyMsg.ChatbotId = ChatbotId
-        replyMsg.ModuleKeywordId = moduleKeyword.id
-        //儲存資料
-        await replyMsg.save()
-      } else {
-        replyMsg = await ReplyMessage.create({
-          type: replyMessage.type === null ? null : replyMessage.type,
-          name: replyMessage.name === null ? '' : replyMessage.name,
-          uuid: uuidv4(),
-          replyMsgCount: 0,
-          readMsgCount: 0,
-          messageTemplate: replyMessage.messageTemplate ? replyMessage.messageTemplate : {},
-          status: replyMessage.status ? replyMessage.status : "edited",
-          ChatbotId: ChatbotId,
-          ModuleKeywordId: moduleKeyword.id
-        })
-      }
-
-      // 建立 textEvents，使用 Promise.all()
-      const createTextEvents = []
-      for (i = 0; i < textEvents.length; i++) {
-        createTextEvents.push(await TextEvent.update({
-          type: "text",
-          text: textEvents[i].text ? textEvents[i].text : null,
-          ReplyMessageId: replyMsg.id,
-          ChatbotId: ChatbotId
-        }, {
-          where: {
-            uuid: textEvents[i].uuid
-          }
-        }))
-      }
-
-      Promise.all(createTextEvents)
-        .then((textEvents) => {
-          console.log('textEvents:', textEvents)
-
-          callback({
-            status: 'not finished'
-          })
-          // 整理 textEvents 的資料
-          // const _textEvents = []
-          // textEvents.forEach(d => {
-          //   _textEvents.push(d[0])
-          // })
-
-          // if (moduleKeyword && replyMsg && _textEvents) {
-          //   const data = {
-          //     status: "success",
-          //     message: "成功取得資料",
-          //     data: {
-          //       moduleKeywordId: moduleKeyword[0].id,
-          //       replyMessage: replyMsg[0].id,
-          //       textEvents: _textEvents
-          //     }
-          //   }
-          //   callback(data)
-          // } else {
-          //   const data = {
-          //     status: "success",
-          //     message: "資料存取失敗，請稍後再試",
-          //   }
-          //   callback(data)
-          // }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-
-    } catch (err) {
-      console.log(err)
-    }
-  },
-
+  // 刪除關鍵字回應模組
   deleteKeywordReply: (req, res, callback) => {
     callback("delete a text event")
   },

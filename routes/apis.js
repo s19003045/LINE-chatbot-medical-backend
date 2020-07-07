@@ -17,11 +17,11 @@ router.delete('/bots/:botId/text-event', replyMsgController.deleteTextEvent)
 
 
 // 儲存關鍵字回應模組
-router.post('/bots/:botId/keyword-reply', replyMsgController.createKeywordReply)
+router.post('/bots/:botId/keyword-reply', replyMsgController.postKeywordReply)
 // 取得關鍵字回應模組
 router.get('/bots/:botId/keyword-reply', replyMsgController.getKeywordReply)
 // 修改關鍵字回應模組
-router.put('/bots/:botId/keyword-reply', replyMsgController.putKeywordReply)
+router.put('/bots/:botId/keyword-reply', replyMsgController.postKeywordReply)
 // 刪除關鍵字回應模組
 router.delete('/bots/:botId/keyword-reply', replyMsgController.deleteKeywordReply)
 

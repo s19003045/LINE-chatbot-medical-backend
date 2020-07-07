@@ -40,7 +40,7 @@ const replyMsgController = {
 
 
   // 儲存關鍵字回應模組
-  createKeywordReply: (req, res) => {
+  postKeywordReply: (req, res) => {
     return replyMsgService.createKeywordReply(req, res, (data) => {
       return res.json(data)
     })
@@ -51,17 +51,12 @@ const replyMsgController = {
       return res.json(data)
     })
   },
-  // 修改關鍵字回應模組
-  putKeywordReply: (req, res) => {
-    return replyMsgService.putKeywordReply(req, res, (data) => {
-      return res.json(data)
-    })
-  },
+},
   // 刪除關鍵字回應模組
   deleteKeywordReply: (req, res) => {
     return replyMsgService.deleteKeywordReply(req, res, (data) => {
-      return res.json(data)
-    })
+    return res.json(data)
+  })
   },
 }
 
