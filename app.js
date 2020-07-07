@@ -24,9 +24,10 @@ const { initHandleEvent } = require('./handles/handleEvent')
 const handleEvent = initHandleEvent(client)
 
 // create Express app
-// about Express itself: https://expressjs.com/
 const app = express();
 
+// cors
+const cors = require('cors')
 
 // logger
 const httpLogger = require('./config/httpLogger');
@@ -34,6 +35,11 @@ const logger = require('./config/logger');
 
 // use Logger
 app.use(httpLogger);
+
+// cors setting
+app.use(cors())
+// use body-parser
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(
   bodyParser.json({
     verify: (req, _, buf) => {
