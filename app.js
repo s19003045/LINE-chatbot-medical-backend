@@ -19,7 +19,6 @@ const config = {
 
 // create LINE SDK client
 const client = new line.Client(config);
-
 // create handleEvent
 const { initHandleEvent } = require('./handles/handleEvent')
 const handleEvent = initHandleEvent(client)
@@ -28,6 +27,13 @@ const handleEvent = initHandleEvent(client)
 // about Express itself: https://expressjs.com/
 const app = express();
 
+
+// logger
+const httpLogger = require('./config/httpLogger');
+const logger = require('./config/logger');
+
+// use Logger
+app.use(httpLogger);
 app.use(
   bodyParser.json({
     verify: (req, _, buf) => {
