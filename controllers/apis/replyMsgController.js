@@ -51,12 +51,11 @@ const replyMsgController = {
       return res.json(data)
     })
   },
-},
   // 刪除關鍵字回應模組
   deleteKeywordReply: (req, res) => {
     return replyMsgService.deleteKeywordReply(req, res, (data) => {
-    return res.json(data)
-  })
+      return res.json(data)
+    })
   },
 }
 

@@ -318,10 +318,63 @@ const replyMsgService = {
     }
   },
   // 刪除關鍵字回應模組
-  deleteKeywordReply: (req, res, callback) => {
-    callback("delete a text event")
-  },
+  deleteKeywordReply: async (req, res, callback) => {
+    try {
+      const { ChatbotId, module, textEvents, replyMessage } = req.body
+      // try {
+      // 尋找 moduleKeyword
+      const moduleKeyword = await ModuleKeyword.findOne({
+        where: {
+          uuid: module && module.uuid ? module.uuid : null
+        }
+      })
+      console.log('moduleKeyword:', moduleKeyword)
 
+      // 刪除 moduleKeyword
+      if (moduleKeyword) {
+        moduleKeyword.status = 'archived'
+        //刪除
+        await moduleKeyword.destroy()
+      }
+
+      // 尋找 reply message
+      const replyMsg = await ReplyMessage.findOne({
+        where: {
+          uuid: replyMessage && replyMessage.uuid ? replyMessage.uuid : null
+        }
+      })
+
+      console.log('replyMsg:', replyMsg)
+      // 刪除 reply message
+      if (replyMsg) {
+        replyMsg.status = "archived"
+        //刪除
+        await replyMsg.destroy()
+      }
+
+      if (!moduleKeyword || !replyMsg) {
+        const data = {
+          status: "error",
+          message: "存取異常，請稍後再試",
+          error: err.message
+        }
+        callback(data)
+      } else {
+        const data = {
+          status: "error",
+          message: "存取成功",
+        }
+        callback(data)
+      }
+    } catch (err) {
+      const data = {
+        status: "error",
+        message: "系統錯誤,請稍後重試",
+        error: err.message
+      }
+      callback(data)
+    }
+
+  }
 }
-
 module.exports = replyMsgService
