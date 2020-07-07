@@ -104,15 +104,52 @@ const replyMsgService = {
     }
   },
   // 新增 text event
-  createTextEvent: (req, res, callback) => {
-    callback("createTextEvent")
+  createTextEvent: async (req, res, callback) => {
+    const { ChatbotId } = req.body
+    const textEvent = await TextEvent.create({
+      uuid: uuidv4(),
+      text: '',
+      ChatbotId: ChatbotId,
+    })
+    if (textEvent) {
+      callback({
+        status: 'success',
+        message: '成功建立',
+        data: {
+          textEvent: textEvent
+        }
+      })
+    } else {
+      callback({
+        status: 'error',
+        message: '新增失敗，請稍後再試'
+      })
+    }
   },
   // 刪除 text event
-  deleteTextEvent: (req, res, callback) => {
-    callback("deleteTextEvent")
+  deleteTextEvent: async (req, res, callback) => {
+    const { ChatbotId, textEvent } = req.body
+    const textEventDeleted = await TextEvent.destroy({
+      where: {
+        ChatbotId: ChatbotId,
+        uuid: textEvent.uuid
+      }
+    })
+    if (textEventDeleted) {
+      callback({
+        status: 'success',
+        message: '成功刪除',
+        data: {
+          textEventDeleted: textEventDeleted
+        }
+      })
+    } else {
+      callback({
+        status: 'error',
+        message: '刪除失敗，請稍後再試'
+      })
+    }
   },
-
-
 
   // create reply message for text event
   createKeywordReply: async (req, res, callback) => {
