@@ -38,8 +38,9 @@ app.use(httpLogger);
 
 // cors setting
 app.use(cors())
-// use body-parser
+// 使用 body-parser 解析 url，並使用 qs 套件
 app.use(bodyParser.urlencoded({ extended: true }))
+// 使用 body-parser 解析 application/json，並將 buffer 轉成 string，存進 req.rawBody
 app.use(
   bodyParser.json({
     verify: (req, _, buf) => {

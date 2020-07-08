@@ -33,11 +33,19 @@ const replyMsgService = {
   },
   // 刪除 module keyword
   deleteModuleKeyword: async (req, res, callback) => {
-    const { ChatbotId, moduleKeyword } = req.body
+    //2020/07/07 => 準備改寫成 query string 來刪除資料，尚未完成
+
+    const { ChatbotId, moduleKeywordUuid } = req.query
+
+    console.log('req.query:', req.query)
+    console.log('ChatbotId:', parseInt(ChatbotId))
+
+    console.log('moduleKeywordUuid:', moduleKeywordUuid)
+
     const moduleKeywordDelete = await ModuleKeyword.destroy({
       where: {
-        ChatbotId: ChatbotId,
-        uuid: moduleKeyword.uuid
+        ChatbotId: parseInt(ChatbotId),
+        uuid: moduleKeywordUuid
       }
     })
     if (moduleKeywordDelete) {
