@@ -137,10 +137,13 @@ const replyMsgService = {
   // 刪除 text event
   deleteTextEvent: async (req, res, callback) => {
     const { ChatbotId, textEventUuid } = req.query
+
+    console.log('ChatbotId', ChatbotId)
+    console.log('textEventUuid', textEventUuid)
     const textEventDeleted = await TextEvent.destroy({
       where: {
-        ChatbotId: ChatbotId,
-        uuid: textEventUuid
+        ChatbotId: ChatbotId ? ChatbotId : null,
+        uuid: textEventUuid ? textEventUuid : null
       }
     })
 
