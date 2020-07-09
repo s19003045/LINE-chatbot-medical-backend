@@ -33,22 +33,16 @@ const replyMsgService = {
   },
   // 刪除 module keyword
   deleteModuleKeyword: async (req, res, callback) => {
-    //2020/07/07 => 準備改寫成 query string 來刪除資料，尚未完成
-
     const { ChatbotId, moduleKeywordUuid } = req.query
-
-    console.log('req.query:', req.query)
-    console.log('ChatbotId:', parseInt(ChatbotId))
-
-    console.log('moduleKeywordUuid:', moduleKeywordUuid)
 
     const moduleKeywordDelete = await ModuleKeyword.destroy({
       where: {
-        ChatbotId: parseInt(ChatbotId),
-        uuid: moduleKeywordUuid
+        ChatbotId: parseInt(ChatbotId) ? parseInt(ChatbotId) : null,
+        uuid: moduleKeywordUuid ? moduleKeywordUuid : null
       }
     })
-    if (moduleKeywordDelete) {
+
+    if (moduleKeywordDelete > 0) {
       callback({
         status: 'success',
         message: '成功刪除模組',
@@ -89,14 +83,16 @@ const replyMsgService = {
   },
   // 刪除 reply message
   deleteReplyMessage: async (req, res, callback) => {
-    const { ChatbotId, replyMessage } = req.body
+    const { ChatbotId, replyMessageUuid } = req.query
+
     const replyMessageDeleted = await ReplyMessage.destroy({
       where: {
-        ChatbotId: ChatbotId,
-        uuid: replyMessage.uuid
+        ChatbotId: parseInt(ChatbotId) ? parseInt(ChatbotId) : null,
+        uuid: replyMessageUuid ? replyMessageUuid : null
       }
     })
-    if (replyMessageDeleted) {
+
+    if (replyMessageDeleted > 0) {
       callback({
         status: 'success',
         message: '成功刪除',
