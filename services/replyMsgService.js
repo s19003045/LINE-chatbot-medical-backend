@@ -10,14 +10,24 @@ const replyMsgService = {
   // 新增 module keyword
   createModuleKeyword: async (req, res, callback) => {
     const { ChatbotId } = req.body
+
+    //驗證資料正確性
+    if (!ChatbotId) {
+      return callback({
+        status: 'error',
+        message: '新增失敗，請確認資料正確性'
+      })
+    }
+
     const moduleKeyword = await ModuleKeyword.create({
       name: '',
       uuid: uuidv4(),
       status: 'edited',
       ChatbotId: ChatbotId,
     })
+
     if (moduleKeyword) {
-      callback({
+      return callback({
         status: 'success',
         message: '成功建立模組',
         data: {
@@ -25,7 +35,7 @@ const replyMsgService = {
         }
       })
     } else {
-      callback({
+      return callback({
         status: 'failed',
         message: '新增模組失敗，請稍後再試'
       })
@@ -35,6 +45,14 @@ const replyMsgService = {
   deleteModuleKeyword: async (req, res, callback) => {
     const { ChatbotId, moduleKeywordUuid } = req.query
 
+    //驗證資料正確性
+    if (!ChatbotId || !moduleKeywordUuid) {
+      return callback({
+        status: 'error',
+        message: '新增失敗，請確認資料正確性'
+      })
+    }
+
     const moduleKeywordDelete = await ModuleKeyword.destroy({
       where: {
         ChatbotId: parseInt(ChatbotId) ? parseInt(ChatbotId) : null,
@@ -43,7 +61,7 @@ const replyMsgService = {
     })
 
     if (moduleKeywordDelete > 0) {
-      callback({
+      return callback({
         status: 'success',
         message: '成功刪除模組',
         data: {
@@ -51,7 +69,7 @@ const replyMsgService = {
         }
       })
     } else {
-      callback({
+      return callback({
         status: 'failed',
         message: '刪除模組失敗，請稍後再試'
       })
@@ -60,14 +78,24 @@ const replyMsgService = {
   // 新增 reply message
   createReplyMessage: async (req, res, callback) => {
     const { ChatbotId } = req.body
+
+    //驗證資料正確性
+    if (!ChatbotId) {
+      return callback({
+        status: 'error',
+        message: '新增失敗，請確認資料正確性'
+      })
+    }
+
     const replyMessage = await ReplyMessage.create({
       name: '',
       uuid: uuidv4(),
       status: 'edited',
       ChatbotId: ChatbotId,
     })
+
     if (replyMessage) {
-      callback({
+      return callback({
         status: 'success',
         message: '成功新增',
         data: {
@@ -75,7 +103,7 @@ const replyMsgService = {
         }
       })
     } else {
-      callback({
+      return callback({
         status: 'error',
         message: '新增失敗，請稍後再試'
       })
@@ -85,6 +113,14 @@ const replyMsgService = {
   deleteReplyMessage: async (req, res, callback) => {
     const { ChatbotId, replyMessageUuid } = req.query
 
+    //驗證資料正確性
+    if (!ChatbotId || !replyMessageUuid) {
+      return callback({
+        status: 'error',
+        message: '新增失敗，請確認資料正確性'
+      })
+    }
+
     const replyMessageDeleted = await ReplyMessage.destroy({
       where: {
         ChatbotId: parseInt(ChatbotId) ? parseInt(ChatbotId) : null,
@@ -93,7 +129,7 @@ const replyMsgService = {
     })
 
     if (replyMessageDeleted > 0) {
-      callback({
+      return callback({
         status: 'success',
         message: '成功刪除',
         data: {
@@ -101,7 +137,7 @@ const replyMsgService = {
         }
       })
     } else {
-      callback({
+      return callback({
         status: 'error',
         message: '刪除失敗，請稍後再試'
       })
@@ -110,13 +146,23 @@ const replyMsgService = {
   // 新增 text event
   createTextEvent: async (req, res, callback) => {
     const { ChatbotId } = req.body
+
+    //驗證資料正確性
+    if (!ChatbotId) {
+      return callback({
+        status: 'error',
+        message: '新增失敗，請確認資料正確性'
+      })
+    }
+
     const textEvent = await TextEvent.create({
       uuid: uuidv4(),
       text: '',
       ChatbotId: ChatbotId,
     })
+
     if (textEvent) {
-      callback({
+      return callback({
         status: 'success',
         message: '成功建立',
         data: {
@@ -124,7 +170,7 @@ const replyMsgService = {
         }
       })
     } else {
-      callback({
+      return callback({
         status: 'error',
         message: '新增失敗，請稍後再試'
       })
@@ -134,8 +180,14 @@ const replyMsgService = {
   deleteTextEvent: async (req, res, callback) => {
     const { ChatbotId, textEventUuid } = req.query
 
-    console.log('ChatbotId', ChatbotId)
-    console.log('textEventUuid', textEventUuid)
+    //驗證資料正確性
+    if (!ChatbotId || !textEventUuid) {
+      return callback({
+        status: 'error',
+        message: '新增失敗，請確認資料正確性'
+      })
+    }
+
     const textEventDeleted = await TextEvent.destroy({
       where: {
         ChatbotId: ChatbotId ? ChatbotId : null,
@@ -144,7 +196,7 @@ const replyMsgService = {
     })
 
     if (textEventDeleted > 0) {
-      callback({
+      return callback({
         status: 'success',
         message: '成功刪除',
         data: {
@@ -152,7 +204,7 @@ const replyMsgService = {
         }
       })
     } else {
-      callback({
+      return callback({
         status: 'error',
         message: '刪除失敗，請稍後再試'
       })
