@@ -12,13 +12,15 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 0
     },
     ReplyMessageId: DataTypes.INTEGER, //FK
-    ChatbotId: DataTypes.INTEGER //FK
+    ChatbotId: DataTypes.INTEGER, //FK
+    ModuleKeywordId: DataTypes.INTEGER, //FK
   }, {
     paranoid: true
   });
   TextEvent.associate = function (models) {
     TextEvent.belongsTo(models.ReplyMessage)
     TextEvent.belongsTo(models.Chatbot)
+    TextEvent.belongsTo(models.ModuleKeyword)
   };
   return TextEvent;
 };

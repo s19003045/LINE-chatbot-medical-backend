@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   ModuleKeyword.associate = function (models) {
     ModuleKeyword.hasOne(models.ReplyMessage)
+    ModuleKeyword.hasMany(models.TextEvent)
   };
   return ModuleKeyword;
 };
