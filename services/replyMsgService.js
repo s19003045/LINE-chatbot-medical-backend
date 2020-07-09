@@ -136,14 +136,15 @@ const replyMsgService = {
   },
   // 刪除 text event
   deleteTextEvent: async (req, res, callback) => {
-    const { ChatbotId, textEvent } = req.body
+    const { ChatbotId, textEventUuid } = req.query
     const textEventDeleted = await TextEvent.destroy({
       where: {
         ChatbotId: ChatbotId,
-        uuid: textEvent.uuid
+        uuid: textEventUuid
       }
     })
-    if (textEventDeleted) {
+
+    if (textEventDeleted > 0) {
       callback({
         status: 'success',
         message: '成功刪除',
