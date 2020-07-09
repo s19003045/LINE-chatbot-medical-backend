@@ -347,6 +347,8 @@ const replyMsgService = {
                 model: TextEvent
               }
             ]
+          }, {
+            model: TextEvent
           }
         ]
       })
