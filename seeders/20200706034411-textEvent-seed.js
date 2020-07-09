@@ -10,6 +10,7 @@ module.exports = {
         textEventCount: 0, //使用次數
         ReplyMessageId: 1, //FK
         ChatbotId: 1, //FK
+        ModuleKeywordId: 1,  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -19,6 +20,7 @@ module.exports = {
         textEventCount: 0, //使用次數
         ReplyMessageId: 1, //FK
         ChatbotId: 1, //FK
+        ModuleKeywordId: 1,  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -28,9 +30,40 @@ module.exports = {
         textEventCount: 0, //使用次數
         ReplyMessageId: 1, //FK
         ChatbotId: 1, //FK
+        ModuleKeywordId: 1,  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        uuid: uuidv4(), //使用於主控台
+        text: '大象', //關鍵字
+        textEventCount: 0, //使用次數
+        ReplyMessageId: 2, //FK
+        ChatbotId: 1, //FK
+        ModuleKeywordId: 2,  //FK
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        uuid: uuidv4(), //使用於主控台
+        text: '猩猩', //關鍵字
+        textEventCount: 0, //使用次數
+        ReplyMessageId: 2, //FK
+        ChatbotId: 1, //FK
+        ModuleKeywordId: 2,  //FK
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        uuid: uuidv4(), //使用於主控台
+        text: '長頸鹿', //關鍵字
+        textEventCount: 0, //使用次數
+        ReplyMessageId: 2, //FK
+        ChatbotId: 1, //FK
+        ModuleKeywordId: 2,  //FK
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
     ], {});
   },
 
