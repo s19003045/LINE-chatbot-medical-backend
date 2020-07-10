@@ -213,8 +213,17 @@ const replyMsgService = {
 
   // 儲存關鍵字回覆模組
   postKeywordReply: async (req, res, callback) => {
-    const { ChatbotId, module, textEvents, replyMessage } = req.body
     try {
+      const { ChatbotId, module, textEvents, replyMessage } = req.body
+
+      //驗證資料正確性
+      if (!ChatbotId || !module || !replyMessage || !textEvents) {
+        return callback({
+          status: 'error',
+          message: '存取失敗，請確認資料正確性'
+        })
+      }
+
       // 先建立 moduleKeyword
       const moduleKeyword = await ModuleKeyword.findOne({
         where: {
@@ -229,6 +238,11 @@ const replyMsgService = {
         moduleKeyword.ChatbotId = ChatbotId
         //存檔
         await moduleKeyword.save()
+      } else {
+        return callback({
+          status: 'error',
+          message: '存取失敗，請確認資料正確性'
+        })
       }
 
       console.log('moduleKeyword:', moduleKeyword)
@@ -257,6 +271,11 @@ const replyMsgService = {
         replyMsg.ModuleKeywordId = moduleKeyword.id
 
         await replyMsg.save()
+      } else {
+        return callback({
+          status: 'error',
+          message: '儲存失敗，請確認資料正確性'
+        })
       }
 
       // 搜尋 text events

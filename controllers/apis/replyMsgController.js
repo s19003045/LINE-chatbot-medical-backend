@@ -41,7 +41,7 @@ const replyMsgController = {
 
   // 儲存關鍵字回應模組
   postKeywordReply: (req, res) => {
-    return replyMsgService.createKeywordReply(req, res, (data) => {
+    return replyMsgService.postKeywordReply(req, res, (data) => {
       return res.json(data)
     })
   },
