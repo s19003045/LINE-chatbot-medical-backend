@@ -1,66 +1,71 @@
 'use strict';
 const { v4: uuidv4 } = require('uuid');
+const ChatbotId = 1
+
+const ReplyMessageIds = [1, 5, 6, 7, 8, 9]
+const ModuleKeywordIds = [1, 2, 3, 4, 5, 6]
+const autoIncrementNum = 10; //local DB 設定1，若為 heroku mySQL DB 則須改為10
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('TextEvents', [
       {
         uuid: uuidv4(), //使用於主控台
-        text: '冰淇淋', //關鍵字
+        text: '產前檢查', //關鍵字
         textEventCount: 0, //使用次數
-        ReplyMessageId: 1, //FK
-        ChatbotId: 1, //FK
-        ModuleKeywordId: 1,  //FK
+        ReplyMessageId: 1 + autoIncrementNum * (ReplyMessageIds[0] - 1), //FK
+        ChatbotId: ChatbotId, //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[0] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         uuid: uuidv4(), //使用於主控台
-        text: '香蕉', //關鍵字
+        text: '孕期衛教', //關鍵字
         textEventCount: 0, //使用次數
-        ReplyMessageId: 1, //FK
-        ChatbotId: 1, //FK
-        ModuleKeywordId: 1,  //FK
+        ReplyMessageId: 1 + autoIncrementNum * (ReplyMessageIds[1] - 1), //FK
+        ChatbotId: ChatbotId, //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[1] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         uuid: uuidv4(), //使用於主控台
-        text: '芒果', //關鍵字
+        text: '胎兒成長', //關鍵字
         textEventCount: 0, //使用次數
-        ReplyMessageId: 1, //FK
-        ChatbotId: 1, //FK
-        ModuleKeywordId: 1,  //FK
+        ReplyMessageId: 1 + autoIncrementNum * (ReplyMessageIds[2] - 1), //FK
+        ChatbotId: ChatbotId, //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[2] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         uuid: uuidv4(), //使用於主控台
-        text: '大象', //關鍵字
+        text: '生理記錄', //關鍵字
         textEventCount: 0, //使用次數
-        ReplyMessageId: 2, //FK
-        ChatbotId: 1, //FK
-        ModuleKeywordId: 2,  //FK
+        ReplyMessageId: 1 + autoIncrementNum * (ReplyMessageIds[3] - 1), //FK
+        ChatbotId: ChatbotId, //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[3] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         uuid: uuidv4(), //使用於主控台
-        text: '猩猩', //關鍵字
+        text: '問與答', //關鍵字
         textEventCount: 0, //使用次數
-        ReplyMessageId: 2, //FK
-        ChatbotId: 1, //FK
-        ModuleKeywordId: 2,  //FK
+        ReplyMessageId: 1 + autoIncrementNum * (ReplyMessageIds[4] - 1), //FK
+        ChatbotId: ChatbotId, //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[4] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         uuid: uuidv4(), //使用於主控台
-        text: '長頸鹿', //關鍵字
+        text: '更多資訊', //關鍵字
         textEventCount: 0, //使用次數
-        ReplyMessageId: 2, //FK
-        ChatbotId: 1, //FK
-        ModuleKeywordId: 2,  //FK
+        ReplyMessageId: 1 + autoIncrementNum * (ReplyMessageIds[5] - 1), //FK
+        ChatbotId: ChatbotId, //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[5] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       }
