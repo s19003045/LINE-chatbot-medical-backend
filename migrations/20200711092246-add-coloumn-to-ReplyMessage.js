@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.addColumn('ReplyMessages', 'ModulePostBackId', Sequelize.INTEGER, {
-      after: 'textEventCount'
+      after: 'status'
     });
   },
 
