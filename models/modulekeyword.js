@@ -12,13 +12,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER, // 已次次數
       defaultValue: 0
     },
-    ChatbotId: DataTypes.INTEGER,
+    ChatbotId: DataTypes.INTEGER, // FK
   }, {
     paranoid: true,
   });
   ModuleKeyword.associate = function (models) {
     ModuleKeyword.hasOne(models.ReplyMessage)
     ModuleKeyword.hasMany(models.TextEvent)
+    ModuleKeyword.belongsTo(models.Chatbot)
   };
   return ModuleKeyword;
 };

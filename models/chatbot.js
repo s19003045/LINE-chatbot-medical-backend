@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
   Chatbot.associate = function (models) {
     Chatbot.belongsTo(models.Channel)
     Chatbot.belongsTo(models.Customer)
+    Chatbot.hasMany(models.TextEvent)
+    Chatbot.hasMany(models.ReplyMessage)
+    Chatbot.hasMany(models.ModuleKeyword)
+    Chatbot.hasMany(models.PostBackEvent)
+    Chatbot.hasMany(models.ModulePostBack)
   };
   return Chatbot;
 };
