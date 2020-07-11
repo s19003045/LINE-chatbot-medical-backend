@@ -16,12 +16,16 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.ENUM('edited', 'in-use', 'archived'), //此模組的狀態
     ChatbotId: DataTypes.INTEGER, //FK
     ModuleKeywordId: DataTypes.INTEGER, //FK
+    ModulePostBackId: DataTypes.INTEGER, //FK
   }, {
     paranoid: true,
   });
   ReplyMessage.associate = function (models) {
     ReplyMessage.hasMany(models.TextEvent)
+    ReplyMessage.hasMany(models.PostBackEvent)
+    ReplyMessage.belongsTo(models.Chatbot)
     ReplyMessage.belongsTo(models.ModuleKeyword)
+    ReplyMessage.belongsTo(models.ModulePostBack)
   };
   return ReplyMessage;
 };
