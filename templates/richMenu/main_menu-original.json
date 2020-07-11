@@ -17,7 +17,7 @@
       "action": {
         "type": "postback",
         "displayText": "產前檢查",
-        "data": "subject=服務選單&data=產前檢查"
+        "data": "action=main_menu&category=prenatal_visit"
       }
     },
     {
@@ -30,7 +30,7 @@
       "action": {
         "type": "postback",
         "displayText": "生理記錄",
-        "data": "subject=服務選單&data=health_record"
+        "data": "action=main_menu&category=health_record"
       }
     },
     {
@@ -43,7 +43,7 @@
       "action": {
         "type": "postback",
         "displayText": "孕期衛教",
-        "data": "subject=服務選單&data=孕期衛教"
+        "data": "action=main_menu&category=pregnancy_education"
       }
     },
     {
@@ -55,8 +55,8 @@
       },
       "action": {
         "type": "postback",
-        "displayText": "問與答",
-        "data": "subject=服務選單&data=問與答"
+        "displayText": "Q & A",
+        "data": "action=main_menu&category=Q_and_A"
       }
     },
     {
@@ -69,7 +69,7 @@
       "action": {
         "type": "postback",
         "displayText": "胎兒成長",
-        "data": "subject=服務選單&data=胎兒成長"
+        "data": "action=main_menu&category=fetus_growth"
       }
     },
     {
@@ -82,7 +82,7 @@
       "action": {
         "type": "postback",
         "displayText": "媽媽教室",
-        "data": "subject=服務選單&data=媽媽教室"
+        "data": "action=main_menu&category=mommy_class"
       }
     }
   ]
