@@ -1,0 +1,46 @@
+{
+  "type": "template",
+  "altText": "this is a carousel template",
+  "template": {
+    "type": "carousel",
+    "actions": [],
+    "columns": [
+      {
+        "title": "依週期數來輸入孕婦體重/胎兒體重",
+        "text": "請選擇要記錄的項目：",
+        "actions": [
+          {
+            "type": "postback",
+            "label": "孕婦體重",
+            "text": "孕婦體重",
+            "data": "subject=依週期數來輸入孕婦體重/胎兒體重&data=孕婦體重"
+          },
+          {
+            "type": "postback",
+            "label": "胎兒體重",
+            "text": "胎兒體重",
+            "data": "subject=依週期數來輸入孕婦體重/胎兒體重&data=胎兒體重"
+          }
+        ]
+      },
+      {
+        "title": "查詢記錄",
+        "text": "請選擇查詢類別：",
+        "actions": [
+          {
+            "type": "postback",
+            "label": "媽媽體重趨勢",
+            "text": "媽媽體重趨勢",
+            "data": "subject=查詢記錄&data=媽媽體重趨勢"
+          },
+          {
+            "type": "postback",
+            "label": "胎兒體重趨勢",
+            "text": "胎兒體重趨勢",
+            "data": "subject=查詢記錄&data=胎兒體重趨勢"
+          }
+        ]
+      }
+    ]
+  }
+}

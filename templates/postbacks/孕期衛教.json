@@ -1,0 +1,35 @@
+{
+  "type": "template",
+  "altText": "this is a buttons template",
+  "template": {
+    "type": "buttons",
+    "actions": [
+      {
+        "type": "postback",
+        "label": "孕期症狀",
+        "text": "孕期症狀",
+        "data": "subject=孕期衛教&data=孕期症狀"
+      },
+      {
+        "type": "postback",
+        "label": "生活保健",
+        "text": "生活保健",
+        "data": "subject=孕期衛教&data=生活保健"
+      },
+      {
+        "type": "postback",
+        "label": "飲食建議",
+        "text": "飲食建議",
+        "data": "subject=孕期衛教&data=飲食建議"
+      },
+      {
+        "type": "postback",
+        "label": "健康操",
+        "text": "健康操",
+        "data": "subject=孕期衛教&data=健康操"
+      }
+    ],
+    "title": "孕期衛教",
+    "text": "請選擇要查詢的類別："
+  }
+}
