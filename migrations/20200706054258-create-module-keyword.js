@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('ModuleKeywords', {
+    return queryInterface.createTable("ModuleKeywords", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       status: {
-        type: Sequelize.ENUM('edited', 'in-use', 'archived')
+        type: Sequelize.ENUM("edited", "in-use", "archived")
       },
       ChatbotId: {
         type: Sequelize.INTEGER
@@ -34,6 +34,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('ModuleKeywords');
+    return queryInterface.dropTable("ModuleKeywords");
   }
 };

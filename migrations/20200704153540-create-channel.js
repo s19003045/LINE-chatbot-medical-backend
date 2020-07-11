@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Channels', {
+    return queryInterface.createTable("Channels", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       role: {
-        type: Sequelize.ENUM('msgAPI', 'lineLogin')
+        type: Sequelize.ENUM("msgAPI", "lineLogin")
       },
       channelId: {
         type: Sequelize.STRING
@@ -49,6 +49,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Channels');
+    return queryInterface.dropTable("Channels");
   }
 };

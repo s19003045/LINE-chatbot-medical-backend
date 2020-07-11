@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Chatbots', {
+    return queryInterface.createTable("Chatbots", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -20,7 +20,7 @@ module.exports = {
         defaultValue: 0
       },
       pushMsgStatus: {
-        type: Sequelize.ENUM('available', 'inactive')
+        type: Sequelize.ENUM("available", "inactive")
       },
       ChannelId: {
         type: Sequelize.INTEGER
@@ -42,6 +42,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Chatbots');
+    return queryInterface.dropTable("Chatbots");
   }
 };

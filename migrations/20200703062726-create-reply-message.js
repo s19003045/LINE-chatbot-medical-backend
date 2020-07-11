@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('ReplyMessages', {
+    return queryInterface.createTable("ReplyMessages", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -29,7 +29,7 @@ module.exports = {
         type: Sequelize.JSON
       },
       status: {
-        type: Sequelize.ENUM('edited', 'in-use', 'archived')
+        type: Sequelize.ENUM("edited", "in-use", "archived")
       },
       ChatbotId: {
         type: Sequelize.INTEGER
@@ -51,6 +51,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('ReplyMessages');
+    return queryInterface.dropTable("ReplyMessages");
   }
 };

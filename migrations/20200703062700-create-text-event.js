@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('TextEvents', {
+    return queryInterface.createTable("TextEvents", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,7 +10,7 @@ module.exports = {
       },
       type: {
         type: Sequelize.STRING,
-        defaultValue: 'text',
+        defaultValue: "text",
       },
       uuid: {
         type: Sequelize.STRING
@@ -41,6 +41,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('TextEvents');
+    return queryInterface.dropTable("TextEvents");
   }
 };
