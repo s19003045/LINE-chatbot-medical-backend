@@ -33,23 +33,18 @@ function handlePostback(event, client, replyText) {
     ]
   })
     .then((postBackEvent) => {
-      console.log('postBackEvent:', postBackEvent)
+      console.log('postBackEvent.ReplyMessage.messageTemplate:', postBackEvent.ReplyMessage.messageTemplate)
       if (postBackEvent) {
         return client.replyMessage(event.replyToken, postBackEvent.ReplyMessage.messageTemplate)
       } else {
         return client.replyMessage(event.replyToken, {
           type: 'text',
-          text: '找不到對應的資料'
+          text: '我們沒有提供相關訊息！'
         })
       }
-
     })
     .catch(err => {
       console.log(err)
-      return client.replyMessage(event.replyToken, {
-        type: 'text',
-        text: '系統異常，請稍後再試'
-      })
     })
 
 
