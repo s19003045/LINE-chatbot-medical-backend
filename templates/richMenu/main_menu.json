@@ -30,7 +30,7 @@
       "action": {
         "type": "postback",
         "displayText": "生理記錄",
-        "data": "subject=服務選單&data=health_record"
+        "data": "subject=服務選單&data=生理記錄"
       }
     },
     {
@@ -81,8 +81,8 @@
       },
       "action": {
         "type": "postback",
-        "displayText": "媽媽教室",
-        "data": "subject=服務選單&data=媽媽教室"
+        "displayText": "更多資訊",
+        "data": "subject=服務選單&data=更多資訊"
       }
     }
   ]
