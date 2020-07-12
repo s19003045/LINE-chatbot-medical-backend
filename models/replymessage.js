@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       set: function (value) {
         this.setDataValue('replyMsgCount', JSON.stringify(value));
       },
-    }
+    },
     status: DataTypes.ENUM('edited', 'in-use', 'archived'), //此模組的狀態
     ChatbotId: DataTypes.INTEGER, //FK
     ModuleKeywordId: DataTypes.INTEGER, //FK
