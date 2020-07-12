@@ -17,9 +17,9 @@
     "username": "root",
     "password": null,
     "database": "database_production",
-    "use_env_variable": "CLEARDB_CRIMSON_URL",
+    "use_env_variable": "CLEARDB_PURPLE_URL",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "logging": false
+    "logging": true
   }
 }
