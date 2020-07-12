@@ -2,6 +2,9 @@ const db = require("../models")
 const TextEvent = db.TextEvent
 const ReplyMessage = db.ReplyMessage
 const ModuleKeyword = db.ModuleKeyword
+const ModulePostBack = db.ModulePostBack
+const PostBackEvent = db.PostBackEvent
+
 const { v4: uuidv4 } = require("uuid");
 const client = require("../app");
 
@@ -456,6 +459,55 @@ const replyMsgService = {
       callback(data)
     }
 
-  }
+  },
+
+  // 取得回傳動作(postback)回應模組
+  getPostBackReply: async (req, res, callback) => {
+    try {
+
+      const { ChatbotId } = req.query
+      console.log('ChatbotId:', ChatbotId)
+
+      const modulePostBack = await ModulePostBack.findAll({
+        where: {
+          ChatbotId: ChatbotId
+        },
+        include: [
+          {
+            model: PostBackEvent
+          }, {
+            model: ReplyMessage
+          }
+        ]
+      })
+
+      if (modulePostBack) {
+        const data = {
+          status: "success",
+          message: "成功取得資料",
+          data: {
+            modulePostBack: modulePostBack
+          }
+        }
+        callback(data)
+      } else {
+        const data = {
+          status: "success",
+          message: "存取異常，請稍後再試",
+        }
+        callback(data)
+      }
+    } catch (err) {
+      console.log(err)
+      const data = {
+        status: "success",
+        message: "系統異常，請稍後再試",
+        error: err.message
+      }
+      callback(data)
+    }
+
+
+  },
 }
 module.exports = replyMsgService

@@ -25,6 +25,7 @@ router.put('/bots/:botId/keyword-reply', replyMsgController.postKeywordReply)
 // 刪除關鍵字回應模組
 router.delete('/bots/:botId/keyword-reply', replyMsgController.deleteKeywordReply)
 
-
+// 取得回傳動作(postback)回應模組
+router.get('/bots/:botId/postback-reply', replyMsgController.getPostBackReply)
 
 module.exports = router
