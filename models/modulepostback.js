@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
     moduleReadCount: DataTypes.INTEGER, // 已讀次數
     status: DataTypes.ENUM('edited', 'in-use', 'archived'),  //模組狀態
     ChatbotId: DataTypes.INTEGER,  // FK
-    ModulePostBackId: DataTypes.INTEGER  // FK
   }, {
     paranoid: true,
   });
