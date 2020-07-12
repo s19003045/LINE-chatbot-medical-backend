@@ -34,7 +34,15 @@ function handlePostback(event, client, replyText) {
   })
     .then((postBackEvent) => {
       console.log('postBackEvent:', postBackEvent)
-      return client.replyMessage(event.replyToken, postBackEvent.ReplyMessage.messageTemplate)
+      if (postBackEvent) {
+        return client.replyMessage(event.replyToken, postBackEvent.ReplyMessage.messageTemplate)
+      } else {
+        return client.replyMessage(event.replyToken, {
+          type: 'text',
+          text: '找不到對應的資料'
+        })
+      }
+
     })
     .catch(err => {
       console.log(err)
