@@ -12,7 +12,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0
     }, // 使用者閱讀次數
-    messageTemplate: DataTypes.JSON,  // message json
+    messageTemplate: {  // message json
+      type: DataTypes.TEXT,
+      get: function () {
+        return JSON.parse(this.getDataValue('replyMsgCount'));
+      },
+      set: function (value) {
+        this.setDataValue('replyMsgCount', JSON.stringify(value));
+      },
+    }
     status: DataTypes.ENUM('edited', 'in-use', 'archived'), //此模組的狀態
     ChatbotId: DataTypes.INTEGER, //FK
     ModuleKeywordId: DataTypes.INTEGER, //FK

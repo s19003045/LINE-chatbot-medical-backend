@@ -26,7 +26,7 @@ module.exports = {
         defaultValue: 0
       },
       messageTemplate: {
-        type: Sequelize.JSON
+        type: Sequelize.DataTypes.TEXT,
       },
       status: {
         type: Sequelize.ENUM("edited", "in-use", "archived")
