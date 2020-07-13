@@ -15,10 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     messageTemplate: {  // message json
       type: DataTypes.TEXT,
       get: function () {
-        return JSON.parse(this.getDataValue('replyMsgCount'));
+        return JSON.parse(this.getDataValue('messageTemplate'));
       },
       set: function (value) {
-        this.setDataValue('replyMsgCount', JSON.stringify(value));
+        this.setDataValue('messageTemplate', JSON.stringify(value));
       },
     },
     status: DataTypes.ENUM('edited', 'in-use', 'archived'), //此模組的狀態
