@@ -39,7 +39,7 @@ function handleText(message, replyToken, source, client, replyText) {
       } else {
         return client.replyMessage(replyToken, {
           type: 'text',
-          text: 'No keyword like'
+          text: '這個問題我還沒辦法回答，你要不要先問我別的問題？'
         })
       }
     })

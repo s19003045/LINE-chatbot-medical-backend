@@ -21,7 +21,7 @@ function initHandleEvent(client) {
         const message = event.message
         switch (message.type) {
           case 'text':
-          // return handleText(message, event.replyToken, event.source, client, replyText)
+            return handleText(message, event.replyToken, event.source, client, replyText)
           case 'image':
             return client.replyMessage(event.replyToken, {
               type: 'text', text: 'you send a image.'

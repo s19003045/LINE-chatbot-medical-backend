@@ -38,7 +38,7 @@ function handlePostback(event, client, replyText) {
       } else {
         return client.replyMessage(event.replyToken, {
           type: 'text',
-          text: '我們沒有提供相關訊息！'
+          text: '針對這個問題，我還沒辦法回答，你要不要先問我別的問題？'
         })
       }
     })
