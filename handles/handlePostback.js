@@ -34,7 +34,7 @@ function handlePostback(event, client, replyText) {
   })
     .then((postBackEvent) => {
       if (postBackEvent) {
-        return client.replyMessage(event.replyToken, JSON.stringify(postBackEvent.ReplyMessage.messageTemplate))
+        return client.replyMessage(event.replyToken, postBackEvent.ReplyMessage.messageTemplate)
       } else {
         return client.replyMessage(event.replyToken, {
           type: 'text',
