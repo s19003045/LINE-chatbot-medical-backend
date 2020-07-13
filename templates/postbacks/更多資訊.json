@@ -8,7 +8,7 @@
         "action": {
           "type": "postback",
           "label": "產前相關資訊",
-          "text": "產前相關資訊",
+          "displayText": "產前相關資訊",
           "data": "subject=更多資訊&data=產前相關資訊"
         }
       },
@@ -17,7 +17,7 @@
         "action": {
           "type": "postback",
           "label": "待產相關資訊",
-          "text": "待產相關資訊",
+          "displayText": "待產相關資訊",
           "data": "subject=更多資訊&data=待產相關資訊"
         }
       },
@@ -26,7 +26,7 @@
         "action": {
           "type": "postback",
           "label": "產後相關資訊",
-          "text": "產後相關資訊",
+          "displayText": "產後相關資訊",
           "data": "subject=更多資訊&data=產後相關資訊"
         }
       }

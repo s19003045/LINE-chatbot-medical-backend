@@ -8,7 +8,7 @@
         "action": {
           "type": "postback",
           "label": "不限週數",
-          "text": "不限週數",
+          "displayText": "不限週數",
           "data": "subject=產前檢查&data=不限週數"
         }
       },
@@ -17,7 +17,7 @@
         "action": {
           "type": "postback",
           "label": "第一孕期",
-          "text": "第一孕期",
+          "displayText": "第一孕期",
           "data": "subject=產前檢查&data=第一孕期"
         }
       },
@@ -26,7 +26,7 @@
         "action": {
           "type": "postback",
           "label": "第二孕期",
-          "text": "第二孕期",
+          "displayText": "第二孕期",
           "data": "subject=產前檢查&data=第二孕期"
         }
       },
@@ -35,7 +35,7 @@
         "action": {
           "type": "postback",
           "label": "第三孕期",
-          "text": "第三孕期",
+          "displayText": "第三孕期",
           "data": "subject=產前檢查&data=第三孕期"
         }
       },
@@ -44,7 +44,7 @@
         "action": {
           "type": "postback",
           "label": "回前一頁",
-          "text": "回前一頁",
+          "displayText": "回前一頁",
           "data": "subject=服務選單&data=產前檢查"
         }
       }

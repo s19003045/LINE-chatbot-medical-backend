@@ -33,9 +33,8 @@ function handlePostback(event, client, replyText) {
     ]
   })
     .then((postBackEvent) => {
-      console.log('postBackEvent.ReplyMessage.messageTemplate:', postBackEvent.ReplyMessage.messageTemplate)
       if (postBackEvent) {
-        return client.replyMessage(event.replyToken, postBackEvent.ReplyMessage.messageTemplate)
+        return client.replyMessage(event.replyToken, JSON.stringify(postBackEvent.ReplyMessage.messageTemplate))
       } else {
         return client.replyMessage(event.replyToken, {
           type: 'text',
@@ -45,6 +44,10 @@ function handlePostback(event, client, replyText) {
     })
     .catch(err => {
       console.log(err)
+      return client.replyMessage(event.replyToken, {
+        type: 'text',
+        text: '系統異常，請稍後再試'
+      })
     })
 
 

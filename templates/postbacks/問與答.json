@@ -7,19 +7,19 @@
       {
         "type": "postback",
         "label": "懷孕初期",
-        "text": "懷孕初期",
+        "displayText": "懷孕初期",
         "data": "subject=問與答&data=懷孕初期"
       },
       {
         "type": "postback",
         "label": "懷孕中期",
-        "text": "懷孕中期",
+        "displayText": "懷孕中期",
         "data": "subject=問與答&data=懷孕中期"
       },
       {
         "type": "postback",
         "label": "懷孕後期",
-        "text": "懷孕後期",
+        "displayText": "懷孕後期",
         "data": "subject=問與答&data=懷孕後期"
       }
     ],

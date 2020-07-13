@@ -7,19 +7,19 @@
       {
         "type": "postback",
         "label": "查詢健保給付項目",
-        "text": "查詢健保給付項目",
+        "displayText": "查詢健保給付項目",
         "data": "subject=產前檢查&data=查詢健保給付項目"
       },
       {
         "type": "postback",
         "label": "查詢自費項目",
-        "text": "查詢自費項目",
+        "displayText": "查詢自費項目",
         "data": "subject=產前檢查&data=查詢自費項目"
       },
       {
         "type": "postback",
         "label": "依週期數查詢產檢項目",
-        "text": "依週期數查詢產檢項目",
+        "displayText": "依週期數查詢產檢項目",
         "data": "subject=產前檢查&data=依週期數查詢產檢項目"
       }
     ],

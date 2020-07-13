@@ -8,7 +8,7 @@
         "action": {
           "type": "postback",
           "label": "例行檢查項目",
-          "text": "例行檢查項目",
+          "displayText": "例行檢查項目",
           "data": "subject=產前檢查&data=例行檢查項目"
         }
       },
@@ -17,7 +17,7 @@
         "action": {
           "type": "postback",
           "label": "9~12週",
-          "text": "9~12週",
+          "displayText": "9~12週",
           "data": "subject=產前檢查&data=9~12週"
         }
       },
@@ -26,7 +26,7 @@
         "action": {
           "type": "postback",
           "label": "13~16週",
-          "text": "13~16週",
+          "displayText": "13~16週",
           "data": "subject=產前檢查&data=13~16週"
         }
       },
@@ -35,7 +35,7 @@
         "action": {
           "type": "postback",
           "label": "17~20週",
-          "text": "17~20週",
+          "displayText": "17~20週",
           "data": "subject=產前檢查&data=17~20週"
         }
       },
@@ -44,7 +44,7 @@
         "action": {
           "type": "postback",
           "label": "21~24週",
-          "text": "21~24週",
+          "displayText": "21~24週",
           "data": "subject=產前檢查&data=21~24週"
         }
       },
@@ -53,7 +53,7 @@
         "action": {
           "type": "postback",
           "label": "25~28週",
-          "text": "25~28週",
+          "displayText": "25~28週",
           "data": "subject=產前檢查&data=25~28週"
         }
       },
@@ -62,7 +62,7 @@
         "action": {
           "type": "postback",
           "label": "29~30週",
-          "text": "29~30週",
+          "displayText": "29~30週",
           "data": "subject=產前檢查&data=29~30週"
         }
       },
@@ -71,7 +71,7 @@
         "action": {
           "type": "postback",
           "label": "31~32週",
-          "text": "31~32週",
+          "displayText": "31~32週",
           "data": "subject=產前檢查&data=31~32週"
         }
       },
@@ -80,7 +80,7 @@
         "action": {
           "type": "postback",
           "label": "33~34週",
-          "text": "33~34週",
+          "displayText": "33~34週",
           "data": "subject=產前檢查&data=33~34週"
         }
       },
@@ -89,7 +89,7 @@
         "action": {
           "type": "postback",
           "label": "35~36週",
-          "text": "35~36週",
+          "displayText": "35~36週",
           "data": "subject=產前檢查&data=35~36週"
         }
       },
@@ -98,7 +98,7 @@
         "action": {
           "type": "postback",
           "label": "37~38週",
-          "text": "37~38週",
+          "displayText": "37~38週",
           "data": "subject=產前檢查&data=37~38週"
         }
       },
@@ -107,7 +107,7 @@
         "action": {
           "type": "postback",
           "label": "39~40週",
-          "text": "39~40週",
+          "displayText": "39~40週",
           "data": "subject=產前檢查&data=39~40週"
         }
       },
@@ -116,7 +116,7 @@
         "action": {
           "type": "postback",
           "label": "回前一頁",
-          "text": "回前一頁",
+          "displayText": "回前一頁",
           "data": "subject=服務選單&data=產前檢查"
         }
       }

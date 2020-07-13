@@ -12,13 +12,13 @@
           {
             "type": "postback",
             "label": "孕婦體重",
-            "text": "孕婦體重",
+            "displayText": "孕婦體重",
             "data": "subject=依週期數來輸入孕婦體重/胎兒體重&data=孕婦體重"
           },
           {
             "type": "postback",
             "label": "胎兒體重",
-            "text": "胎兒體重",
+            "displayText": "胎兒體重",
             "data": "subject=依週期數來輸入孕婦體重/胎兒體重&data=胎兒體重"
           }
         ]
@@ -30,13 +30,13 @@
           {
             "type": "postback",
             "label": "媽媽體重趨勢",
-            "text": "媽媽體重趨勢",
+            "displayText": "媽媽體重趨勢",
             "data": "subject=查詢記錄&data=媽媽體重趨勢"
           },
           {
             "type": "postback",
             "label": "胎兒體重趨勢",
-            "text": "胎兒體重趨勢",
+            "displayText": "胎兒體重趨勢",
             "data": "subject=查詢記錄&data=胎兒體重趨勢"
           }
         ]
