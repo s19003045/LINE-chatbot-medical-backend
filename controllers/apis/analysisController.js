@@ -13,6 +13,12 @@ const analysisController = {
       return res.json(data)
     })
   },
+  // 分析模組-取得關鍵字模組使用數據
+  getReplyMessageAnalysis: (req, res) => {
+    return analysisService.getReplyMessageAnalysis(req, res, (data) => {
+      return res.json(data)
+    })
+  },
 }
 
 module.exports = analysisController

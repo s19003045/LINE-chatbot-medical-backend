@@ -35,5 +35,8 @@ router.get('/bots/:botId/postback-reply', replyMsgController.getPostBackReply)
 router.get('/bots/:botId/module-keyword-analysis', analysisController.getModuleKeywordAnalysis)
 // 分析模組-取得postback模組使用數據
 router.get('/bots/:botId/module-postback-analysis', analysisController.getModulePostBackAnalysis)
+// 分析模組-取得關鍵字模組使用數據
+router.get('/bots/:botId/reply-message-analysis', analysisController.getReplyMessageAnalysis)
+
 
 module.exports = router
