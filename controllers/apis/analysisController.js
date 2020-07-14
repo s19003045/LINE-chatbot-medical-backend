@@ -6,7 +6,13 @@ const analysisController = {
     return analysisService.getModuleKeywordAnalysis(req, res, (data) => {
       return res.json(data)
     })
-  }
+  },
+  // 分析模組-取得postback模組使用數據
+  getModulePostBackAnalysis: (req, res) => {
+    return analysisService.getModulePostBackAnalysis(req, res, (data) => {
+      return res.json(data)
+    })
+  },
 }
 
 module.exports = analysisController
