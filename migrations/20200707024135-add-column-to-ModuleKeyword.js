@@ -2,10 +2,17 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    queryInterface.addColumn("ModuleKeywords", "moduleUsedCount", Sequelize.INTEGER, {
+    queryInterface.addColumn("ModuleKeywords", "moduleUsedCount", {
+      type: Sequelize.INTEGER,
+      defaultValue: 0
+    }, {
       after: "status"
     });
-    return queryInterface.addColumn("ModuleKeywords", "moduleReadCount", Sequelize.INTEGER, {
+    return queryInterface.addColumn("ModuleKeywords", "moduleReadCount",
+      {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      }, {
       after: "status"
     });
   },

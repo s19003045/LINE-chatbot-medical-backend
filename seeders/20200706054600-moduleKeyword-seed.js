@@ -11,6 +11,8 @@ module.exports = {
         name: '產前檢查', //模組名稱
         uuid: uuidv4(),
         status: 'in-use',
+        moduleUsedCount: 0,
+        moduleReadCount: 0,
         ChatbotId: ChatbotId,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -19,6 +21,8 @@ module.exports = {
         name: '孕期衛教', //模組名稱
         uuid: uuidv4(),
         status: 'in-use',
+        moduleUsedCount: 0,
+        moduleReadCount: 0,
         ChatbotId: ChatbotId,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -27,6 +31,8 @@ module.exports = {
         name: '胎兒成長', //模組名稱
         uuid: uuidv4(),
         status: 'in-use',
+        moduleUsedCount: 0,
+        moduleReadCount: 0,
         ChatbotId: ChatbotId,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -35,6 +41,8 @@ module.exports = {
         name: '生理記錄', //模組名稱
         uuid: uuidv4(),
         status: 'in-use',
+        moduleUsedCount: 0,
+        moduleReadCount: 0,
         ChatbotId: ChatbotId,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -43,6 +51,8 @@ module.exports = {
         name: '問與答', //模組名稱
         uuid: uuidv4(),
         status: 'in-use',
+        moduleUsedCount: 0,
+        moduleReadCount: 0,
         ChatbotId: ChatbotId,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -51,6 +61,8 @@ module.exports = {
         name: '更多資訊', //模組名稱
         uuid: uuidv4(),
         status: 'in-use',
+        moduleUsedCount: 0,
+        moduleReadCount: 0,
         ChatbotId: ChatbotId,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -59,6 +71,8 @@ module.exports = {
         name: '查詢健保給付項目', //模組名稱
         uuid: uuidv4(),
         status: 'in-use',
+        moduleUsedCount: 0,
+        moduleReadCount: 0,
         ChatbotId: ChatbotId,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -67,6 +81,8 @@ module.exports = {
         name: '查詢自費項目', //模組名稱
         uuid: uuidv4(),
         status: 'in-use',
+        moduleUsedCount: 0,
+        moduleReadCount: 0,
         ChatbotId: ChatbotId,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -75,6 +91,8 @@ module.exports = {
         name: '依週期數查詢產檢項目', //模組名稱
         uuid: uuidv4(),
         status: 'in-use',
+        moduleUsedCount: 0,
+        moduleReadCount: 0,
         ChatbotId: ChatbotId,
         createdAt: new Date(),
         updatedAt: new Date()
