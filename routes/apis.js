@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const replyMsgController = require('../controllers/apis/replyMsgController')
+const analysisController = require('../controllers/apis/analysisController')
+
 
 // 新增 module keyword
 router.post('/bots/:botId/module-keyword', replyMsgController.createModuleKeyword)
@@ -27,5 +29,9 @@ router.delete('/bots/:botId/keyword-reply', replyMsgController.deleteKeywordRepl
 
 // 取得回傳動作(postback)回應模組
 router.get('/bots/:botId/postback-reply', replyMsgController.getPostBackReply)
+
+
+// 分析模組-取得關鍵字模組使用數據
+router.get('/bots/:botId/module-keyword-analysis', analysisController.getModuleKeywordAnalysis)
 
 module.exports = router
