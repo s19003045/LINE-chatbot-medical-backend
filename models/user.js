@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     paranoid: true
   });
   User.associate = function (models) {
-    // associations can be defined here
+    User.belongsToMany(Keyword, { through: models.KeywordUsers });
   };
   return User;
 };

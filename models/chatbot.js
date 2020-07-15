@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     Chatbot.hasMany(models.ModuleKeyword)
     Chatbot.hasMany(models.PostBackEvent)
     Chatbot.hasMany(models.ModulePostBack)
+    Chatbot.hasMany(models.Keyword)
   };
   return Chatbot;
 };
