@@ -4,6 +4,9 @@ const ReplyMessage = db.ReplyMessage
 const ModuleKeyword = db.ModuleKeyword
 const ModulePostBack = db.ModulePostBack
 const PostBackEvent = db.PostBackEvent
+const Keyword = db.Keyword
+const KeywordUser = db.KeywordUser
+
 
 const { v4: uuidv4 } = require("uuid");
 const client = require("../app");
@@ -210,6 +213,64 @@ const replyMsgService = {
       return callback({
         status: 'error',
         message: '刪除失敗，請稍後再試'
+      })
+    }
+  },
+
+  // 新增關鍵字
+  createKeyword: async (req, res, callback) => {
+    try {
+      const { ChatbotId, keywordName } = req.body
+
+      //驗證資料正確性
+      if (!ChatbotId || !keywordName || keywordName === '') {
+        return callback({
+          status: 'error',
+          message: '新增失敗，請確認資料正確性'
+        })
+      }
+
+      const keywordFind = await Keyword.findOne({
+        where: {
+          ChatbotId: ChatbotId,
+          name: keywordName
+        }
+      })
+
+      if (keywordFind) {
+        return callback({
+          status: 'error',
+          message: '已有此關鍵字',
+          data: {
+            keywordFind: keywordFind
+          }
+        })
+      } else {
+        return Keyword.create({
+          ChatbotId: ChatbotId,
+          name: keywordName
+        })
+          .then(keyword => {
+            if (keyword) {
+              return callback({
+                status: 'success',
+                message: '成功建立關鍵字',
+                data: {
+                  keyword: keyword
+                }
+              })
+            } else {
+              return callback({
+                status: 'error',
+                message: '建立失敗，請稍後再試',
+              })
+            }
+          })
+      }
+    } catch (err) {
+      return callback({
+        status: 'error',
+        message: '建立失敗，請稍後再試',
       })
     }
   },

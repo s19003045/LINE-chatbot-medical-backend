@@ -38,6 +38,13 @@ const replyMsgController = {
     })
   },
 
+  // 新增關鍵字
+  createKeyword: (req, res) => {
+    return replyMsgService.createKeyword(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+
 
   // 儲存關鍵字回應模組
   postKeywordReply: (req, res) => {

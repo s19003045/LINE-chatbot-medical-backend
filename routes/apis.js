@@ -17,6 +17,10 @@ router.post('/bots/:botId/text-event', replyMsgController.createTextEvent)
 // 刪除 text event
 router.delete('/bots/:botId/text-event', replyMsgController.deleteTextEvent)
 
+// 新增關鍵字
+router.post('/bots/:botId/keyword', replyMsgController.createKeyword)
+
+
 
 // 儲存關鍵字回應模組
 router.post('/bots/:botId/keyword-reply', replyMsgController.postKeywordReply)
