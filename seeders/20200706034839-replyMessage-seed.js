@@ -2,7 +2,8 @@
 const { v4: uuidv4 } = require('uuid');
 const ChatbotId = 1
 
-const ModuleKeywordIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const ModuleKeywordIds = [1, 7, 8, 9, 2, 3, 4, 5, 6]
+const ModulePostBackIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 const autoIncrementNum = 10; //local DB 設定1，若為 heroku mySQL DB 則須改為10
 
 //1
@@ -45,7 +46,8 @@ module.exports = {
           JSON.stringify(prenatalVisit), //id:1
         status: 'in-use', //此模組的狀態
         ChatbotId: 1, //FK
-        ModulePostBackId: 1 + autoIncrementNum * (ModuleKeywordIds[0] - 1),  //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[0] - 1),  //FK
+        ModulePostBackId: 1 + autoIncrementNum * (ModulePostBackIds[0] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -57,7 +59,8 @@ module.exports = {
           JSON.stringify(healthInsuranceExam), //id:2
         status: 'in-use', //此模組的狀態
         ChatbotId: 1, //FK
-        ModulePostBackId: 1 + autoIncrementNum * (ModuleKeywordIds[1] - 1),  //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[1] - 1),  //FK
+        ModulePostBackId: 1 + autoIncrementNum * (ModulePostBackIds[1] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -69,7 +72,8 @@ module.exports = {
           JSON.stringify(atOnesOwnExpenseExam), //id:3
         status: 'in-use', //此模組的狀態
         ChatbotId: 1, //FK
-        ModulePostBackId: 1 + autoIncrementNum * (ModuleKeywordIds[2] - 1),  //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[2] - 1),  //FK
+        ModulePostBackId: 1 + autoIncrementNum * (ModulePostBackIds[2] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -81,7 +85,8 @@ module.exports = {
           JSON.stringify(queryExamByWeeks), //id:4
         status: 'in-use', //此模組的狀態
         ChatbotId: 1, //FK
-        ModulePostBackId: 1 + autoIncrementNum * (ModuleKeywordIds[3] - 1),  //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[3] - 1),  //FK
+        ModulePostBackId: 1 + autoIncrementNum * (ModulePostBackIds[3] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -94,7 +99,8 @@ module.exports = {
           JSON.stringify(pregnancyEducation), //id:5
         status: 'in-use', //此模組的狀態
         ChatbotId: 1, //FK
-        ModulePostBackId: 1 + autoIncrementNum * (ModuleKeywordIds[4] - 1),  //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[4] - 1),  //FK
+        ModulePostBackId: 1 + autoIncrementNum * (ModulePostBackIds[4] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -106,7 +112,8 @@ module.exports = {
           JSON.stringify(fetusGrowth), //id:6
         status: 'in-use', //此模組的狀態
         ChatbotId: 1, //FK
-        ModulePostBackId: 1 + autoIncrementNum * (ModuleKeywordIds[5] - 1),  //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[5] - 1),  //FK
+        ModulePostBackId: 1 + autoIncrementNum * (ModulePostBackIds[5] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -118,7 +125,8 @@ module.exports = {
           JSON.stringify(healthRecord), //id:7
         status: 'in-use', //此模組的狀態
         ChatbotId: 1, //FK
-        ModulePostBackId: 1 + autoIncrementNum * (ModuleKeywordIds[6] - 1),  //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[6] - 1),  //FK
+        ModulePostBackId: 1 + autoIncrementNum * (ModulePostBackIds[6] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -130,7 +138,8 @@ module.exports = {
           JSON.stringify(questionAndAnswer), //id:8
         status: 'in-use', //此模組的狀態
         ChatbotId: 1, //FK
-        ModulePostBackId: 1 + autoIncrementNum * (ModuleKeywordIds[7] - 1),  //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[7] - 1),  //FK
+        ModulePostBackId: 1 + autoIncrementNum * (ModulePostBackIds[7] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -142,7 +151,8 @@ module.exports = {
           JSON.stringify(moreInformation), //id:9
         status: 'in-use', //此模組的狀態
         ChatbotId: 1, //FK
-        ModulePostBackId: 1 + autoIncrementNum * (ModuleKeywordIds[8] - 1),  //FK
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[8] - 1),  //FK
+        ModulePostBackId: 1 + autoIncrementNum * (ModulePostBackIds[8] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
