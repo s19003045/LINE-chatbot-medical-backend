@@ -2,6 +2,7 @@
 const { v4: uuidv4 } = require('uuid');
 const ChatbotId = 1
 
+const ModuleKeywordIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 const autoIncrementNum = 10; //local DB 設定1，若為 heroku mySQL DB 則須改為10
 
 module.exports = {
@@ -14,6 +15,7 @@ module.exports = {
         moduleUsedCount: 0,
         moduleReadCount: 0,
         ChatbotId: ChatbotId,
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[0] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -24,6 +26,7 @@ module.exports = {
         moduleUsedCount: 0,
         moduleReadCount: 0,
         ChatbotId: ChatbotId,
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[0] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -34,6 +37,7 @@ module.exports = {
         moduleUsedCount: 0,
         moduleReadCount: 0,
         ChatbotId: ChatbotId,
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[0] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -44,6 +48,7 @@ module.exports = {
         moduleUsedCount: 0,
         moduleReadCount: 0,
         ChatbotId: ChatbotId,
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[0] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -54,6 +59,7 @@ module.exports = {
         moduleUsedCount: 0,
         moduleReadCount: 0,
         ChatbotId: ChatbotId,
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[0] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -64,6 +70,7 @@ module.exports = {
         moduleUsedCount: 0,
         moduleReadCount: 0,
         ChatbotId: ChatbotId,
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[0] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -74,6 +81,7 @@ module.exports = {
         moduleUsedCount: 0,
         moduleReadCount: 0,
         ChatbotId: ChatbotId,
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[0] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -84,6 +92,7 @@ module.exports = {
         moduleUsedCount: 0,
         moduleReadCount: 0,
         ChatbotId: ChatbotId,
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[0] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -94,6 +103,7 @@ module.exports = {
         moduleUsedCount: 0,
         moduleReadCount: 0,
         ChatbotId: ChatbotId,
+        ModuleKeywordId: 1 + autoIncrementNum * (ModuleKeywordIds[0] - 1),  //FK
         createdAt: new Date(),
         updatedAt: new Date()
       },
