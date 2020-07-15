@@ -288,7 +288,8 @@ const replyMsgService = {
         })
       }
 
-      // 先建立 moduleKeyword
+      // moduleKeyword於使用者點選新增模組時，即向 API 請求建立一筆並回傳 uuid 等資訊
+      // 先確認 moduleKeyword 是否已建立
       const moduleKeyword = await ModuleKeyword.findOne({
         where: {
           uuid: module && module.uuid ? module.uuid : null
@@ -309,85 +310,60 @@ const replyMsgService = {
         })
       }
 
-      console.log('moduleKeyword:', moduleKeyword)
-      // 再建立 reply message
-      const replyMsg = await ReplyMessage.findOne({
+      //刪除舊有的 replyMessage 資料
+      const replyMsgDestroy = await ReplyMessage.destroy({
         where: {
-          uuid: replyMessage && replyMessage.uuid ? replyMessage.uuid : null
+          ModuleKeywordId: moduleKeyword.id
+        }
+      })
+      //刪除舊有的 textEvents 資料
+      const textEventsDestroy = await TextEvent.destroy({
+        where: {
+          ModuleKeywordId: moduleKeyword.id
         }
       })
 
-      console.log('replyMsg:', replyMsg)
-      //修改並存檔
-      if (replyMsg) {
-        replyMsg.type = replyMessage && replyMessage.type ? replyMessage.type : null
+      //重新建立 replyMessage
+      const replyMsgCreate = await ReplyMessage.create({
+        type: replyMessage.type ? replyMessage.type : null,
+        name: replyMessage.name ? replyMessage.name : '',
+        uuid: uuidv4(),
+        // replyMsgCount: 0, //之後用不到
+        // readMsgCount: 0, //之後用不到
+        messageTemplate: replyMessage.messageTemplate,
+        status: 'in-use',
+        ChatbotId: ChatbotId,
+        ModuleKeywordId: moduleKeyword.id
+      })
 
-        replyMsg.name = replyMessage && replyMessage.name ? replyMessage.name : ''
 
-        replyMsg.replyMsgCount = 0
-        replyMsg.readMsgCount = 0
+      //建立 keyword=>未完成
 
-        replyMsg.messageTemplate = replyMessage && replyMessage.messageTemplate ? replyMessage.messageTemplate : {}
-
-        replyMsg.status = replyMessage && replyMessage.status ? replyMessage.status : "edited"
-
-        replyMsg.ChatbotId = ChatbotId
-        replyMsg.ModuleKeywordId = moduleKeyword.id
-
-        await replyMsg.save()
-      } else {
-        return callback({
-          status: 'error',
-          message: '儲存失敗，請確認資料正確性'
-        })
-      }
-
-      // 搜尋 text events
+      //重新建立 textEvents
       const createTextEvents = []
       for (i = 0; i < textEvents.length; i++) {
-        createTextEvents.push(await TextEvent.findOne({
-          where: {
-            uuid: textEvents[i] && textEvents[i].uuid ? textEvents[i].uuid : null
-          }
+        createTextEvents.push(await TextEvent.create({
+          type: textEvents[i].type ? textEvents[i].type : '',
+          uuid: uuidv4(),
+          text: textEvents[i].text ? textEvents[i].text : '',
+          // textEventCount:0, //用不到了
+          ReplyMessageId: replyMsgCreate.id,
+          ChatbotId: ChatbotId,
+          ModuleKeywordId: moduleKeyword.id
         }))
       }
 
       // 修改並儲存 text events
       Promise.all(createTextEvents)
         .then(async (_textEvents) => {
-          console.log('_textEvents:', _textEvents)
-
-          try {
-            for (i = 0; i < textEvents.length; i++) {
-              if (_textEvents[i]) {
-                _textEvents[i].type = textEvents[i] && textEvents[i].type ? textEvents[i].type : 'text'
-
-                _textEvents[i].text = textEvents[i] && textEvents[i].text ? textEvents[i].text : ''
-
-                _textEvents[i].ReplyMessageId = replyMsg && replyMsg.id ? replyMsg.id : null
-
-                _textEvents[i].ChatbotId = ChatbotId
-
-                //存檔
-                await _textEvents[i].save()
-              }
-            }
-          } catch (err) {
-            const data = {
-              status: "success",
-              message: "資料存取失敗，請稍後再試",
-              error: err.message
-            }
-            callback(data)
-          }
           //存取成功，匯出訊息
-          if (moduleKeyword && replyMsg && _textEvents) {
+          if (moduleKeyword && replyMsgCreate && _textEvents) {
             const data = {
               status: "success",
               message: "資料存取成功",
               data: {
                 moduleKeywordId: moduleKeyword,
-                replyMessage: replyMsg,
+                replyMessage: replyMsgCreate,
                 textEvents: _textEvents
               }
             }
