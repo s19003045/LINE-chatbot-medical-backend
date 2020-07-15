@@ -7,9 +7,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,  //使用者呼叫次數
       defaultValue: 0
     },
-  }, {});
+  }, {
+    paranoid: true
+  });
   Keyword.associate = function (models) {
-    Keyword.belongsToMany(User, { through: models.KeywordUsers });
+    Keyword.belongsToMany(models.User, { through: 'KeywordUsers' });
     Keyword.belongsTo(models.Chatbot)
   };
   return Keyword;

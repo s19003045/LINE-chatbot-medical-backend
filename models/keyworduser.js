@@ -7,7 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     UserId: {
       type: DataTypes.INTEGER,
     }
-  }, {});
+  }, {
+    paranoid: true
+  });
   KeywordUser.associate = function (models) {
     // associations can be defined here
   };
