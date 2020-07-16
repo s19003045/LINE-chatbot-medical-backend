@@ -421,16 +421,14 @@ const replyMsgService = {
         where: {
           ChatbotId: ChatbotId
         },
+        attributes: ['name', 'uuid', 'status'],
         include: [
           {
             model: ReplyMessage,
-            include: [
-              {
-                model: TextEvent
-              }
-            ]
+            attributes: ['type', 'name', 'uuid', 'messageTemplate', 'status']
           }, {
-            model: TextEvent
+            model: TextEvent,
+            attributes: ['type', 'uuid', 'text']
           }
         ]
       })
