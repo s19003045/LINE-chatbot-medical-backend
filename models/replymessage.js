@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     ChatbotId: DataTypes.INTEGER, //FK
     ModuleKeywordId: DataTypes.INTEGER, //FK
     ModulePostBackId: DataTypes.INTEGER, //FK
+    moduleKeywordUuid: DataTypes.STRING,
   }, {
     paranoid: true,
   });

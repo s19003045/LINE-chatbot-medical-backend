@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     ReplyMessageId: DataTypes.INTEGER, //FK
     ChatbotId: DataTypes.INTEGER, //FK
     ModuleKeywordId: DataTypes.INTEGER, //FK
+    moduleKeywordUuid: DataTypes.STRING,
   }, {
     paranoid: true
   });
