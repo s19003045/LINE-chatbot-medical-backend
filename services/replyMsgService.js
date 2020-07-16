@@ -25,14 +25,22 @@ const replyMsgService = {
       })
     }
 
-    const moduleKeyword = await ModuleKeyword.create({
+    const moduleKeywordCreate = await ModuleKeyword.create({
       name: '',
       uuid: uuidv4(),
-      status: 'edited',
+      status: 'in-use',
       ChatbotId: ChatbotId,
     })
 
-    if (moduleKeyword) {
+    if (moduleKeywordCreate) {
+      const moduleKeyword = {
+        name: moduleKeywordCreate.name,
+        uuid: moduleKeywordCreate.uuid,
+        status: moduleKeywordCreate.status,
+        ReplyMessage: {},
+        TextEvents: []
+      }
+
       return callback({
         status: 'success',
         message: '成功建立模組',
