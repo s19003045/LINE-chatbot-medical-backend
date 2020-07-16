@@ -69,7 +69,7 @@ const replyMsgService = {
 
     const moduleKeywordDelete = await ModuleKeyword.destroy({
       where: {
-        ChatbotId: parseInt(ChatbotId) ? parseInt(ChatbotId) : null,
+        ChatbotId: ChatbotId ? ChatbotId : null,
         uuid: moduleKeywordUuid ? moduleKeywordUuid : null
       }
     })
@@ -78,9 +78,7 @@ const replyMsgService = {
       return callback({
         status: 'success',
         message: '成功刪除模組',
-        data: {
-          moduleKeywordDelete: moduleKeywordDelete
-        }
+        data: null
       })
     } else {
       return callback({
