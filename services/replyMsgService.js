@@ -278,7 +278,10 @@ const replyMsgService = {
   // 儲存關鍵字回覆模組
   postKeywordReply: async (req, res, callback) => {
     try {
-      const { ChatbotId, module, textEvents, replyMessage } = req.body
+      let { ChatbotId, module, textEvents, replyMessage } = req.body
+
+      replyMessage = replyMessage ? replyMessage : {}
+      textEvents = textEvents ? textEvents : []
 
       //驗證資料正確性
       if (!ChatbotId || !module || !replyMessage || !textEvents) {
@@ -293,16 +296,18 @@ const replyMsgService = {
       const moduleKeyword = await ModuleKeyword.findOne({
         where: {
           uuid: module && module.uuid ? module.uuid : null
-        }
+        },
+        attributes: ['id', 'name', 'uuid', 'status']
       })
 
+      let _moduleKeyword
       //修改並存檔
       if (moduleKeyword) {
         moduleKeyword.name = module && module.name ? module.name : ''
-        moduleKeyword.status = module && module.status ? module.status : 'edited'
-        moduleKeyword.ChatbotId = ChatbotId
+        moduleKeyword.status = module && module.status ? module.status : 'in-use'
+        moduleKeyword.uuid = uuidv4() //新的 uuid
         //存檔
-        await moduleKeyword.save()
+        _moduleKeyword = await moduleKeyword.save()
       } else {
         return callback({
           status: 'error',
@@ -310,34 +315,39 @@ const replyMsgService = {
         })
       }
 
-      //刪除舊有的 replyMessage 資料
-      const replyMsgDestroy = await ReplyMessage.destroy({
-        where: {
-          ModuleKeywordId: moduleKeyword.id
-        }
-      })
-      //刪除舊有的 textEvents 資料
-      const textEventsDestroy = await TextEvent.destroy({
-        where: {
-          ModuleKeywordId: moduleKeyword.id
-        }
-      })
-
+      //使用新的 module uuid 來建立 replyMessage
       //重新建立 replyMessage
       const replyMsgCreate = await ReplyMessage.create({
-        type: replyMessage.type ? replyMessage.type : null,
+        type: replyMessage.type ? replyMessage.type : '',
         name: replyMessage.name ? replyMessage.name : '',
         uuid: uuidv4(),
         // replyMsgCount: 0, //之後用不到
         // readMsgCount: 0, //之後用不到
-        messageTemplate: replyMessage.messageTemplate,
+        messageTemplate: replyMessage.messageTemplate ? replyMessage.messageTemplate : {},
         status: 'in-use',
         ChatbotId: ChatbotId,
-        ModuleKeywordId: moduleKeyword.id
+        ModuleKeywordId: _moduleKeyword.id,
+        moduleKeywordUuid: _moduleKeyword.uuid
       })
 
+      //刪除舊有的 replyMessage 資料
+      const replyMsgDestroy = await ReplyMessage.destroy({
+        where: {
+          moduleKeywordUuid: module.uuid
+        }
+      })
 
-      //建立 keyword=>未完成
+      //建立 keyword
+      const keywordsCreate = []
+      for (let i = 0; i < textEvents.length; i++) {
+        keywordsCreate.push(await Keyword.findOrCreate({
+          where: {
+            name: textEvents[i].text,
+            ChatbotId: ChatbotId,
+            UsedCount: 0
+          }
+        }))
+      }
 
       //重新建立 textEvents
       const createTextEvents = []
@@ -346,23 +356,30 @@ const replyMsgService = {
           type: textEvents[i].type ? textEvents[i].type : '',
           uuid: uuidv4(),
           text: textEvents[i].text ? textEvents[i].text : '',
-          // textEventCount:0, //用不到了
           ReplyMessageId: replyMsgCreate.id,
           ChatbotId: ChatbotId,
-          ModuleKeywordId: moduleKeyword.id
+          ModuleKeywordId: _moduleKeyword.id,
+          moduleKeywordUuid: _moduleKeyword.uuid
         }))
       }
+
+      //刪除舊有的 textEvents 資料
+      const textEventsDestroy = await TextEvent.destroy({
+        where: {
+          moduleKeywordUuid: module.uuid,
+        }
+      })
 
       // 修改並儲存 text events
       Promise.all(createTextEvents)
         .then(async (_textEvents) => {
           //存取成功，匯出訊息
-          if (moduleKeyword && replyMsgCreate && _textEvents) {
+          if (_moduleKeyword && replyMsgCreate && _textEvents) {
             const data = {
               status: "success",
               message: "資料存取成功",
               data: {
-                moduleKeywordId: moduleKeyword,
+                moduleKeyword: _moduleKeyword,
                 replyMessage: replyMsgCreate,
                 textEvents: _textEvents
               }
