@@ -470,7 +470,6 @@ const replyMsgService = {
           uuid: module && module.uuid ? module.uuid : null
         }
       })
-      console.log('moduleKeyword:', moduleKeyword)
 
       // 刪除 moduleKeyword
       if (moduleKeyword) {
@@ -486,7 +485,6 @@ const replyMsgService = {
         }
       })
 
-      console.log('replyMsg:', replyMsg)
       // 刪除 reply message
       if (replyMsg) {
         replyMsg.status = "archived"
@@ -524,7 +522,6 @@ const replyMsgService = {
     try {
 
       const { ChatbotId } = req.query
-      console.log('ChatbotId:', ChatbotId)
 
       const modulePostBack = await ModulePostBack.findAll({
         where: {
