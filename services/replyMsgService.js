@@ -561,8 +561,54 @@ const replyMsgService = {
       }
       callback(data)
     }
+  // 新增 postback module
+  createModulePostBack: async (req, res, callback) => {
+    try {
+      const { ChatbotId } = req.body
 
+      //驗證資料正確性
+      if (!ChatbotId) {
+        return callback({
+          status: 'error',
+          message: '新增失敗，請確認資料正確性'
+        })
+      }
 
+      const modulePostBackCreate = await ModulePostBack.create({
+        name: '',
+        uuid: uuidv4(),
+        status: 'in-use',
+        ChatbotId: ChatbotId,
+      })
+
+      if (modulePostBackCreate) {
+        const moduleKeyword = {
+          name: modulePostBackCreate.name,
+          uuid: modulePostBackCreate.uuid,
+          status: modulePostBackCreate.status,
+          ReplyMessage: {},
+          PostBackEvents: []
+        }
+
+        return callback({
+          status: 'success',
+          message: '成功建立模組',
+          data: {
+            modulePostBackCreate: modulePostBackCreate
+          }
+        })
+      } else {
+        return callback({
+          status: 'failed',
+          message: '新增模組失敗，請稍後再試'
+        })
+      }
+    } catch (err) {
+      return callback({
+        status: 'failed',
+        message: '新增模組失敗，請稍後再試'
+      })
+    }
   },
 }
 module.exports = replyMsgService
