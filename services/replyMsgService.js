@@ -527,12 +527,18 @@ const replyMsgService = {
         where: {
           ChatbotId: ChatbotId
         },
+        attributes: [
+          "name", "uuid", "status",
+        ],
         include: [
           {
-            model: PostBackEvent
-          }, {
-            model: ReplyMessage
-          }
+            model: ReplyMessage,
+            attributes: ['type', 'name', 'uuid', 'messageTemplate', 'status']
+          },
+          {
+            model: PostBackEvent,
+            attributes: ['name', 'eventType', 'uuid', 'subject', 'data']
+          },
         ]
       })
 
