@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     ReplyMessageId: DataTypes.INTEGER,  // FK
     ChatbotId: DataTypes.INTEGER,  // FK
     ModulePostBackId: DataTypes.INTEGER,  // FK
+    modulePostBackUuid: DataTypes.STRING,
   }, {
     paranoid: true,
   });
