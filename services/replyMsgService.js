@@ -616,5 +616,127 @@ const replyMsgService = {
       })
     }
   },
+  // 儲存回傳動作(postback)回應模組
+  postPostBackReply: async (req, res, callback) => {
+    try {
+      let { ChatbotId, module, postBackEvents, replyMessage } = req.body
+
+      replyMessage = replyMessage ? replyMessage : {}
+      postBackEvents = postBackEvents ? postBackEvents : []
+
+      //驗證資料正確性
+      if (!ChatbotId || !module || !replyMessage || !postBackEvents) {
+        return callback({
+          status: 'error',
+          message: '存取失敗，請確認資料正確性'
+        })
+      }
+
+      // modulePostBack於使用者點選新增模組時，即向 API 請求建立一筆並回傳 uuid 等資訊
+      // 先確認 modulePostBack 是否已建立
+      const modulePostBack = await ModulePostBack.findOne({
+        where: {
+          uuid: module && module.uuid ? module.uuid : null
+        },
+        attributes: ['id', 'name', 'uuid']
+      })
+
+      let _modulePostBack
+      //修改並存檔
+      if (modulePostBack) {
+        modulePostBack.name = module && module.name ? module.name : ''
+        modulePostBack.status = module && module.status ? module.status : 'in-use'
+        modulePostBack.uuid = uuidv4() //新的 uuid
+        //存檔
+        _modulePostBack = await modulePostBack.save()
+      } else {
+        return callback({
+          status: 'error',
+          message: '存取失敗，請確認資料正確性'
+        })
+      }
+
+      //使用新的 module uuid 來建立 replyMessage
+      //重新建立 replyMessage
+      const replyMsgCreate = await ReplyMessage.create({
+        type: replyMessage.type ? replyMessage.type : '',
+        name: replyMessage.name ? replyMessage.name : '',
+        uuid: uuidv4(),
+        // replyMsgCount: 0, //之後用不到
+        // readMsgCount: 0, //之後用不到
+        messageTemplate: replyMessage.messageTemplate ? replyMessage.messageTemplate : {},
+        status: 'in-use',
+        ChatbotId: ChatbotId,
+        ModulePostBackId: _modulePostBack.id,
+        modulePostBackUuid: _modulePostBack.uuid
+      })
+
+      //刪除舊有的 replyMessage 資料
+      const replyMsgDestroy = await ReplyMessage.destroy({
+        where: {
+          modulePostBackUuid: module.uuid
+        }
+      })
+
+
+      //重新建立 postBackEvents
+      const createPostBackEvents = []
+      for (i = 0; i < postBackEvents.length; i++) {
+        createPostBackEvents.push(await PostBackEvent.create({
+          name: postBackEvents[i].name ? postBackEvents[i].name : '',
+          eventType: postBackEvents[i].eventType ? postBackEvents[i].eventType : '',
+          uuid: uuidv4(),
+          subject: postBackEvents[i].subject ? postBackEvents[i].subject : '',
+          data: postBackEvents[i].data ? postBackEvents[i].data : '',
+          ReplyMessageId: replyMsgCreate.id,
+          ChatbotId: ChatbotId,
+          ModulePostBackId: _modulePostBack.id,
+          modulePostBackUuid: _modulePostBack.uuid
+        }))
+      }
+
+      //刪除舊有的 postBackEvents 資料
+      const postBackEventsDestroy = await PostBackEvent.destroy({
+        where: {
+          modulePostBackUuid: module.uuid,
+        }
+      })
+
+      // 修改並儲存 postBackEvents
+      Promise.all(createPostBackEvents)
+        .then(async (_postBackEvents) => {
+          //存取成功，匯出訊息
+          if (_modulePostBack && replyMsgCreate && _postBackEvents) {
+            const data = {
+              status: "success",
+              message: "資料存取成功",
+              data: {
+                modulePostBack: _modulePostBack,
+                replyMessage: replyMsgCreate,
+                postBackEvents: _postBackEvents
+              }
+            }
+            callback(data)
+          }
+        })
+        .catch((err) => {
+          const data = {
+            status: "success",
+            message: "資料存取失敗，請稍後再試",
+            error: err.message
+          }
+          callback(data)
+        })
+
+    } catch (err) {
+      const data = {
+        status: "error",
+        message: "系統錯誤,請稍後重試",
+        error: err.message
+      }
+      callback(data)
+    }
+  },
+
 }
 module.exports = replyMsgService

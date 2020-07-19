@@ -77,6 +77,13 @@ const replyMsgController = {
       return res.json(data)
     })
   },
+  // 儲存回傳動作(postback)回應模組
+  postPostBackReply: (req, res) => {
+    return replyMsgService.postPostBackReply(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+
 }
 
 module.exports = replyMsgController

@@ -38,6 +38,8 @@ router.delete('/bots/:botId/keyword-reply', replyMsgController.deleteKeywordRepl
 router.post('/bots/:botId/module-postback', replyMsgController.createModulePostBack)
 // 取得回傳動作(postback)回應模組
 router.get('/bots/:botId/postback-reply', replyMsgController.getPostBackReply)
+// 儲存回傳動作(postback)回應模組
+router.post('/bots/:botId/postback-reply', replyMsgController.postPostBackReply)
 
 
 // 分析模組-取得關鍵字模組使用數據
