@@ -520,10 +520,9 @@ const replyMsgService = {
   // 取得回傳動作(postback)回應模組
   getPostBackReply: async (req, res, callback) => {
     try {
-
       const { ChatbotId } = req.query
 
-      const modulePostBack = await ModulePostBack.findAll({
+      const modulePostBacks = await ModulePostBack.findAll({
         where: {
           ChatbotId: ChatbotId
         },
@@ -542,12 +541,12 @@ const replyMsgService = {
         ]
       })
 
-      if (modulePostBack) {
+      if (modulePostBacks) {
         const data = {
           status: "success",
           message: "成功取得資料",
           data: {
-            modulePostBack: modulePostBack
+            modulePostBacks: modulePostBacks
           }
         }
         callback(data)
@@ -567,6 +566,7 @@ const replyMsgService = {
       }
       callback(data)
     }
+  },
   // 新增 postback module
   createModulePostBack: async (req, res, callback) => {
     try {
