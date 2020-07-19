@@ -36,6 +36,8 @@ router.delete('/bots/:botId/keyword-reply', replyMsgController.deleteKeywordRepl
 
 // 新增 postback module
 router.post('/bots/:botId/module-postback', replyMsgController.createModulePostBack)
+// 刪除 postback module
+router.delete('/bots/:botId/module-postback', replyMsgController.deleteModulePostBack)
 // 取得回傳動作(postback)回應模組
 router.get('/bots/:botId/postback-reply', replyMsgController.getPostBackReply)
 // 儲存回傳動作(postback)回應模組

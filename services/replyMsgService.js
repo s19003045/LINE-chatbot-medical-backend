@@ -616,6 +616,38 @@ const replyMsgService = {
       })
     }
   },
+  // 刪除 postback module
+  deleteModulePostBack: async (req, res, callback) => {
+    const { ChatbotId, modulePostBackUuid } = req.query
+
+    //驗證資料正確性
+    if (!ChatbotId || !modulePostBackUuid) {
+      return callback({
+        status: 'error',
+        message: '新增失敗，請確認資料正確性'
+      })
+    }
+
+    const modulePostBackDelete = await ModulePostBack.destroy({
+      where: {
+        ChatbotId: ChatbotId ? ChatbotId : null,
+        uuid: modulePostBackUuid ? modulePostBackUuid : null
+      }
+    })
+
+    if (modulePostBackDelete > 0) {
+      return callback({
+        status: 'success',
+        message: '成功刪除模組',
+        data: null
+      })
+    } else {
+      return callback({
+        status: 'failed',
+        message: '刪除模組失敗，請稍後再試'
+      })
+    }
+  },
   // 儲存回傳動作(postback)回應模組
   postPostBackReply: async (req, res, callback) => {
     try {

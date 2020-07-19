@@ -71,6 +71,12 @@ const replyMsgController = {
       return res.json(data)
     })
   },
+  // 刪除 postback module
+  deleteModulePostBack: (req, res) => {
+    return replyMsgService.deleteModulePostBack(req, res, (data) => {
+      return res.json(data)
+    })
+  },
   // 取得回傳動作(postback)回應模組
   getPostBackReply: (req, res) => {
     return replyMsgService.getPostBackReply(req, res, (data) => {
