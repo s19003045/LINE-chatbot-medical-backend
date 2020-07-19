@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     ModuleKeywordId: DataTypes.INTEGER, //FK
     ModulePostBackId: DataTypes.INTEGER, //FK
     moduleKeywordUuid: DataTypes.STRING,
+    modulePostBackUuid: DataTypes.STRING,
   }, {
     paranoid: true,
   });
