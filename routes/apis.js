@@ -8,14 +8,16 @@ const analysisController = require('../controllers/apis/analysisController')
 router.post('/bots/:botId/module-keyword', replyMsgController.createModuleKeyword)
 // 刪除 module keyword
 router.delete('/bots/:botId/module-keyword', replyMsgController.deleteModuleKeyword)
-// 新增 reply message
-router.post('/bots/:botId/reply-message', replyMsgController.createReplyMessage)
-// 刪除 reply message
-router.delete('/bots/:botId/reply-message', replyMsgController.deleteReplyMessage)
-// 新增 text event
-router.post('/bots/:botId/text-event', replyMsgController.createTextEvent)
-// 刪除 text event
-router.delete('/bots/:botId/text-event', replyMsgController.deleteTextEvent)
+
+// //====以下 API 暫時用不到===
+// // 新增 reply message
+// router.post('/bots/:botId/reply-message', replyMsgController.createReplyMessage)
+// // 刪除 reply message
+// router.delete('/bots/:botId/reply-message', replyMsgController.deleteReplyMessage)
+// // 新增 text event
+// router.post('/bots/:botId/text-event', replyMsgController.createTextEvent)
+// // 刪除 text event
+// router.delete('/bots/:botId/text-event', replyMsgController.deleteTextEvent)
 
 // 新增關鍵字
 router.post('/bots/:botId/keyword', replyMsgController.createKeyword)
