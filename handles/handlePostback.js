@@ -10,14 +10,6 @@ const ModulePostBack = db.ModulePostBack
 const querystring = require('querystring');
 // base URL for webhook server
 let baseURL = process.env.BASE_URL;
-// 模擬資料庫：用於 carousel template，統計投票結果
-let fake_candidates =
-  [
-    { id: 1, name: 'doris', vote: 0 },
-    { id: 2, name: 'ken', vote: 0 },
-    { id: 3, name: 'eric', vote: 0 },
-    { id: 4, name: 'richfather', vote: 0 },
-  ]
 
 // 處理 postback 訊息
 function handlePostback(event, client, replyText) {

@@ -14,15 +14,11 @@ const ModuleKeyword = db.ModuleKeyword
 const { Op } = require("sequelize")
 
 function handleText(message, replyToken, source, client, replyText) {
-  let replyMsg
-  const imageURL = `${baseURL}/public/images`
-  const videoURL = `${baseURL}/public/videos`
-  const audioURL = `${baseURL}/public/audios`
-
   //關鍵字相符情形：等於、包含、不包含
   //文字開頭是、文字結尾是
   //數字相符情形：>=、>、=、<=、<
   console.log(message.text)
+
   //字串完全相符
   return TextEvent.findOne({
     where: {
