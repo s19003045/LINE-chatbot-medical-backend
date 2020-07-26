@@ -381,7 +381,54 @@ const replyMsgService = {
   },
   // 刪除 replyModule
   deleteReplyModule: async (req, res, callback) => {
-    callback('刪除 replyModule')
+    try {
+      const { ChatbotId, ReplyModuleUuid } = req.body
+
+      //驗證資料正確性
+      if (!ChatbotId || !ReplyModuleUuid) {
+        return callback({
+          status: 'error',
+          message: '存取失敗，請確認資料正確性'
+        })
+      }
+      //先找出該筆資料
+      const replyModule = await ReplyModule.findOne({
+        where: {
+          uuid: ReplyModuleUuid,
+          ChatbotId: ChatbotId ? ChatbotId : null,
+        }
+      })
+
+      if (replyModule) {
+        //變更 status
+        replyModule.status = 'archived'
+        // soft delete
+        const replyModuleDelete = await replyModule.destroy()
+
+        if (replyModuleDelete) {
+          return callback({
+            status: 'success',
+            message: '成功存取資料',
+            data: null
+          })
+        } else {
+          return callback({
+            status: 'error',
+            message: '存取失敗，請稍後再試',
+          })
+        }
+      } else {
+        return callback({
+          status: 'error',
+          message: '存取失敗，請稍後再試',
+        })
+      }
+    } catch (err) {
+      return callback({
+        status: 'error',
+        message: '系統異常，請稍後再試',
+      })
+    }
   },
   // 儲存 replyModule
   putReplyModule: async (req, res, callback) => {
