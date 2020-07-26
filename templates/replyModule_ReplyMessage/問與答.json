@@ -1,0 +1,29 @@
+{
+  "type": "template",
+  "altText": "this is a buttons template",
+  "template": {
+    "type": "buttons",
+    "actions": [
+      {
+        "type": "postback",
+        "label": "懷孕初期",
+        "displayText": "懷孕初期",
+        "data": "action=triggerReply&triggerModuleId="
+      },
+      {
+        "type": "postback",
+        "label": "懷孕中期",
+        "displayText": "懷孕中期",
+        "data": "action=triggerReply&triggerModuleId="
+      },
+      {
+        "type": "postback",
+        "label": "懷孕後期",
+        "displayText": "懷孕後期",
+        "data": "action=triggerReply&triggerModuleId="
+      }
+    ],
+    "title": "問與答",
+    "text": "請選擇要查詢的類別："
+  }
+}

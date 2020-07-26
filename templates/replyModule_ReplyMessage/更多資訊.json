@@ -1,0 +1,35 @@
+{
+  "type": "text",
+  "text": "請選擇你要查詢的類別：",
+  "quickReply": {
+    "items": [
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "產前相關資訊",
+          "displayText": "產前相關資訊",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "待產相關資訊",
+          "displayText": "待產相關資訊",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "產後相關資訊",
+          "displayText": "產後相關資訊",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      }
+    ]
+  }
+}

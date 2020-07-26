@@ -1,0 +1,53 @@
+{
+  "type": "text",
+  "text": "請選擇你要查詢的孕期：",
+  "quickReply": {
+    "items": [
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "不限週數",
+          "displayText": "不限週數",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "第一孕期",
+          "displayText": "第一孕期",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "第二孕期",
+          "displayText": "第二孕期",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "第三孕期",
+          "displayText": "第三孕期",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "回前一頁",
+          "displayText": "回前一頁",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      }
+    ]
+  }
+}

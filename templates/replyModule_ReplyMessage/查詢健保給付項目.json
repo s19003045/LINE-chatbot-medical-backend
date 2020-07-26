@@ -1,0 +1,125 @@
+{
+  "type": "text",
+  "text": "請選擇你要查詢的類別：",
+  "quickReply": {
+    "items": [
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "例行檢查項目",
+          "displayText": "例行檢查項目",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "9~12週",
+          "displayText": "9~12週",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "13~16週",
+          "displayText": "13~16週",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "17~20週",
+          "displayText": "17~20週",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "21~24週",
+          "displayText": "21~24週",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "25~28週",
+          "displayText": "25~28週",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "29~30週",
+          "displayText": "29~30週",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "31~32週",
+          "displayText": "31~32週",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "33~34週",
+          "displayText": "33~34週",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "35~36週",
+          "displayText": "35~36週",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "37~38週",
+          "displayText": "37~38週",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "39~40週",
+          "displayText": "39~40週",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      },
+      {
+        "type": "action",
+        "action": {
+          "type": "postback",
+          "label": "回前一頁",
+          "displayText": "回前一頁",
+          "data": "action=triggerReply&triggerModuleId="
+        }
+      }
+    ]
+  }
+}
