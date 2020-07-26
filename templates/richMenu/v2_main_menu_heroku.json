@@ -1,0 +1,89 @@
+{
+  "size": {
+    "width": 2500,
+    "height": 1686
+  },
+  "selected": true,
+  "name": "main menu",
+  "chatBarText": "服務選單",
+  "areas": [
+    {
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 833,
+        "height": 843
+      },
+      "action": {
+        "type": "postback",
+        "displayText": "產前檢查",
+        "data": "action=triggerReply&triggerModuleId=1"
+      }
+    },
+    {
+      "bounds": {
+        "x": 0,
+        "y": 843,
+        "width": 833,
+        "height": 843
+      },
+      "action": {
+        "type": "postback",
+        "displayText": "生理記錄",
+        "data": "action=triggerReply&triggerModuleId=61"
+      }
+    },
+    {
+      "bounds": {
+        "x": 833,
+        "y": 0,
+        "width": 833,
+        "height": 843
+      },
+      "action": {
+        "type": "postback",
+        "displayText": "孕期衛教",
+        "data": "action=triggerReply&triggerModuleId=41"
+      }
+    },
+    {
+      "bounds": {
+        "x": 833,
+        "y": 843,
+        "width": 833,
+        "height": 843
+      },
+      "action": {
+        "type": "postback",
+        "displayText": "問與答",
+        "data": "action=triggerReply&triggerModuleId=71"
+      }
+    },
+    {
+      "bounds": {
+        "x": 1666,
+        "y": 0,
+        "width": 833,
+        "height": 843
+      },
+      "action": {
+        "type": "postback",
+        "displayText": "胎兒成長",
+        "data": "action=triggerReply&triggerModuleId=51"
+      }
+    },
+    {
+      "bounds": {
+        "x": 1666,
+        "y": 843,
+        "width": 833,
+        "height": 843
+      },
+      "action": {
+        "type": "postback",
+        "displayText": "更多資訊",
+        "data": "action=triggerReply&triggerModuleId=81"
+      }
+    }
+  ]
+}
