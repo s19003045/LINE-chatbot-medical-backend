@@ -30,8 +30,8 @@ router.put('/bots/:botId/keyword', replyMsgController.putKeyword)
 
 // 新增 replyModule
 router.post('/bots/:botId/reply-module', replyMsgController.createReplyModule)
-// 取得 replyModule
-router.get('/bots/:botId/reply-module', replyMsgController.getReplyModule)
+// 取得 replyModules
+router.get('/bots/:botId/reply-module', replyMsgController.getReplyModules)
 // 刪除 replyModule
 router.delete('/bots/:botId/reply-module', replyMsgController.deleteReplyModule)
 // 儲存 replyModule

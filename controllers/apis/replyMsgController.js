@@ -72,9 +72,9 @@ const replyMsgController = {
       return res.json(data)
     })
   },
-  // 取得 replyModule
-  getReplyModule: (req, res) => {
-    return replyMsgService.getReplyModule(req, res, (data) => {
+  // 取得 replyModules
+  getReplyModules: (req, res) => {
+    return replyMsgService.getReplyModules(req, res, (data) => {
       return res.json(data)
     })
   },

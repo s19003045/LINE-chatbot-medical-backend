@@ -338,9 +338,46 @@ const replyMsgService = {
       })
     }
   },
-  // 取得 replyModule
-  getReplyModule: async (req, res, callback) => {
-    callback('取得 replyModule')
+  // 取得 replyModules
+  getReplyModules: async (req, res, callback) => {
+    try {
+      const { ChatbotId } = req.query
+
+      //驗證資料正確性
+      if (!ChatbotId) {
+        return callback({
+          status: 'error',
+          message: '新增失敗，請確認資料正確性'
+        })
+      }
+
+      const replyModules = await ReplyModule.findAll({
+        where: {
+          ChatbotId: ChatbotId,
+        }
+      })
+
+      if (replyModules) {
+        return callback({
+          status: 'success',
+          message: '成功建立關鍵字',
+          data: {
+            replyModules: replyModules
+          }
+        })
+      } else {
+        return callback({
+          status: 'error',
+          message: '建立失敗，請稍後再試',
+        })
+      }
+
+    } catch (err) {
+      return callback({
+        status: 'error',
+        message: '系統異常，請稍後再試',
+      })
+    }
   },
   // 刪除 replyModule
   deleteReplyModule: async (req, res, callback) => {
