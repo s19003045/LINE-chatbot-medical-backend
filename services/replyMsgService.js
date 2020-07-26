@@ -304,7 +304,7 @@ const replyMsgService = {
       if (!ChatbotId) {
         return callback({
           status: 'error',
-          message: '新增失敗，請確認資料正確性'
+          message: '存取失敗，請確認資料正確性'
         })
       }
 
@@ -319,7 +319,7 @@ const replyMsgService = {
       if (replyModuleCreate) {
         return callback({
           status: 'success',
-          message: '成功建立關鍵字',
+          message: '成功存取',
           data: {
             replyModule: replyModuleCreate
           }
@@ -327,7 +327,7 @@ const replyMsgService = {
       } else {
         return callback({
           status: 'error',
-          message: '建立失敗，請稍後再試',
+          message: '存取失敗，請稍後再試',
         })
       }
 
@@ -347,7 +347,7 @@ const replyMsgService = {
       if (!ChatbotId) {
         return callback({
           status: 'error',
-          message: '新增失敗，請確認資料正確性'
+          message: '存取失敗，請確認資料正確性'
         })
       }
 
@@ -360,7 +360,7 @@ const replyMsgService = {
       if (replyModules) {
         return callback({
           status: 'success',
-          message: '成功建立關鍵字',
+          message: '成功存取資料',
           data: {
             replyModules: replyModules
           }
@@ -368,7 +368,7 @@ const replyMsgService = {
       } else {
         return callback({
           status: 'error',
-          message: '建立失敗，請稍後再試',
+          message: '存取失敗，請稍後再試',
         })
       }
 
