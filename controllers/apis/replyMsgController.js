@@ -38,9 +38,55 @@ const replyMsgController = {
     })
   },
 
+
+  //========= keyword =========
   // 新增關鍵字
   createKeyword: (req, res) => {
     return replyMsgService.createKeyword(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+  // 取得關鍵字
+  getKeyword: (req, res) => {
+    return replyMsgService.getKeyword(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+  // 刪除關鍵字
+  deleteKeyword: (req, res) => {
+    return replyMsgService.deleteKeyword(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+  // 儲存關鍵字
+  putKeyword: (req, res) => {
+    return replyMsgService.putKeyword(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+
+  //========= replyModule =========
+  // 新增 replyModule
+  createReplyModule: (req, res) => {
+    return replyMsgService.createReplyModule(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+  // 取得 replyModule
+  getReplyModule: (req, res) => {
+    return replyMsgService.getReplyModule(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+  // 刪除 replyModule
+  deleteReplyModule: (req, res) => {
+    return replyMsgService.deleteReplyModule(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+  // 儲存 replyModule
+  putReplyModule: (req, res) => {
+    return replyMsgService.putReplyModule(req, res, (data) => {
       return res.json(data)
     })
   },

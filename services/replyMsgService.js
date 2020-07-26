@@ -223,6 +223,7 @@ const replyMsgService = {
     }
   },
 
+
   // 新增關鍵字
   createKeyword: async (req, res, callback) => {
     try {
@@ -279,6 +280,36 @@ const replyMsgService = {
         message: '建立失敗，請稍後再試',
       })
     }
+  },
+  // 取得關鍵字
+  getKeyword: async (req, res, callback) => {
+    callback('取得關鍵字')
+  },
+  // 刪除關鍵字
+  deleteKeyword: async (req, res, callback) => {
+    callback('刪除關鍵字')
+  },
+  // 儲存關鍵字
+  putKeyword: async (req, res, callback) => {
+    callback('儲存關鍵字')
+  },
+
+
+  // 新增 replyModule
+  createReplyModule: async (req, res, callback) => {
+    callback('新增 replyModule')
+  },
+  // 取得 replyModule
+  getReplyModule: async (req, res, callback) => {
+    callback('取得 replyModule')
+  },
+  // 刪除 replyModule
+  deleteReplyModule: async (req, res, callback) => {
+    callback('刪除 replyModule')
+  },
+  // 儲存 replyModule
+  putReplyModule: async (req, res, callback) => {
+    callback('儲存 replyModule')
   },
 
   // 儲存關鍵字回覆模組

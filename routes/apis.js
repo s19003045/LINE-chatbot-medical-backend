@@ -21,7 +21,21 @@ router.delete('/bots/:botId/module-keyword', replyMsgController.deleteModuleKeyw
 
 // 新增關鍵字
 router.post('/bots/:botId/keyword', replyMsgController.createKeyword)
+// 取得關鍵字
+router.get('/bots/:botId/keyword', replyMsgController.getKeyword)
+// 刪除關鍵字
+router.delete('/bots/:botId/keyword', replyMsgController.deleteKeyword)
+// 儲存關鍵字
+router.put('/bots/:botId/keyword', replyMsgController.putKeyword)
 
+// 新增 replyModule
+router.post('/bots/:botId/reply-module', replyMsgController.createReplyModule)
+// 取得 replyModule
+router.get('/bots/:botId/reply-module', replyMsgController.getReplyModule)
+// 刪除 replyModule
+router.delete('/bots/:botId/reply-module', replyMsgController.deleteReplyModule)
+// 儲存 replyModule
+router.put('/bots/:botId/reply-module', replyMsgController.putReplyModule)
 
 
 // 儲存關鍵字回應模組
