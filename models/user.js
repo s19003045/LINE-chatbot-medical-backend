@@ -14,6 +14,8 @@ module.exports = (sequelize, DataTypes) => {
   });
   User.associate = function (models) {
     User.belongsToMany(models.Keyword, { through: 'KeywordUsers' });
+    User.hasMany(models.Chatbot)
+    User.belongsToMany(models.ReplyModule, { through: 'ReplyModuleUser' });
   };
   return User;
 };
