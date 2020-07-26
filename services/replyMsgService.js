@@ -6,7 +6,7 @@ const ModulePostBack = db.ModulePostBack
 const PostBackEvent = db.PostBackEvent
 const Keyword = db.Keyword
 const KeywordUser = db.KeywordUser
-
+const ReplyModule = db.ReplyModule
 
 const { v4: uuidv4 } = require("uuid");
 const client = require("../app");
@@ -297,7 +297,46 @@ const replyMsgService = {
 
   // 新增 replyModule
   createReplyModule: async (req, res, callback) => {
-    callback('新增 replyModule')
+    try {
+      const { ChatbotId } = req.body
+
+      //驗證資料正確性
+      if (!ChatbotId) {
+        return callback({
+          status: 'error',
+          message: '新增失敗，請確認資料正確性'
+        })
+      }
+
+      const replyModuleCreate = await ReplyModule.create({
+        name: '',
+        uuid: uuidv4(),
+        status: 'edited',
+        ChatbotId: ChatbotId,
+        replyMessage: {}
+      })
+
+      if (replyModuleCreate) {
+        return callback({
+          status: 'success',
+          message: '成功建立關鍵字',
+          data: {
+            replyModule: replyModuleCreate
+          }
+        })
+      } else {
+        return callback({
+          status: 'error',
+          message: '建立失敗，請稍後再試',
+        })
+      }
+
+    } catch (err) {
+      return callback({
+        status: 'error',
+        message: '系統異常，請稍後再試',
+      })
+    }
   },
   // 取得 replyModule
   getReplyModule: async (req, res, callback) => {
