@@ -7,31 +7,31 @@ const ModulePostBackIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 const autoIncrementNum = 10; //local DB 設定1，若為 heroku mySQL DB 則須改為10
 
 //1
-const prenatalVisit = require('../templates/postbacks/產前檢查.json')
+const prenatalVisit = require('../../templates/postbacks/產前檢查.json')
 
 //2
-const healthInsuranceExam = require('../templates/postbacks/查詢健保給付項目.json')
+const healthInsuranceExam = require('../../templates/postbacks/查詢健保給付項目.json')
 
 //3
-const atOnesOwnExpenseExam = require('../templates/postbacks/查詢自費項目.json')
+const atOnesOwnExpenseExam = require(../'../templates / postbacks / 查詢自費項目.json')
 
 //4
-const queryExamByWeeks = require('../templates/postbacks/依週期數查詢產檢項目.json')
+const queryExamByWeeks = require('../../templates/postbacks/依週期數查詢產檢項目.json')
 
 //5  孕期衛教.json
-const pregnancyEducation = require('../templates/postbacks/孕期衛教.json')
+const pregnancyEducation = require('../../templates/postbacks/孕期衛教.json')
 
 //6 胎兒成長.json
-const fetusGrowth = require('../templates/postbacks/胎兒成長.json')
+const fetusGrowth = require('../../templates/postbacks/胎兒成長.json')
 
 //7 生理記錄.json
-const healthRecord = require('../templates/postbacks/生理記錄.json')
+const healthRecord = require('../../templates/postbacks/生理記錄.json')
 
 //8 問與答.json
-const questionAndAnswer = require('../templates/postbacks/問與答.json')
+const questionAndAnswer = require('../../templates/postbacks/問與答.json')
 
 //9 更多資訊.json
-const moreInformation = require('../templates/postbacks/更多資訊.json')
+const moreInformation = require('../../templates/postbacks/更多資訊.json')
 
 
 
