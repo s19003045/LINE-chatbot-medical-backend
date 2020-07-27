@@ -282,8 +282,51 @@ const replyMsgService = {
     }
   },
   // 取得關鍵字
-  getKeyword: async (req, res, callback) => {
-    callback('取得關鍵字')
+  getKeywords: async (req, res, callback) => {
+    try {
+      const { ChatbotId } = req.query
+
+      //驗證資料正確性
+      if (!ChatbotId) {
+        return callback({
+          status: 'error',
+          message: '新增失敗，請確認資料正確性'
+        })
+      }
+
+      //搜尋資料
+      const keywordsFind = await Keyword.findAll({
+        where: {
+          ChatbotId: ChatbotId
+        },
+        include: [
+          {
+            model: ReplyModule
+          }
+        ]
+      })
+
+      if (keywordsFind) {
+        return callback({
+          status: 'success',
+          message: '成功存取',
+          data: {
+            keywords: keywordsFind
+          }
+        })
+      } else {
+        return callback({
+          status: 'error',
+          message: '存取失敗，請稍後再試',
+        })
+      }
+    } catch (err) {
+      return callback({
+        status: 'error',
+        message: '系統異常，請稍後再試',
+        err: err
+      })
+    }
   },
   // 刪除關鍵字
   deleteKeyword: async (req, res, callback) => {
@@ -497,7 +540,6 @@ const replyMsgService = {
 
 
 
-  },
 
 
   // 儲存關鍵字回覆模組

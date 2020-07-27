@@ -22,7 +22,7 @@ router.delete('/bots/:botId/module-keyword', replyMsgController.deleteModuleKeyw
 // 新增關鍵字
 router.post('/bots/:botId/keyword', replyMsgController.createKeyword)
 // 取得關鍵字
-router.get('/bots/:botId/keyword', replyMsgController.getKeyword)
+router.get('/bots/:botId/keywords', replyMsgController.getKeywords)
 // 刪除關鍵字
 router.delete('/bots/:botId/keyword', replyMsgController.deleteKeyword)
 // 儲存關鍵字

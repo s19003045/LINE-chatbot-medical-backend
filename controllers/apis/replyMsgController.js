@@ -47,8 +47,8 @@ const replyMsgController = {
     })
   },
   // 取得關鍵字
-  getKeyword: (req, res) => {
-    return replyMsgService.getKeyword(req, res, (data) => {
+  getKeywords: (req, res) => {
+    return replyMsgService.getKeywords(req, res, (data) => {
       return res.json(data)
     })
   },
