@@ -315,7 +315,7 @@ const replyMsgService = {
   // 刪除關鍵字
   deleteKeyword: async (req, res, callback) => {
     try {
-      const { ChatbotId, keywordUuid } = req.body
+      const { ChatbotId, keywordUuid } = req.query
 
       //驗證資料正確性
       if (!ChatbotId || !keywordUuid) {
@@ -511,7 +511,7 @@ const replyMsgService = {
   // 刪除 replyModule
   deleteReplyModule: async (req, res, callback) => {
     try {
-      const { ChatbotId, ReplyModuleUuid } = req.body
+      const { ChatbotId, ReplyModuleUuid } = req.query
 
       //驗證資料正確性
       if (!ChatbotId || !ReplyModuleUuid) {
