@@ -356,7 +356,71 @@ const replyMsgService = {
   },
   // 儲存關鍵字
   putKeyword: async (req, res, callback) => {
-    callback('儲存關鍵字')
+    try {
+      const { ChatbotId, keywords, action } = req.body
+
+      //驗證資料正確性
+      if (!ChatbotId || !keywords || !action) {
+        return callback({
+          status: 'error',
+          message: '存取失敗，請確認資料正確性'
+        })
+      }
+
+      const keywordsUpdateQuery = []
+      // 若 action 為 'edited'，則不改變 keyword.status，若 action 為 'deploy'，則改變 replyModule.status 為 in-use
+      if (action === 'edited') {
+        for (let i = 0; i < keywords.length; i++) {
+          keywordsUpdateQuery.push(await Keyword.update({
+            name: keywords[i].name,
+          }, {
+            where: {
+              ChatbotId: ChatbotId,
+              uuid: keywords[i].uuid,
+            }
+          }))
+        }
+      } else if (action === 'deploy') {
+        for (let i = 0; i < keywords.length; i++) {
+          keywordsUpdateQuery.push(await Keyword.update({
+            name: keywords[i].name,
+            status: 'in-use'
+          }, {
+            where: {
+              ChatbotId: ChatbotId,
+              uuid: keywords[i].uuid,
+            }
+          }))
+        }
+      } else {
+        return callback({
+          status: 'error',
+          message: '存取失敗，請確認資料正確性'
+        })
+      }
+
+      Promise.all(keywordsUpdateQuery)
+        .then(res => {
+          return callback({
+            status: 'success',
+            message: '存取成功',
+            data: res
+          })
+        })
+        .catch(err => {
+          return callback({
+            status: 'error',
+            message: '存取失敗，請稍後再試',
+            err: err
+          })
+        })
+    } catch (err) {
+      return callback({
+        status: 'error',
+        message: '系統異常，請稍後再試',
+        err: err
+      })
+    }
   },
 
 
@@ -544,18 +608,24 @@ const replyMsgService = {
 
       Promise.all(replyModulesUpdateQuery)
         .then(res => {
-          callback(res)
+          return callback({
+            status: 'success',
+            message: '存取成功',
+            data: res
+          })
         })
         .catch(err => {
           return callback({
             status: 'error',
             message: '存取失敗，請稍後再試',
+            err: err
           })
         })
     } catch (err) {
       return callback({
         status: 'error',
         message: '系統異常，請稍後再試',
+        err: err
       })
     }
   },
