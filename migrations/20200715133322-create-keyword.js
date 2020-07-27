@@ -12,12 +12,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      ChatbotId: {
-        type: Sequelize.INTEGER
-      },
-      UsedCount: {
+      usedCount: {
         type: Sequelize.INTEGER,
         defaultValue: 0
+      },
+      ChatbotId: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

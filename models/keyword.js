@@ -7,12 +7,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('edited', 'in-use', 'archived'),  //模組狀態
       defaultValue: 'edited'
     },
-    ChatbotId: DataTypes.INTEGER,
-    UsedCount: {
+    usedCount: {
       type: DataTypes.INTEGER,  //使用者呼叫次數
       defaultValue: 0
     },
     triggerModuleId: DataTypes.INTEGER,
+    ChatbotId: DataTypes.INTEGER,
   }, {
     paranoid: true
   });
