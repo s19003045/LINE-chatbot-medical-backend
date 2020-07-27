@@ -330,7 +330,45 @@ const replyMsgService = {
   },
   // 刪除關鍵字
   deleteKeyword: async (req, res, callback) => {
-    callback('刪除關鍵字')
+    try {
+      const { ChatbotId, keywordUuid } = req.body
+
+      //驗證資料正確性
+      if (!ChatbotId || !keywordUuid) {
+        return callback({
+          status: 'error',
+          message: '存取失敗，請確認資料正確性'
+        })
+      }
+      //搜尋資料
+      const keywordFind = await Keyword.findOne({
+        where: {
+          ChatbotId: ChatbotId,
+          uuid: keywordUuid
+        }
+      })
+      //刪除資料
+      if (keywordFind) {
+        keywordFind.destroy()
+          .then(() => {
+            return callback({
+              status: 'success',
+              message: '存取成功',
+              data: null
+            })
+          })
+      } else {
+        return callback({
+          status: 'error',
+          message: '存取失敗，請稍後再試',
+        })
+      }
+    } catch (err) {
+      return callback({
+        status: 'error',
+        message: '系統異常，請稍後再試',
+      })
+    }
   },
   // 儲存關鍵字
   putKeyword: async (req, res, callback) => {
