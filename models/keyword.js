@@ -2,6 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Keyword = sequelize.define('Keyword', {
     name: DataTypes.STRING,  //關鍵字名稱
+    uuid: DataTypes.STRING,
     ChatbotId: DataTypes.INTEGER,
     UsedCount: {
       type: DataTypes.INTEGER,  //使用者呼叫次數
