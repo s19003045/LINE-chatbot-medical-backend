@@ -13,7 +13,7 @@ const prenatalVisit = require('../../templates/postbacks/產前檢查.json')
 const healthInsuranceExam = require('../../templates/postbacks/查詢健保給付項目.json')
 
 //3
-const atOnesOwnExpenseExam = require(../'../templates / postbacks / 查詢自費項目.json')
+const atOnesOwnExpenseExam = require('../../templates/postbacks/查詢自費項目.json')
 
 //4
 const queryExamByWeeks = require('../../templates/postbacks/依週期數查詢產檢項目.json')
