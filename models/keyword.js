@@ -14,7 +14,9 @@ module.exports = (sequelize, DataTypes) => {
   Keyword.associate = function (models) {
     Keyword.belongsToMany(models.User, { through: 'KeywordUsers' });
     Keyword.belongsTo(models.Chatbot)
-    Keyword.belongsTo(models.ReplyModule)
+    Keyword.belongsTo(models.ReplyModule, {
+      foreignKey: 'triggerModuleId'
+    })
   };
   return Keyword;
 };
