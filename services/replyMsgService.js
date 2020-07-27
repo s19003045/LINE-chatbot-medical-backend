@@ -432,7 +432,68 @@ const replyMsgService = {
   },
   // 儲存 replyModule
   putReplyModule: async (req, res, callback) => {
-    callback('儲存 replyModule')
+    try {
+      const { ChatbotId, replyModules, action } = req.body
+
+      //驗證資料正確性
+      if (!ChatbotId || !replyModules || !action) {
+        return callback({
+          status: 'error',
+          message: '存取失敗，請確認資料正確性'
+        })
+      }
+
+      const replyModulesUpdateQuery = []
+      // 若 action 為 'edited'，則不改變 replyModule.status，若 action 為 'deploy'，則改變 replyModule.status 為 in-use
+      if (action === 'edited') {
+        for (let i = 0; i < replyModules.length; i++) {
+          replyModulesUpdateQuery.push(await ReplyModule.update({
+            name: replyModules[i].name,
+            replyMessage: replyModules[i].replyMessage,
+          }, {
+            where: {
+              ChatbotId: ChatbotId,
+              uuid: replyModules[i].uuid,
+            }
+          }))
+        }
+      } else if (action === 'deploy') {
+        for (let i = 0; i < replyModules.length; i++) {
+          replyModulesUpdateQuery.push(await ReplyModule.update({
+            name: replyModules[i].name,
+            replyMessage: replyModules[i].replyMessage,
+            status: 'in-use'
+          }, {
+            where: {
+              ChatbotId: ChatbotId,
+              uuid: replyModules[i].uuid,
+            }
+          }))
+        }
+      } else {
+        return callback({
+          status: 'error',
+          message: '存取失敗，請確認資料正確性'
+        })
+      }
+
+      Promise.all(replyModulesUpdateQuery)
+        .then(res => {
+          callback(res)
+        })
+        .catch(err => {
+          return callback({
+            status: 'error',
+            message: '存取失敗，請稍後再試',
+          })
+        })
+    } catch (err) {
+      return callback({
+        status: 'error',
+        message: '系統異常，請稍後再試',
+      })
+    }
+  },
   },
 
   // 儲存關鍵字回覆模組
