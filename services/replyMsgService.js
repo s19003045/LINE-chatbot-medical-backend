@@ -227,57 +227,41 @@ const replyMsgService = {
   // 新增關鍵字
   createKeyword: async (req, res, callback) => {
     try {
-      const { ChatbotId, keywordName } = req.body
+      const { ChatbotId } = req.body
 
       //驗證資料正確性
-      if (!ChatbotId || !keywordName || keywordName === '') {
+      if (!ChatbotId) {
         return callback({
           status: 'error',
           message: '新增失敗，請確認資料正確性'
         })
       }
 
-      const keywordFind = await Keyword.findOne({
-        where: {
-          ChatbotId: ChatbotId,
-          name: keywordName
-        }
+      const keywordCreate = await Keyword.create({
+        name: '',
+        uuid: uuidv4(),
+        ChatbotId: ChatbotId,
       })
 
-      if (keywordFind) {
+      if (keywordCreate) {
         return callback({
-          status: 'error',
-          message: '已有此關鍵字',
+          status: 'success',
+          message: '存取成功',
           data: {
-            keywordFind: keywordFind
+            keyword: keywordCreate
           }
         })
       } else {
-        return Keyword.create({
-          ChatbotId: ChatbotId,
-          name: keywordName
+        return callback({
+          status: 'error',
+          message: '存取失敗，請稍後再試'
         })
-          .then(keyword => {
-            if (keyword) {
-              return callback({
-                status: 'success',
-                message: '成功建立關鍵字',
-                data: {
-                  keyword: keyword
-                }
-              })
-            } else {
-              return callback({
-                status: 'error',
-                message: '建立失敗，請稍後再試',
-              })
-            }
-          })
       }
     } catch (err) {
       return callback({
         status: 'error',
-        message: '建立失敗，請稍後再試',
+        message: '系統異常，請稍後再試',
+        err: err
       })
     }
   },
@@ -290,7 +274,7 @@ const replyMsgService = {
       if (!ChatbotId) {
         return callback({
           status: 'error',
-          message: '新增失敗，請確認資料正確性'
+          message: '存取失敗，請確認資料正確性'
         })
       }
 
