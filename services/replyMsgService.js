@@ -494,7 +494,11 @@ const replyMsgService = {
       })
     }
   },
+
+
+
   },
+
 
   // 儲存關鍵字回覆模組
   postKeywordReply: async (req, res, callback) => {
@@ -815,7 +819,7 @@ const replyMsgService = {
           status: 'success',
           message: '成功建立模組',
           data: {
-            modulePostBackCreate: modulePostBackCreate
+            modulePostBack: modulePostBackCreate
           }
         })
       } else {
