@@ -8,19 +8,19 @@
         "type": "postback",
         "label": "查詢健保給付項目",
         "displayText": "查詢健保給付項目",
-        "data": "action=triggerReply&triggerModuleId=11"
+        "data": "action=triggerReply&triggerModuleId=1"
       },
       {
         "type": "postback",
         "label": "查詢自費項目",
         "displayText": "查詢自費項目",
-        "data": "action=triggerReply&triggerModuleId=21"
+        "data": "action=triggerReply&triggerModuleId=2"
       },
       {
         "type": "postback",
         "label": "依週期數查詢產檢項目",
         "displayText": "依週期數查詢產檢項目",
-        "data": "action=triggerReply&triggerModuleId=31"
+        "data": "action=triggerReply&triggerModuleId=3"
       }
     ],
     "title": "產前檢查",
