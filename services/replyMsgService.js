@@ -442,7 +442,7 @@ const replyMsgService = {
         uuid: uuidv4(),
         status: 'edited',
         ChatbotId: ChatbotId,
-        replyMessage: {}
+        replyMessage: []
       })
 
       if (replyModuleCreate) {
