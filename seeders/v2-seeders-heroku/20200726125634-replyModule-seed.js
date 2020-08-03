@@ -4,31 +4,31 @@ const ChatbotId = 1
 
 
 //1
-const prenatalVisit = require('../../templates/replyModule_ReplyMessage/產前檢查.json')
+const prenatalVisit = require('../../templates/replyModule_ReplyMessage_heroku/產前檢查.json')
 
 //2
-const healthInsuranceExam = require('../../templates/replyModule_ReplyMessage/查詢健保給付項目.json')
+const healthInsuranceExam = require('../../templates/replyModule_ReplyMessage_heroku/查詢健保給付項目.json')
 
 //3
-const atOnesOwnExpenseExam = require('../../templates/replyModule_ReplyMessage/查詢自費項目.json')
+const atOnesOwnExpenseExam = require('../../templates/replyModule_ReplyMessage_heroku/查詢自費項目.json')
 
 //4
-const queryExamByWeeks = require('../../templates/replyModule_ReplyMessage/依週期數查詢產檢項目.json')
+const queryExamByWeeks = require('../../templates/replyModule_ReplyMessage_heroku/依週期數查詢產檢項目.json')
 
 //5  孕期衛教.json
-const pregnancyEducation = require('../../templates/replyModule_ReplyMessage/孕期衛教.json')
+const pregnancyEducation = require('../../templates/replyModule_ReplyMessage_heroku/孕期衛教.json')
 
 //6 胎兒成長.json
-const fetusGrowth = require('../../templates/replyModule_ReplyMessage/胎兒成長.json')
+const fetusGrowth = require('../../templates/replyModule_ReplyMessage_heroku/胎兒成長.json')
 
 //7 生理記錄.json
-const healthRecord = require('../../templates/replyModule_ReplyMessage/生理記錄.json')
+const healthRecord = require('../../templates/replyModule_ReplyMessage_heroku/生理記錄.json')
 
 //8 問與答.json
-const questionAndAnswer = require('../../templates/replyModule_ReplyMessage/問與答.json')
+const questionAndAnswer = require('../../templates/replyModule_ReplyMessage_heroku/問與答.json')
 
 //9 更多資訊.json
-const moreInformation = require('../../templates/replyModule_ReplyMessage/更多資訊.json')
+const moreInformation = require('../../templates/replyModule_ReplyMessage_heroku/更多資訊.json')
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
