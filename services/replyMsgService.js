@@ -241,6 +241,7 @@ const replyMsgService = {
         name: '',
         uuid: uuidv4(),
         ChatbotId: ChatbotId,
+        triggerModuleId: null
       })
 
       if (keywordCreate) {
@@ -368,38 +369,22 @@ const replyMsgService = {
       }
 
       const keywordsUpdateQuery = []
-      // 若 action 為 'edited'，則不改變 keyword.status，若 action 為 'deploy'，則改變 replyModule.status 為 in-use
-      if (action === 'edited') {
-        for (let i = 0; i < keywords.length; i++) {
-          keywordsUpdateQuery.push(await Keyword.update({
-            name: keywords[i].name,
-          }, {
-            where: {
-              ChatbotId: ChatbotId,
-              uuid: keywords[i].uuid,
-            }
-          }))
-        }
-      } else if (action === 'deploy') {
-        for (let i = 0; i < keywords.length; i++) {
-          keywordsUpdateQuery.push(await Keyword.update({
-            name: keywords[i].name,
-            status: 'in-use'
-          }, {
-            where: {
-              ChatbotId: ChatbotId,
-              uuid: keywords[i].uuid,
-            }
-          }))
-        }
-      } else {
-        return callback({
-          status: 'error',
-          message: '存取失敗，請確認資料正確性'
-        })
+
+      // keyword 的狀態由前端控制 'edited' 或 'in-use'
+      for (let i = 0; i < keywords.length; i++) {
+        keywordsUpdateQuery.push(await Keyword.update({
+          name: keywords[i].name ? keywords[i].name : '',
+          status: keywords[i].status ? keywords[i].status : 'edited',
+          triggerModuleId: keywords[i].triggerModuleId ? keywords[i].triggerModuleId : null
+        }, {
+          where: {
+            ChatbotId: ChatbotId,
+            uuid: keywords[i].uuid,
+          }
+        }))
       }
 
-      Promise.all(keywordsUpdateQuery)
+      return Promise.all(keywordsUpdateQuery)
         .then(res => {
           return callback({
             status: 'success',
