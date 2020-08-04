@@ -483,7 +483,12 @@ const replyMsgService = {
       const replyModules = await ReplyModule.findAll({
         where: {
           ChatbotId: ChatbotId,
-        }
+        },
+        include: [
+          {
+            model: Keyword
+          }
+        ]
       })
 
       if (replyModules) {

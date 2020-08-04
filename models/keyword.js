@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,  //關鍵字名稱
     uuid: DataTypes.STRING,
     status: {
-      type: DataTypes.ENUM('edited', 'in-use', 'archived'),  //模組狀態
+      type: DataTypes.ENUM('edited', 'in-use', 'archived'),  //模組狀態。不使用此關鍵字或正在編輯都採用 edited 狀態
       defaultValue: 'edited'
     },
     usedCount: {
