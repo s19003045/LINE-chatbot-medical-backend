@@ -5,8 +5,13 @@ module.exports = (sequelize, DataTypes) => {
     pushMsgLimit: DataTypes.INTEGER, //主動推播訊息量上限
     pushMsgCount: DataTypes.INTEGER, //主動推播量統計
     pushMsgStatus: DataTypes.ENUM('available', 'inactive'), //是否可繼續推播
+    CHANNEL_ID: DataTypes.STRING, //官方提供
+    CHANNEL_SECRET: DataTypes.STRING,  //官方提供，用於身份驗證
+    CHANNEL_ACCESS_TOKEN: DataTypes.STRING, //官方提供，用於身份驗證
+    botBasicId: DataTypes.STRING, // 官方提供，用於加好友
     ChannelId: DataTypes.INTEGER,
-    CustomerId: DataTypes.INTEGER
+    CustomerId: DataTypes.INTEGER,
+    ConsoleUserId: DataTypes.INTEGER, //平台管理者(使用者)
   }, {
     paranoid: true
   });
@@ -14,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     Chatbot.belongsTo(models.Channel)
     Chatbot.belongsTo(models.Customer)
     Chatbot.belongsTo(models.User)
+    Chatbot.belongsTo(models.ConsoleUser)
+    Chatbot.hasMany(models.LineUserChatbot)
 
     Chatbot.hasMany(models.TextEvent)
     Chatbot.hasMany(models.ReplyMessage)
@@ -22,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     Chatbot.hasMany(models.ModulePostBack)
     Chatbot.hasMany(models.Keyword)
     Chatbot.hasMany(models.ReplyModule)
+
+    Chatbot.hasOne(models.WelcomeMsgChatbot)
   };
   return Chatbot;
 };
