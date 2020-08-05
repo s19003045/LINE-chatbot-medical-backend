@@ -4,6 +4,11 @@ const line = require('@line/bot-sdk');
 const express = require('express');
 const bodyParser = require('body-parser')
 
+const db = require('./models')
+const Chatbot = db.Chatbot
+
+const { initHandleEvent } = require('./handles/handleEvent')
+
 // 判別開發環境
 if (process.env.NODE_ENV !== 'production') {
   // 如果不是 production 模式
@@ -11,17 +16,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-// create LINE SDK config from env variables
-const config = {
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
-  channelSecret: process.env.CHANNEL_SECRET,
-};
-
-// create LINE SDK client
-const client = new line.Client(config);
-// create handleEvent
-const { initHandleEvent } = require('./handles/handleEvent')
-const handleEvent = initHandleEvent(client)
 
 // create Express app
 const app = express();
@@ -52,17 +46,43 @@ app.use(
 // serve static files
 app.use('/public', express.static('public'));
 
+
 // register a webhook handler with middleware
 // about the middleware, please refer to doc
-app.use('/:botId/callback', line.middleware(config), (req, res, next) => {
-  // 測試用途，了解 event 內容
-  console.log('req.header:', req.headers)
-  console.log('req.body:', req.body)
-  console.log('event.source:', req.body.events[0].source)
-  console.log('event.message:', req.body.events[0].message)
-  console.log('event.postback:', req.body.events[0].postback)
+app.use('/:botId/callback', async (req, res, next) => {
+  try {
+    // 測試用途，了解 event 內容
+    console.log('req.body:', req.body)
+    console.log('event.source:', req.body.events[0].source)
+    console.log('event.message:', req.body.events[0].message)
 
-  next()
+    const chatbot = await Chatbot.findOne({
+      where: {
+        botId: req.params.botId
+      }
+    })
+
+    // create LINE SDK config from env variables
+    const config = {
+      channelAccessToken: chatbot.CHANNEL_ACCESS_TOKEN,
+      channelSecret: chatbot.CHANNEL_SECRET,
+    };
+
+    // create LINE SDK client
+    const client = new line.Client(config);
+    // console.log('client (app.js)=>>>', client)
+    // 建立 handleEvent
+    const handleEvent = initHandleEvent(client)
+    // 將 handleEvent 傳到下一個 middleware
+    req.handleEvent = handleEvent
+
+    // middleware
+    line.middleware(config)
+
+    next()
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 app.post('/:botId/callback', (req, res) => {
@@ -71,7 +91,7 @@ app.post('/:botId/callback', (req, res) => {
   })
 
   return Promise
-    .all(req.body.events.map(handleEvent))
+    .all(req.body.events.map(req.handleEvent))
     .then((result) => res.json(result))
     .catch((err) => {
       console.error(err);
@@ -87,4 +107,4 @@ app.listen(port, () => {
 
 require('./routes')(app)
 
-module.exports = client
+// module.exports = client

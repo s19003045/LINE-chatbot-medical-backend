@@ -12,7 +12,9 @@
 #test-API-seeds
 /test-API-seeds
 
-
+# local seed
+/seeders/v2-seeders-local
+/seeders/local
 
 # local env files
 .env.local
