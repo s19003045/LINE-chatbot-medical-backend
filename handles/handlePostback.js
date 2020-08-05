@@ -8,14 +8,12 @@ const ReplyModule = db.ReplyModule
 const querystring = require('querystring');
 const triggerReply = require('./postbackHelper/triggerReply.js')
 
-// base URL for webhook server
-let baseURL = process.env.BASE_URL;
-
 // 處理 postback 訊息
 function handlePostback({
+  replyToken,
+  source,
   event,
   client,
-  replyText,
   reqParams
 }) {
   console.log('reqParams(in handlePostback)', reqParams)
@@ -24,7 +22,14 @@ function handlePostback({
 
   switch (_data.action) {
     case 'triggerReply':
-      return triggerReply(event, client, _data)
+      return triggerReply({
+        replyToken,
+        source,
+        event,
+        client,
+        data: _data,
+        reqParams
+      })
     default:
       return client.replyMessage(event.replyToken, {
         type: 'text',

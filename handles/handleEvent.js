@@ -96,9 +96,10 @@ function initHandleEvent(client) {
 
       case 'postback':
         return handlePostback({
+          replyToken: event.replyToken,
+          source: event.source,
           event,
           client,
-          replyText,
           reqParams: event.reqParams
         })
 
