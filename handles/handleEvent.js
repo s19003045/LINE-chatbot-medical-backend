@@ -11,7 +11,6 @@ function initHandleEvent(client) {
 
   // event handler
   function handleEvent(event) {
-    console.log('event.reqParams(in handleEvent)=>>', event.reqParams)
     // 官網測試 webhookURL
     if (event.replyToken && event.replyToken.match(/^(.)\1*$/)) {
       return console.log("Test hook recieved: " + JSON.stringify(event.message));
@@ -28,7 +27,6 @@ function initHandleEvent(client) {
                 replyToken: event.replyToken,
                 source: event.source,
                 client: client,
-                replyText: replyText,
                 reqParams: event.reqParams
               }
             )

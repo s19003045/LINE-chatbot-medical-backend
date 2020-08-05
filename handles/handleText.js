@@ -1,11 +1,9 @@
 'use strict'
-// base URL for webhook server
-let baseURL = process.env.BASE_URL;
-
 
 const db = require('../models')
 const Keyword = db.Keyword
 const ReplyModule = db.ReplyModule
+const Chatbot = db.Chatbot
 
 const { Op } = require("sequelize")
 
@@ -14,7 +12,6 @@ async function handleText({
   replyToken,
   source,
   client,
-  replyText,
   reqParams
 }) {
   try {
@@ -23,10 +20,20 @@ async function handleText({
     //文字開頭是、文字結尾是
     //數字相符情形：>=、>、=、<=、<
 
+
+    // 依 webhook URL 的 params.botId 找到對應的 ChatbotId
+    const chatbot = await Chatbot.findOne({
+      where: {
+        botId: reqParams.botId
+      }
+    })
+
+    // 依 ChatbotId 找尋關鍵字
     //字串完全相符
     const keyword = await Keyword.findOne({
       where: {
-        name: message.text
+        name: message.text,
+        ChatbotId: chatbot.id
       },
       include: [
         {
@@ -40,6 +47,7 @@ async function handleText({
         by: 1
       })
 
+      // 關鍵字使用次數+1
       await keyword.ReplyModule.increment(['moduleUsedCount'], {
         by: 1
       })
@@ -57,7 +65,6 @@ async function handleText({
     return client.replyMessage(event.replyToken, {
       type: 'text',
       text: '系統異常，請稍後再試',
-      err: err
     })
   }
 
