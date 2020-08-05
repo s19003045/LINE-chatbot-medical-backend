@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const replyMsgController = require('../controllers/apis/replyMsgController')
 const analysisController = require('../controllers/apis/analysisController')
+const welcomeMsgController = require('../controllers/apis/welcomeMsgController')
 
 
 // 新增 module keyword
@@ -58,6 +59,8 @@ router.get('/bots/:botId/postback-reply', replyMsgController.getPostBackReply)
 router.post('/bots/:botId/postback-reply', replyMsgController.postPostBackReply)
 
 
+// 歡迎訊息設定-取得歡迎訊息資料
+router.get('/bots/:botId/welcome', welcomeMsgController.getWelcomeMsg)
 // 分析模組-取得關鍵字模組使用數據
 router.get('/bots/:botId/module-keyword-analysis', analysisController.getModuleKeywordAnalysis)
 // 分析模組-取得postback模組使用數據
