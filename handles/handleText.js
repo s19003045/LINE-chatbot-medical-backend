@@ -9,8 +9,16 @@ const ReplyModule = db.ReplyModule
 
 const { Op } = require("sequelize")
 
-async function handleText(message, replyToken, source, client, replyText) {
+async function handleText({
+  message,
+  replyToken,
+  source,
+  client,
+  replyText,
+  reqParams
+}) {
   try {
+    console.log('reqParams(in handleText)', reqParams)
     //關鍵字相符情形：等於、包含、不包含
     //文字開頭是、文字結尾是
     //數字相符情形：>=、>、=、<=、<

@@ -54,7 +54,7 @@ app.use('/public', express.static('public'));
 
 // register a webhook handler with middleware
 // about the middleware, please refer to doc
-app.use('/callback', line.middleware(config), (req, res, next) => {
+app.use('/:botId/callback', line.middleware(config), (req, res, next) => {
   // 測試用途，了解 event 內容
   console.log('req.header:', req.headers)
   console.log('req.body:', req.body)
@@ -65,8 +65,12 @@ app.use('/callback', line.middleware(config), (req, res, next) => {
   next()
 })
 
-app.post('/callback', (req, res) => {
-  Promise
+app.post('/:botId/callback', (req, res) => {
+  req.body.events.forEach(d => {
+    d.reqParams = req.params
+  })
+
+  return Promise
     .all(req.body.events.map(handleEvent))
     .then((result) => res.json(result))
     .catch((err) => {

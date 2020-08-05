@@ -12,7 +12,13 @@ const triggerReply = require('./postbackHelper/triggerReply.js')
 let baseURL = process.env.BASE_URL;
 
 // 處理 postback 訊息
-function handlePostback(event, client, replyText) {
+function handlePostback({
+  event,
+  client,
+  replyText,
+  reqParams
+}) {
+  console.log('reqParams(in handlePostback)', reqParams)
   let data = event.postback.data
   let _data = querystring.parse(data)
 

@@ -11,6 +11,7 @@ function initHandleEvent(client) {
 
   // event handler
   function handleEvent(event) {
+    console.log('event.reqParams(in handleEvent)=>>', event.reqParams)
     // 官網測試 webhookURL
     if (event.replyToken && event.replyToken.match(/^(.)\1*$/)) {
       return console.log("Test hook recieved: " + JSON.stringify(event.message));
@@ -21,7 +22,16 @@ function initHandleEvent(client) {
         const message = event.message
         switch (message.type) {
           case 'text':
-            return handleText(message, event.replyToken, event.source, client, replyText)
+            return handleText(
+              {
+                message: message,
+                replyToken: event.replyToken,
+                source: event.source,
+                client: client,
+                replyText: replyText,
+                reqParams: event.reqParams
+              }
+            )
           case 'image':
             return client.replyMessage(event.replyToken, {
               type: 'text', text: 'you send a image.'
@@ -87,7 +97,12 @@ function initHandleEvent(client) {
         return console.log(`memberLeft: ${JSON.stringify(event)}`);
 
       case 'postback':
-        return handlePostback(event, client, replyText)
+        return handlePostback({
+          event,
+          client,
+          replyText,
+          reqParams: event.reqParams
+        })
 
       case 'beacon':
         return replyText(event.replyToken, `Got beacon: ${event.beacon.hwid}`);
