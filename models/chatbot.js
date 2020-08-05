@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
   Chatbot.associate = function (models) {
     Chatbot.belongsTo(models.Channel)
     Chatbot.belongsTo(models.Customer)
-    Chatbot.belongsTo(models.User)
     Chatbot.belongsTo(models.ConsoleUser)
     Chatbot.hasMany(models.LineUserChatbot)
 
