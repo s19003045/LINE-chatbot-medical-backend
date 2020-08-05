@@ -21,9 +21,12 @@ module.exports = (sequelize, DataTypes) => {
   ReplyModule.associate = function (models) {
     ReplyModule.belongsTo(models.Chatbot)
     ReplyModule.belongsToMany(models.User, { through: 'ReplyModuleUser' });
+
     ReplyModule.hasMany(models.Keyword, {
       foreignKey: 'triggerModuleId'
     })
+
+    ReplyModule.hasOne(models.WelcomeMsgChatbot)
   };
   return ReplyModule;
 };
