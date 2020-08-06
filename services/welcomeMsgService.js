@@ -64,9 +64,52 @@ const welcomeMsgService = {
     }
   },
   // 歡迎訊息設定-儲存歡迎訊息資料
-  // putWelcomeMsg: async (req, res, callback) => {
+  putWelcomeMsg: async (req, res, callback) => {
+    try {
+      // parse req
+      const { botId } = req.params
+      const { ChatbotId, welcomeMsg } = req.body
 
-  // },
+      // find data
+      const welcomeMsgFind = await WelcomeMsg.findOne({
+        where: {
+          ChatbotId: ChatbotId,
+          id: welcomeMsg.id
+        }
+      })
+
+      if (welcomeMsgFind) {
+        // update data
+        welcomeMsgFind.replyMessage = welcomeMsg.replyMessage
+        welcomeMsgFind.status = welcomeMsg.status
+
+        const welcomeMsgSaved = await welcomeMsgFind.save()
+
+        const data = {
+          status: 'success',
+          message: '存取成功',
+          data: {
+            welcomeMsg: welcomeMsgSaved
+          }
+        }
+        callback(data)
+      } else {
+        // data not found
+        const data = {
+          status: 'error',
+          message: '存取失敗，請確認資料正確性',
+        }
+        callback(data)
+      }
+    } catch (err) {
+      const data = {
+        status: 'error',
+        message: '存取失敗',
+        error: err.message
+      }
+      callback(data)
+    }
+  },
 }
 
 module.exports = welcomeMsgService
