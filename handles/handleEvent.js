@@ -3,6 +3,8 @@
 const { handlePostback } = require('./handlePostback')
 const { handleText } = require('./handleText')
 const { initReplyText } = require('../libs/utils')
+const handleFollow = require('./handleFollow')
+
 const db = require('../models')
 const User = db.User
 
@@ -17,6 +19,7 @@ function initHandleEvent(client) {
     }
 
     switch (event.type) {
+      // 訊息事件
       case 'message':
         const message = event.message
         switch (message.type) {
@@ -58,46 +61,39 @@ function initHandleEvent(client) {
             throw new Error(`Unknown message: ${JSON.stringify(message)}`);
         }
 
+      //LINE 使用者加為好友
       case 'follow':
-        return client.getProfile(event.source.userId)
-          .then((profile) => {
-            return User.findOrCreate({
-              where: { userId: event.source.userId },
-              defaults: {
-                userId: event.source.userId,
-                displayName: profile.displayName,
-                pictureUrl: profile.pictureUrl,
-                statusMessage: profile.statusMessage,
-                language: profile.language,
-                status: 'join',
-                interactiveStatus: 'active',
-                joinDate: new Date()
-              }
-            })
-              .then((user) => {
-                return replyText(event.replyToken, `${user[0].displayName}，您好！\n感謝您成為 Crocodile Doctor 的好友!`);
-              })
-          })
+        return handleFollow({
+          replyToken: event.replyToken,
+          source: event.source,
+          event,
+          client,
+          reqParams: event.reqParams
+        })
 
+      //LINE 使用者取消好友關係
       case 'unfollow':
         return console.log(`Unfollowed this bot: ${JSON.stringify(event)}`);
 
+      //機器人受邀加入 group 或 room
       case 'join':
         return replyText(event.replyToken, `Joined ${event.source.type}`);
 
+      //機器人離開 group 或 room
       case 'leave':
         return console.log(`Left: ${JSON.stringify(event)}`);
+      //機器人所在的 group 或 room ，有人加入時
 
       case 'memberJoined':
         return replyText(event.replyToken, `memberJoined ${event.source.type}`);
 
+      //機器人所在的 group 或 room ，有人離開時
       case 'memberLeft':
         return console.log(`memberLeft: ${JSON.stringify(event)}`);
 
+      // 回傳動作事件
       case 'postback':
         return handlePostback({
-          replyToken: event.replyToken,
-          source: event.source,
           event,
           client,
           reqParams: event.reqParams
