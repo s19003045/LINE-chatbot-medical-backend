@@ -74,7 +74,8 @@ const welcomeMsgService = {
       const welcomeMsgFind = await WelcomeMsg.findOne({
         where: {
           ChatbotId: ChatbotId,
-          id: welcomeMsg.id
+          id: welcomeMsg.id,
+          uuid: welcomeMsg.uuid
         }
       })
 
