@@ -6,6 +6,22 @@ const welcomeMsgController = require('../controllers/apis/welcomeMsgController')
 const userController = require('../controllers/apis/userController')
 
 
+const passport = require('../config/passport')
+
+// middleware
+const authenticated = passport.authenticate('jwt', { session: false })
+
+const authenticatedAdmin = (req, res, next) => {
+  if (req.user) {
+    if (req.user.role === 'admin') {
+      return next()
+    } else {
+      return res.json({ status: 'error', message: 'permission denied' })
+    }
+  } else {
+    return res.json({ status: 'error', message: 'permission denied' })
+  }
+}
 
 // user API
 router.post('/signup', userController.signUp)
@@ -29,20 +45,20 @@ router.delete('/bots/:botId/module-keyword', replyMsgController.deleteModuleKeyw
 // router.delete('/bots/:botId/text-event', replyMsgController.deleteTextEvent)
 
 // 新增關鍵字
-router.post('/bots/:botId/keyword', replyMsgController.createKeyword)
+router.post('/bots/:botId/keyword', authenticated, replyMsgController.createKeyword)
 // 取得關鍵字
-router.get('/bots/:botId/keywords', replyMsgController.getKeywords)
+router.get('/bots/:botId/keywords', authenticated, replyMsgController.getKeywords)
 // 刪除關鍵字
-router.delete('/bots/:botId/keyword', replyMsgController.deleteKeyword)
+router.delete('/bots/:botId/keyword', authenticated, replyMsgController.deleteKeyword)
 // 儲存關鍵字
-router.put('/bots/:botId/keyword', replyMsgController.putKeyword)
+router.put('/bots/:botId/keyword', authenticated, replyMsgController.putKeyword)
 
 // 新增 replyModule
-router.post('/bots/:botId/reply-module', replyMsgController.createReplyModule)
+router.post('/bots/:botId/reply-module', authenticated, replyMsgController.createReplyModule)
 // 取得 replyModules
-router.get('/bots/:botId/reply-module', replyMsgController.getReplyModules)
+router.get('/bots/:botId/reply-module', authenticated, replyMsgController.getReplyModules)
 // 刪除 replyModule
-router.delete('/bots/:botId/reply-module', replyMsgController.deleteReplyModule)
+router.delete('/bots/:botId/reply-module', authenticated, replyMsgController.deleteReplyModule)
 // 儲存 replyModule
 router.put('/bots/:botId/reply-module', replyMsgController.putReplyModule)
 
@@ -55,6 +71,7 @@ router.get('/bots/:botId/keyword-reply', replyMsgController.getKeywordReply)
 router.put('/bots/:botId/keyword-reply', replyMsgController.postKeywordReply)
 // 刪除關鍵字回應模組
 router.delete('/bots/:botId/keyword-reply', replyMsgController.deleteKeywordReply)
+router.put('/bots/:botId/reply-module', authenticated, replyMsgController.putReplyModule)
 
 
 // 新增 postback module
@@ -68,9 +85,9 @@ router.post('/bots/:botId/postback-reply', replyMsgController.postPostBackReply)
 
 
 // 歡迎訊息設定-取得歡迎訊息資料
-router.get('/bots/:botId/welcome', welcomeMsgController.getWelcomeMsg)
+router.get('/bots/:botId/welcome', authenticated, welcomeMsgController.getWelcomeMsg)
 // 歡迎訊息設定-儲存歡迎訊息資料
-router.put('/bots/:botId/welcome', welcomeMsgController.putWelcomeMsg)
+router.put('/bots/:botId/welcome', authenticated, welcomeMsgController.putWelcomeMsg)
 
 
 // 分析模組-取得關鍵字模組使用數據
