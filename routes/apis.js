@@ -3,6 +3,14 @@ const router = express.Router()
 const replyMsgController = require('../controllers/apis/replyMsgController')
 const analysisController = require('../controllers/apis/analysisController')
 const welcomeMsgController = require('../controllers/apis/welcomeMsgController')
+const userController = require('../controllers/apis/userController')
+
+
+
+// user API
+router.post('/signup', userController.signUp)
+router.post('/signin', userController.signIn)
+router.post('/logout', userController.logout)
 
 
 // 新增 module keyword
