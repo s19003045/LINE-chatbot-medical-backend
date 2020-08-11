@@ -17,6 +17,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 
+const redis = require('redis')
+const session = require('express-session')
+
+const RedisStore = require('connect-redis')(session)
+const redisClient = redis.createClient()
+
+const passport = require('./config/passport')
+
 // create Express app
 const app = express();
 
@@ -42,6 +50,19 @@ app.use(
     },
   })
 )
+
+// use redis session
+app.use(
+  session({
+    store: new RedisStore({ client: redisClient }),
+    secret: process.env.sessionSecret,
+    resave: false,
+    saveUninitialized: false
+  })
+)
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 // serve static files
 app.use('/public', express.static('public'));

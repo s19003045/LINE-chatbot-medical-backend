@@ -33,6 +33,17 @@ passport.use(new LocalStrategy({
   }
 ));
 
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  return ConsoleUser.findByPk(id)
+    .then(user => {
+      return done(null, user)
+    })
+});
+
 const passportJWT = require('passport-jwt')
 const JwtStrategy = passportJWT.Strategy,
   ExtractJwt = passportJWT.ExtractJwt;
