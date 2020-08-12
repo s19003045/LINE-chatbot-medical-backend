@@ -25,8 +25,8 @@ const authenticatedAdmin = (req, res, next) => {
 
 // user API
 router.post('/signup', userController.signUp)
-router.post('/signin', userController.signIn)
-router.post('/logout', userController.logout)
+router.post('/sign-in', userController.signIn)
+router.post('/logout', userController.logOut)
 router.get('/get_current_user', authenticated, userController.getCurrentUser)
 
 

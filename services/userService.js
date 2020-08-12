@@ -187,8 +187,10 @@ const userService = {
   },
 
   // 登出
-  logout: (req, res, callback) => {
-    callback('logout')
+  logOut: (req, res, callback) => {
+    callback('logOut')
+  },
+
   // 取得使用者資料
   getCurrentUser: async (req, res, callback) => {
     const { user } = req
