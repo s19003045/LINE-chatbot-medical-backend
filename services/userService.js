@@ -189,6 +189,21 @@ const userService = {
   // 登出
   logout: (req, res, callback) => {
     callback('logout')
+  // 取得使用者資料
+  getCurrentUser: async (req, res, callback) => {
+    const { user } = req
+    const data = {
+      status: 'success',
+      message: '存取成功',
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        roll: user.roll,
+        avatar: user.avatar,
+      }
+    }
+    callback(data)
   },
 }
 

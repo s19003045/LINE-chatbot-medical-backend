@@ -16,6 +16,9 @@ const userController = {
   // 登出
   logout: (req, res) => {
     return userService.logout(req, res, (data) => {
+  // 取得使用者資料
+  getCurrentUser: (req, res) => {
+    return userService.getCurrentUser(req, res, (data) => {
       return res.json(data)
     })
   },

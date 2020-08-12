@@ -27,6 +27,7 @@ const authenticatedAdmin = (req, res, next) => {
 router.post('/signup', userController.signUp)
 router.post('/signin', userController.signIn)
 router.post('/logout', userController.logout)
+router.get('/get_current_user', authenticated, userController.getCurrentUser)
 
 
 // 新增 module keyword
