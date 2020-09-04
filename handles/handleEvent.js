@@ -4,7 +4,7 @@ const { handlePostback } = require('./handlePostback')
 const { handleText } = require('./handleText')
 const { initReplyText } = require('../libs/utils')
 const handleFollow = require('./handleFollow')
-
+const handleJoin = require('./handleJoin')
 const db = require('../models')
 const User = db.User
 
@@ -64,8 +64,6 @@ function initHandleEvent(client) {
       //LINE 使用者加為好友
       case 'follow':
         return handleFollow({
-          replyToken: event.replyToken,
-          source: event.source,
           event,
           client,
           reqParams: event.reqParams
@@ -77,7 +75,12 @@ function initHandleEvent(client) {
 
       //機器人受邀加入 group 或 room
       case 'join':
-        return replyText(event.replyToken, `Joined ${event.source.type}`);
+        return handleJoin({
+          event,
+          client,
+          reqParams: event.reqParams
+        })
+      // return replyText(event.replyToken, `Joined ${event.source.type}`);
 
       //機器人離開 group 或 room
       case 'leave':
