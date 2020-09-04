@@ -14,8 +14,9 @@ module.exports = (sequelize, DataTypes) => {
   });
   User.associate = function (models) {
     User.belongsToMany(models.Keyword, { through: 'KeywordUsers' });
-
     User.belongsToMany(models.ReplyModule, { through: 'ReplyModuleUser' });
+    User.belongsToMany(models.Room, { through: 'RoomUser' });
+    User.belongsToMany(models.Group, { through: 'GroupUser' });
   };
   return User;
 };

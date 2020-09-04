@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     paranoid: true
   });
   Room.associate = function (models) {
-    // associations can be defined here
+    Room.belongsToMany(models.User, { through: 'RoomUser' });
   };
   return Room;
 };

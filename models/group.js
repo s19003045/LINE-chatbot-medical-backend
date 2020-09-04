@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     paranoid: true
   });
   Group.associate = function (models) {
-    // associations can be defined here
+    Group.belongsToMany(models.User, { through: 'GroupUser' });
   };
   return Group;
 };
