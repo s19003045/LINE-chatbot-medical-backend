@@ -9,7 +9,7 @@ const userController = require('../controllers/apis/userController')
 const passport = require('../config/passport')
 
 // middleware
-const authenticated = passport.authenticate('jwt', { session: false })
+// const authenticated = passport.authenticate('jwt', { session: false })
 
 const authenticatedAdmin = (req, res, next) => {
   if (req.user) {
@@ -27,7 +27,7 @@ const authenticatedAdmin = (req, res, next) => {
 router.post('/signup', userController.signUp)
 router.post('/sign-in', userController.signIn)
 router.post('/logout', userController.logOut)
-router.get('/get_current_user', authenticated, userController.getCurrentUser)
+router.get('/get_current_user', userController.getCurrentUser)
 
 
 // 新增 module keyword
@@ -38,34 +38,34 @@ router.delete('/bots/:botId/module-keyword', replyMsgController.deleteModuleKeyw
 
 
 // 新增關鍵字
-router.post('/bots/:botId/keyword', authenticated, replyMsgController.createKeyword)
+router.post('/bots/:botId/keyword', replyMsgController.createKeyword)
 // 取得關鍵字
-router.get('/bots/:botId/keywords', authenticated, replyMsgController.getKeywords)
+router.get('/bots/:botId/keywords', replyMsgController.getKeywords)
 // 刪除關鍵字
-router.delete('/bots/:botId/keyword', authenticated, replyMsgController.deleteKeyword)
+router.delete('/bots/:botId/keyword', replyMsgController.deleteKeyword)
 // 儲存關鍵字
-router.put('/bots/:botId/keyword', authenticated, replyMsgController.putKeyword)
+router.put('/bots/:botId/keyword', replyMsgController.putKeyword)
 
 // 新增 replyModule
-router.post('/bots/:botId/reply-module', authenticated, replyMsgController.createReplyModule)
+router.post('/bots/:botId/reply-module', replyMsgController.createReplyModule)
 // 取得 replyModules
-router.get('/bots/:botId/reply-module', authenticated, replyMsgController.getReplyModules)
+router.get('/bots/:botId/reply-module', replyMsgController.getReplyModules)
 // 刪除 replyModule
-router.delete('/bots/:botId/reply-module', authenticated, replyMsgController.deleteReplyModule)
+router.delete('/bots/:botId/reply-module', replyMsgController.deleteReplyModule)
 // 儲存 replyModule
-router.put('/bots/:botId/reply-module', authenticated, replyMsgController.putReplyModule)
+router.put('/bots/:botId/reply-module', replyMsgController.putReplyModule)
 
 // 歡迎訊息設定-取得歡迎訊息資料
-router.get('/bots/:botId/welcome', authenticated, welcomeMsgController.getWelcomeMsg)
+router.get('/bots/:botId/welcome', welcomeMsgController.getWelcomeMsg)
 // 歡迎訊息設定-儲存歡迎訊息資料
-router.put('/bots/:botId/welcome', authenticated, welcomeMsgController.putWelcomeMsg)
+router.put('/bots/:botId/welcome', welcomeMsgController.putWelcomeMsg)
 
 // 分析模組-取得回應模組(replyModule)使用數據
-router.get('/bots/:botId/reply-module-analysis', authenticated, analysisController.getReplyModuleAnalysis)
+router.get('/bots/:botId/reply-module-analysis', analysisController.getReplyModuleAnalysis)
 // 分析模組-取得關鍵字使用數據
-router.get('/bots/:botId/keyword-analysis', authenticated, analysisController.getKeywordAnalysis)
+router.get('/bots/:botId/keyword-analysis', analysisController.getKeywordAnalysis)
 // 分析模組-取得將機器人加為好友的使用者數據
-router.get('/bots/:botId/user-analysis', authenticated, analysisController.getUserAnalysis)
+router.get('/bots/:botId/user-analysis', analysisController.getUserAnalysis)
 
 
 // //====以下 API 暫時用不到===
