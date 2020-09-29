@@ -14,7 +14,7 @@
   "author": "Wu Jen Hsien",
   "license": "ISC",
   "dependencies": {
-    "@line/bot-sdk": "^7.0.0",
+    "@line/bot-sdk": "^7.1.0",
     "aws-sdk": "^2.705.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
